@@ -5,7 +5,6 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -23,7 +22,7 @@
          <children>
             <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="71.0" prefWidth="520.0">
                <children>
-                  <HBox prefHeight="71.0" prefWidth="220.0" style="-fx-background-color: #47A3E0;">
+                  <HBox prefHeight="71.0" prefWidth="220.0" style="-fx-background-color: #3498db;">
                      <children>
                         <Label style="-fx-text-fill: #fcfcfc;" text="Project" textFill="#ebe9e9" HBox.hgrow="ALWAYS">
                            <font>
@@ -46,29 +45,33 @@
       </VBox>
    </top>
    <left>
-      <GridPane prefHeight="100.0" prefWidth="360.0" BorderPane.alignment="CENTER">
+      <GridPane prefHeight="205.0" prefWidth="324.0" BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="90.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
          </padding>
          <children>
             <HBox alignment="CENTER" prefHeight="30.0" prefWidth="360.0">
                <children>
-                  <JFXTextField focusColor="WHITE" prefHeight="34.0" prefWidth="285.0" style="-fx-background-color: #FFFFFF;" unFocusColor="WHITE">
+                  <HBox prefHeight="30.0" prefWidth="273.0" style="-fx-background-color: #ffffff;">
+                     <children>
+                        <JFXTextField cacheShape="false" centerShape="false" focusColor="WHITE" prefHeight="25.0" prefWidth="274.0" unFocusColor="WHITE">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                     </children>
                      <HBox.margin>
-                        <Insets left="5.0" right="5.0" />
+                        <Insets right="5.0" />
                      </HBox.margin>
-                     <padding>
-                        <Insets left="5.0" right="5.0" />
-                     </padding>
-                  </JFXTextField>
-                  <HBox alignment="CENTER" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: #47A3E0;">
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: #3498db;">
                      <children>
                         <FontAwesomeIconView fill="WHITE" glyphName="SEARCH" size="14" />
                      </children>
@@ -78,7 +81,7 @@
                   </HBox>
                </children>
             </HBox>
-            <JFXListView fx:id="rootViewList" focusTraversable="false" onMouseClicked="#loadDetailProject" style="-fx-border-color: #E7E7E7;" GridPane.rowIndex="1">
+            <JFXListView fx:id="rootViewList" focusTraversable="false" onMouseClicked="#loadDetailProject" style="-fx-background-color: #f1f1f1;" stylesheets="@mylistview.css" verticalGap="80.0" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets top="10.0" />
                </GridPane.margin>
@@ -86,14 +89,4 @@
          </children>
       </GridPane>
    </left>
-   <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f1f1f1;" BorderPane.alignment="CENTER">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <BorderPane.margin>
-            <Insets bottom="5.0" right="5.0" />
-         </BorderPane.margin>
-      </AnchorPane>
-   </center>
 </BorderPane>

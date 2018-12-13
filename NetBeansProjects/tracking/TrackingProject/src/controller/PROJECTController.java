@@ -57,6 +57,10 @@ public class PROJECTController implements Initializable {
             }
             rootViewList.setItems(data);
             rootViewList.setCellFactory(projectListView -> new ProjectDao());
+            rootViewList.setVerticalGap(30.0);
+            rootViewList.setExpanded(true);
+            rootViewList.depthProperty().set(1);
+            rootViewList.getStyleClass().add("mylistview");
         } catch (Exception e) {
         }
     }

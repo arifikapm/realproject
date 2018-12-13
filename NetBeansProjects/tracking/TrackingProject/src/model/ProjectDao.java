@@ -115,6 +115,7 @@ public class ProjectDao extends ListCell<Project>{
             titleStratMonth.setText(project.getStartMonth());
             titleEndMonth.setText(project.getEndMonth());
             lblProgres.setText(project.getInisialProgress());
+            gridPane.getStyleClass().add("mylistview");
            
             
             

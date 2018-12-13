@@ -39,12 +39,14 @@ public class ROOTController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         try {
             // TODO
             loadDasboard();
         } catch (IOException ex) {
             Logger.getLogger(ROOTController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }    
 
     @FXML
@@ -93,6 +95,14 @@ public class ROOTController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DASHBOARD.fxml"));
         BorderPane newScene = loader.load();
         DASHBOARDController mct = loader.getController();
+        rootLoad.setCenter(newScene);
+        System.out.println("print dashboard");
+    }
+    
+    public void loadDasboardView() throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DashboardView.fxml"));
+        BorderPane newScene = loader.load();
+        DashboardViewController mct = loader.getController();
         rootLoad.setCenter(newScene);
         System.out.println("print dashboard");
     }

@@ -11,29 +11,34 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="gridPane" prefHeight="108.0" prefWidth="309.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="gridPane" prefHeight="97.0" prefWidth="279.0" style="-fx-background-color: #ffffff;" stylesheets="@mylistview.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane HBox.hgrow="ALWAYS">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="237.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="78.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="217.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="92.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="0.5" minHeight="0.5" prefHeight="0.5" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.0" minHeight="1.0" prefHeight="1.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="2.0" minHeight="2.0" prefHeight="2.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="titleCivitas" prefHeight="25.0" prefWidth="317.0" text="PT Bangun Pertiwi Perkasa" textFill="#a8a8a8" GridPane.columnSpan="2">
+            <Label fx:id="titleCivitas" prefHeight="25.0" prefWidth="317.0" text="PT Bangun Pertiwi Perkasa Kusuma Putra" textFill="#a8a8a8" GridPane.columnSpan="3">
                <font>
                   <Font name="Ubuntu Bold" size="13.0" />
                </font>
                <padding>
-                  <Insets right="10.0" top="10.0" />
+                  <Insets top="8.0" />
                </padding>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="14.0" />
+               </GridPane.margin>
             </Label>
-            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="15.0" prefWidth="277.0" GridPane.rowIndex="2">
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="15.0" prefWidth="277.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
                <children>
                   <VBox prefHeight="39.0" prefWidth="241.0">
                      <children>
@@ -79,15 +84,18 @@
                            </VBox.margin>
                         </HBox>
                      </children>
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
                   </VBox>
                </children>
                <GridPane.margin>
                   <Insets top="4.0" />
                </GridPane.margin>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="277.0" GridPane.rowIndex="3">
+            <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="121.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                <children>
-                  <ProgressBar fx:id="barProgress" cacheShape="false" maxHeight="12.0" maxWidth="1.7976931348623157E308" minHeight="12.0" opacity="0.57" prefHeight="12.0" prefWidth="178.0" progress="0.54">
+                  <ProgressBar fx:id="barProgress" cacheShape="false" maxHeight="12.0" maxWidth="1.7976931348623157E308" minHeight="12.0" opacity="0.57" prefHeight="12.0" prefWidth="151.0" progress="0.54">
                      <effect>
                         <Glow />
                      </effect>
@@ -113,16 +121,27 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </HBox>
-            <HBox opacity="0.13" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #545454;" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-            <HBox alignment="CENTER" prefHeight="65.0" prefWidth="101.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2">
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #C8C8C8;" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></HBox>
+            <HBox alignment="CENTER" prefHeight="65.0" prefWidth="101.0" style="-fx-background-color: #C8C8C8;" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.rowSpan="2">
                <children>
-                  <Label fx:id="lblProgres" style="-fx-text-fill: #a8a8a8;" text="IP">
+                  <Label fx:id="lblProgres" text="IP" textFill="WHITE">
                      <font>
                         <Font name="Ubuntu" size="22.0" />
                      </font>
                   </Label>
                </children>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
             </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="12.0" prefWidth="12.0" style="-fx-background-color: #00DA74;" />
+               </children>
+            </VBox>
          </children>
       </GridPane>
    </children>

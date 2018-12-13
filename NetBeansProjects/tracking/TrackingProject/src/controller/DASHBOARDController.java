@@ -41,16 +41,6 @@ import org.jfree.data.general.Series;
 public class DASHBOARDController implements Initializable {
 
     @FXML
-    private PieChart pieAssurance;
-    @FXML
-    private PieChart pieAssurance11;
-    @FXML
-    private PieChart pieAssurance2;
-    @FXML
-    private PieChart pieAssurance1;
-    @FXML
-    private PieChart pieAssurance3;
-    @FXML
     private Label txtTglStart;
     @FXML
     private Label txtTglStart1;
@@ -60,7 +50,6 @@ public class DASHBOARDController implements Initializable {
     private Label txtTglStart111;
     @FXML
     private Label txtTglStart112;
-    @FXML
     private JFXListView<ListDasboard> rootViewList;
     
     koneksi kon = new koneksi();
@@ -70,6 +59,22 @@ public class DASHBOARDController implements Initializable {
     private ObservableList<ListDasboard> data;
 //    @FXML
 //    private BorderPane viewProject;
+    @FXML
+    private PieChart labelPieChart;
+    @FXML
+    private PieChart pieChart;
+    @FXML
+    private PieChart labelPieChart1;
+    @FXML
+    private PieChart pieChart1;
+    @FXML
+    private PieChart labelPieChart2;
+    @FXML
+    private PieChart pieChart2;
+    @FXML
+    private PieChart labelPieChart3;
+    @FXML
+    private PieChart pieChart3;
     
     private void loadListProject(){
         try {
@@ -89,170 +94,247 @@ public class DASHBOARDController implements Initializable {
     /**
      * Initializes the controller class.
      */
-     public void loadPieManfAss(){
-        ObservableList<PieChart.Data> pieChartAssurance=
-                FXCollections.observableArrayList(
-                new PieChart.Data("NY", 3),
-                new PieChart.Data("IP", 2),
-                new PieChart.Data("Co", 8),
-                new PieChart.Data("Fi", 37));
-        
-        pieAssurance.setClockwise(true);
-        pieAssurance.setLabelLineLength(-15);
-        pieAssurance.setLabelsVisible(true);
-        pieAssurance.setMinSize(320, 320);
-        pieAssurance.setLegendVisible(true);
-        pieAssurance.setData(pieChartAssurance);
-        
-        DoubleBinding total = Bindings.createDoubleBinding(() ->
-        pieChartAssurance.stream().collect(Collectors.summingDouble(PieChart.Data::getPieValue)), pieChartAssurance);
-        
-        pieChartAssurance.forEach(data -> 
-        data.nameProperty().bind(Bindings.concat(data.getName()," (",
-        String.format("%.0f%%", 100*data.getPieValue()/total.get()),")")));
-                    
-        //pieAssurance11.setLabelLineLength(0);
-        //pieAssurance11.setLabelsVisible(true);
-//        DoubleBinding total = Bindings.createDoubleBinding(() ->
-//        pieChartAssurance11.stream().collect(Collectors.summingDouble(PieChart.Data::getPieValue)), pieChartAssurance11);
-//        final Label caption = new Label("");
-//        caption.setTextFill(Color.DARKORANGE);
-//        caption.setStyle("-fx-font: 24 arial;");
-//        
-//        for (final PieChart.Data data : pieAssurance11.getData()) {
-//        data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
-//            e -> {
-//                caption.setTranslateX(e.getSceneX());
-//                caption.setTranslateY(e.getSceneY());
-//                String text = String.format("%.1f%%", 100*data.getPieValue()/total.get()) ;
-//                caption.setText(text);
-//             }
-//            );
-//    }
-      
-    }
      
-     public void loadPieTreddAss(){
-        ObservableList<PieChart.Data> pieChartAssurance1=
-                FXCollections.observableArrayList(
-                new PieChart.Data("NY", 0),
-                new PieChart.Data("IP", 0),
-                new PieChart.Data("Co", 2),
-                new PieChart.Data("Fi", 1));
-        
-        pieAssurance1.setClockwise(true);
-        pieAssurance1.setLabelLineLength(-15);
-        pieAssurance1.setLabelsVisible(true);
-        pieAssurance1.setMinSize(320, 320);
-        pieAssurance1.setLegendVisible(true);
-        pieAssurance1.setData(pieChartAssurance1);
-        
-        DoubleBinding total = Bindings.createDoubleBinding(() ->
-        pieChartAssurance1.stream().collect(Collectors.summingDouble(PieChart.Data::getPieValue)), pieChartAssurance1);
-        
-        pieChartAssurance1.forEach(data -> 
-        data.nameProperty().bind(Bindings.concat(data.getName()," (",
-        String.format("%.0f%%", 100*data.getPieValue()/total.get()),")")));
-     }
-    
-     public void loadPieManfRisk(){
-        ObservableList<PieChart.Data> pieChartAssurance2=
-                FXCollections.observableArrayList(
-                new PieChart.Data("NY", 0),
-                new PieChart.Data("IP", 2),
-                new PieChart.Data("Co", 3),
-                new PieChart.Data("Fi", 1));
-        
-        pieAssurance2.setClockwise(true);
-        pieAssurance2.setLabelLineLength(-15);
-        pieAssurance2.setLabelsVisible(true);
-        pieAssurance2.setMinSize(320, 320);
-        pieAssurance2.setLegendVisible(true);
-        pieAssurance2.setData(pieChartAssurance2);
-        
-        DoubleBinding total = Bindings.createDoubleBinding(() ->
-        pieChartAssurance2.stream().collect(Collectors.summingDouble(PieChart.Data::getPieValue)), pieChartAssurance2);
-        
-        pieChartAssurance2.forEach(data -> 
-        data.nameProperty().bind(Bindings.concat(data.getName()," (",
-        String.format("%.0f%%", 100*data.getPieValue()/total.get()),")")));
-     }
-     
-     public void loadPieTredRisk(){
-        ObservableList<PieChart.Data> pieChartAssurance3=
-                FXCollections.observableArrayList(
-                new PieChart.Data("NY", 0),
-                new PieChart.Data("IP", 0),
-                new PieChart.Data("Co", 2),
-                new PieChart.Data("Fi", 1));
-        
-        pieAssurance3.setClockwise(true);
-        pieAssurance3.setLabelLineLength(-15);
-        pieAssurance3.setLabelsVisible(true);
-        pieAssurance3.setMinSize(320, 320);
-        pieAssurance3.setLegendVisible(true);
-        pieAssurance3.setData(pieChartAssurance3);
-        
-        DoubleBinding total = Bindings.createDoubleBinding(() ->
-        pieChartAssurance3.stream().collect(Collectors.summingDouble(PieChart.Data::getPieValue)), pieChartAssurance3);
-        
-        pieChartAssurance3.forEach(data -> 
-        data.nameProperty().bind(Bindings.concat(data.getName()," (",
-        String.format("%.0f%%", 100*data.getPieValue()/total.get()),")")));
-     }
-     
-     public void loadPieAdvisory(){
-        ObservableList<PieChart.Data> pieChartAssurance11=
-                FXCollections.observableArrayList(
-                new PieChart.Data("NY", 0),
-                new PieChart.Data("IP", 0),
-                new PieChart.Data("CO", 1),
-                new PieChart.Data("Finish", 0));
-        
-        pieAssurance11.setClockwise(true);
-        pieAssurance11.setLabelLineLength(-5);
-        pieAssurance11.setLabelsVisible(true);
-        pieAssurance11.setMinSize(200, 200);
-        pieAssurance11.setLegendVisible(true);
-        pieAssurance11.setData(pieChartAssurance11);
-        
-        
-        DoubleBinding total = Bindings.createDoubleBinding(() ->
-        pieChartAssurance11.stream().collect(Collectors.summingDouble(PieChart.Data::getPieValue)), pieChartAssurance11);
-        
-        pieChartAssurance11.forEach(data -> 
-        data.nameProperty().bind(Bindings.concat(data.getName()," (",
-        String.format("%.0f%%", 100*data.getPieValue()/total.get()),")")));
-     }
      
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         kon.db();
-        loadPieManfAss();
-        loadPieManfRisk();
-        loadPieTredRisk();
-        loadPieTreddAss();
-        loadPieAdvisory();
+        loadPieAss();
+        labelPieAss();
+        
+        loadPieRisk();
+        labelPieRisk();
+        
+        loadPieOth();
+        labelPieOth();
+        
+        loadPieAdv();
+        labelPieAdv();
+
         loadListProject();
     }    
 
-    @FXML
-    private void showPercentage(MouseEvent event) {
-        final Label caption = new Label("");
-caption.setTextFill(Color.DARKORANGE);
-caption.setStyle("-fx-font: 24 arial;");
+//    private void showPercentage(MouseEvent event) {
+//        final Label caption = new Label("");
+//caption.setTextFill(Color.DARKORANGE);
+//caption.setStyle("-fx-font: 24 arial;");
+//
+////for (final PieChart.Data data : pieAssurance.getData()) {
+////    data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
+////        new EventHandler<MouseEvent>() {
+////            @Override public void handle(MouseEvent e) {
+////                caption.setTranslateX(e.getSceneX());
+////                caption.setTranslateY(e.getSceneY());
+////                caption.setText(String.valueOf(data.getPieValue()) + "%");
+////             }
+////        });
+////    }
+////    }
+//    
 
-for (final PieChart.Data data : pieAssurance.getData()) {
-    data.getNode().addEventHandler(MouseEvent.MOUSE_PRESSED,
-        new EventHandler<MouseEvent>() {
-            @Override public void handle(MouseEvent e) {
-                caption.setTranslateX(e.getSceneX());
-                caption.setTranslateY(e.getSceneY());
-                caption.setText(String.valueOf(data.getPieValue()) + "%");
-             }
-        });
+    public void loadPieAss() {
+        ObservableList<PieChart.Data> pieChartAssurance1=
+                FXCollections.observableArrayList(
+                new PieChart.Data("Not Yet", 3),
+                new PieChart.Data("In Progress", 5),
+                new PieChart.Data("Complete", 7),
+                new PieChart.Data("Finish", 1));
+        
+        labelPieChart.setClockwise(true);
+        labelPieChart.setLabelLineLength(0);
+        labelPieChart.setLabelsVisible(false);
+        labelPieChart.setMinSize(280, 280);
+        labelPieChart.setLegendVisible(true);
+        labelPieChart.setLegendSide(Side.TOP);
+        labelPieChart.setData(pieChartAssurance1);
+
+        
     }
+    
+    public void labelPieAss(){
+        ObservableList<PieChart.Data> pieChartAssurance2=
+                FXCollections.observableArrayList(
+                new PieChart.Data("Not Yet", 3),
+                new PieChart.Data("In Progress", 5),
+                new PieChart.Data("Complete", 7),
+                new PieChart.Data("Finish", 1));
+        
+        pieChart.setClockwise(true);
+        pieChart.setLabelLineLength(5);
+
+        pieChart.setMaxSize(270, 270);
+        pieChart.setLabelsVisible(true);
+
+        pieChart.setLegendVisible(false);
+        pieChart.setData(pieChartAssurance2);
+        
+        DoubleBinding total = Bindings.createDoubleBinding(() ->
+        pieChartAssurance2.stream().collect(Collectors.summingDouble(PieChart.Data::getPieValue)), pieChartAssurance2);
+        
+        pieChartAssurance2.forEach(data -> 
+        data.nameProperty().bind(Bindings.concat(
+        String.format("%.0f%%", 100*data.getPieValue()/total.get()))));
+        // #a9a9a9
+        
+        for (PieChart.Data data : pieChartAssurance2) {
+            int idx = pieChartAssurance2.indexOf(data);
+            data.getNode().setStyle("-fx-pie-color: #ffffff");
+            
+        }
+    }
+    
+    public void loadPieRisk() {
+        ObservableList<PieChart.Data> pieChartAssurance1=
+                FXCollections.observableArrayList(
+                new PieChart.Data("Not Yet", 3),
+                new PieChart.Data("In Progress", 5),
+                new PieChart.Data("Complete", 7),
+                new PieChart.Data("Finish", 1));
+        
+        labelPieChart2.setClockwise(true);
+        labelPieChart2.setLabelLineLength(0);
+        labelPieChart2.setLabelsVisible(false);
+        labelPieChart2.setMinSize(280, 280);
+        labelPieChart2.setLegendVisible(true);
+        labelPieChart2.setLegendSide(Side.TOP);
+        labelPieChart2.setData(pieChartAssurance1);
+
+        
+    }
+    
+    public void labelPieRisk(){
+        ObservableList<PieChart.Data> pieChartAssurance2=
+                FXCollections.observableArrayList(
+                new PieChart.Data("Not Yet", 3),
+                new PieChart.Data("In Progress", 5),
+                new PieChart.Data("Complete", 7),
+                new PieChart.Data("Finish", 1));
+        
+        pieChart2.setClockwise(true);
+        pieChart2.setLabelLineLength(5);
+
+        pieChart2.setMaxSize(270, 270);
+        pieChart2.setLabelsVisible(true);
+
+        pieChart2.setLegendVisible(false);
+        pieChart2.setData(pieChartAssurance2);
+        
+        DoubleBinding total = Bindings.createDoubleBinding(() ->
+        pieChartAssurance2.stream().collect(Collectors.summingDouble(PieChart.Data::getPieValue)), pieChartAssurance2);
+        
+        pieChartAssurance2.forEach(data -> 
+        data.nameProperty().bind(Bindings.concat(
+        String.format("%.0f%%", 100*data.getPieValue()/total.get()))));
+        // #a9a9a9
+        
+        for (PieChart.Data data : pieChartAssurance2) {
+            int idx = pieChartAssurance2.indexOf(data);
+            data.getNode().setStyle("-fx-pie-color: #ffffff");
+            
+        }
+    }
+    
+    public void loadPieOth() {
+        ObservableList<PieChart.Data> pieChartAssurance1=
+                FXCollections.observableArrayList(
+                new PieChart.Data("Not Yet", 3),
+                new PieChart.Data("In Progress", 5),
+                new PieChart.Data("Complete", 7),
+                new PieChart.Data("Finish", 1));
+        
+        labelPieChart1.setClockwise(true);
+        labelPieChart1.setLabelLineLength(0);
+        labelPieChart1.setLabelsVisible(false);
+        labelPieChart1.setMinSize(280, 280);
+        labelPieChart1.setLegendVisible(true);
+        labelPieChart1.setLegendSide(Side.TOP);
+        labelPieChart1.setData(pieChartAssurance1);
+
+        
+    }
+    
+    public void labelPieOth(){
+        ObservableList<PieChart.Data> pieChartAssurance2=
+                FXCollections.observableArrayList(
+                new PieChart.Data("Not Yet", 3),
+                new PieChart.Data("In Progress", 5),
+                new PieChart.Data("Complete", 7),
+                new PieChart.Data("Finish", 1));
+        
+        pieChart1.setClockwise(true);
+        pieChart1.setLabelLineLength(5);
+
+        pieChart1.setMaxSize(240, 240);
+        pieChart1.setLabelsVisible(true);
+
+        pieChart1.setLegendVisible(false);
+        pieChart1.setData(pieChartAssurance2);
+        
+        DoubleBinding total = Bindings.createDoubleBinding(() ->
+        pieChartAssurance2.stream().collect(Collectors.summingDouble(PieChart.Data::getPieValue)), pieChartAssurance2);
+        
+        pieChartAssurance2.forEach(data -> 
+        data.nameProperty().bind(Bindings.concat(
+        String.format("%.0f%%", 100*data.getPieValue()/total.get()))));
+        // #a9a9a9
+        
+        for (PieChart.Data data : pieChartAssurance2) {
+            int idx = pieChartAssurance2.indexOf(data);
+            data.getNode().setStyle("-fx-pie-color: #ffffff");
+            
+        }
+    }
+    
+    public void loadPieAdv() {
+        ObservableList<PieChart.Data> pieChartAssurance1=
+                FXCollections.observableArrayList(
+                new PieChart.Data("Not Yet", 3),
+                new PieChart.Data("In Progress", 5),
+                new PieChart.Data("Complete", 7),
+                new PieChart.Data("Finish", 1));
+        
+        labelPieChart3.setClockwise(true);
+        labelPieChart3.setLabelLineLength(0);
+        labelPieChart3.setLabelsVisible(false);
+        labelPieChart3.setMinSize(280, 280);
+        labelPieChart3.setLegendVisible(true);
+        labelPieChart3.setLegendSide(Side.TOP);
+        labelPieChart3.setData(pieChartAssurance1);
+
+        
+    }
+    
+    public void labelPieAdv(){
+        ObservableList<PieChart.Data> pieChartAssurance2=
+                FXCollections.observableArrayList(
+                new PieChart.Data("Not Yet", 3),
+                new PieChart.Data("In Progress", 5),
+                new PieChart.Data("Complete", 7),
+                new PieChart.Data("Finish", 1));
+        
+        pieChart3.setClockwise(true);
+        pieChart3.setLabelLineLength(5);
+
+        pieChart3.setMaxSize(240, 240);
+        pieChart3.setLabelsVisible(true);
+
+        pieChart3.setLegendVisible(false);
+        pieChart3.setData(pieChartAssurance2);
+        
+        DoubleBinding total = Bindings.createDoubleBinding(() ->
+        pieChartAssurance2.stream().collect(Collectors.summingDouble(PieChart.Data::getPieValue)), pieChartAssurance2);
+        
+        pieChartAssurance2.forEach(data -> 
+        data.nameProperty().bind(Bindings.concat(
+        String.format("%.0f%%", 100*data.getPieValue()/total.get()))));
+        // #a9a9a9
+        
+        for (PieChart.Data data : pieChartAssurance2) {
+            int idx = pieChartAssurance2.indexOf(data);
+            data.getNode().setStyle("-fx-pie-color: #ffffff");
+            
+        }
     }
     
 }

@@ -161,7 +161,7 @@ public class PROJECTdetailController implements Initializable {
                 
                 //label bawah
                 txtStartMonth.setText(textStratMonth);
-                txtTglStart.setText(datestartlbl);
+                //txtTglStart.setText(datestartlbl);
                 txtEndMonth.setText(textEndMonth);
                 txtTglEnd.setText(dateendLbl);
                 
@@ -207,16 +207,16 @@ public class PROJECTdetailController implements Initializable {
         JFreeChart chart = ChartFactory.createGanttChart("", "", "", dataset);
         
         //Style plot
-        chart.getPlot().setBackgroundPaint(new Color(246, 246, 246));
-        chart.getPlot().setBackgroundAlpha(0.9f);
+        chart.getPlot().setBackgroundPaint(new Color(153,153,153));
+        //chart.getPlot().setBackgroundAlpha(1.0f);
         chart.getPlot().setOutlineVisible(false);
-        chart.getPlot().setForegroundAlpha(0.6f);
+        //chart.getPlot().setForegroundAlpha(1.0f);
         chart.getPlot().setNoDataMessage("No Data");
         
         
 
         //style chart
-        chart.setBackgroundPaint(new Color (241,241,241));
+        chart.setBackgroundPaint(new Color (255,255,255));
         //chart.getXYPlot().setWeight(yearEnd);
         
         

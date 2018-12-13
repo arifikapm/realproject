@@ -46,3 +46,17 @@
     -fx-accent: orange; }
 .red-bar    { 
     -fx-accent: red;    }
+
+.chart-pie-label-line {
+    -fx-stroke: #ffffff;
+    -fx-fill: #ffff;
+}
+
+.chart-pie-label { /*this is what you need for labels*/
+    -fx-fill: #ffffff;
+    -fx-font-size: 1em;
+} 
+.chart-legend {
+   -fx-background-color:  #fafad2;
+   -fx-stroke: #daa520;
+}
