@@ -88,8 +88,25 @@ round((SUM(TOTAL_WEEKDAYS(pro.act_month_end, pro.act_month_start))/ COUNT(pro.ac
 from project as pro
 INNER JOIN master_activity AS MAC ON pro.master_activity_idactivity = MAC.idactivity
 GROUP BY MAC.idactivity
-/*====================================
 
+
+
+
+
+/*++++++++++++****************&&&&&&&&&&&&&
+
+# FUNCTION PENTING UNTUK 
+    MYSQL YANG DIGUNAKAN MEMBEDAKAN WEEKDAYS
+
+****************&&&&&&++++++++++++**********
+
+CREATE FUNCTION TOTAL_WEEKDAYS(date1 DATE, date2 DATE)
+RETURNS INT
+RETURN ABS(DATEDIFF(date2, date1)) + 1
+     - ABS(DATEDIFF(ADDDATE(date2, INTERVAL 1 - DAYOFWEEK(date2) DAY),
+                    ADDDATE(date1, INTERVAL 1 - DAYOFWEEK(date1) DAY))) / 7 * 2
+     - (DAYOFWEEK(IF(date1 < date2, date1, date2)) = 1)
+     - (DAYOFWEEK(IF(date1 > date2, date1, date2)) = 7);
 
 */
 
