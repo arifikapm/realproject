@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane cacheShape="false" centerShape="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" scaleShape="false" style="-fx-background-color: #E7E7E7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DASHBOARDController">
+<BorderPane cacheShape="false" centerShape="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1330.0" prefWidth="1300.0" scaleShape="false" style="-fx-background-color: #E7E7E7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DASHBOARDController">
    <center>
       <ScrollPane cacheShape="false" centerShape="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" scaleShape="false" stylesheets="@mylistview.css" BorderPane.alignment="CENTER">
          <content>
@@ -41,7 +41,7 @@
                   <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="5.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="395.0" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="5.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <padding>
@@ -345,8 +345,8 @@
                               </Label>
                            </children>
                         </HBox>
-                        <JFXListView cacheShape="false" centerShape="false" focusTraversable="false" scaleShape="false" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                        <JFXListView cacheShape="false" centerShape="false" focusTraversable="false" scaleShape="false" style="-fx-background-color: #F2F2F2;" stylesheets="@mylistview.css" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                        <JFXListView fx:id="listOverdue" cacheShape="false" centerShape="false" focusTraversable="false" scaleShape="false" style="-fx-background-color: #F2F2F2;" stylesheets="@mylistview.css" verticalGap="120.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <JFXListView fx:id="listAverage" cacheShape="false" centerShape="false" focusTraversable="false" scaleShape="false" style="-fx-background-color: #F2F2F2;" stylesheets="@mylistview.css" verticalGap="120.0" GridPane.columnIndex="6" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                   <BarChart fx:id="barProfileRisk" GridPane.columnIndex="6" GridPane.rowIndex="6">

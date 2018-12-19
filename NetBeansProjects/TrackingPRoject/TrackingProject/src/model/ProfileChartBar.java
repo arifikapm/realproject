@@ -12,14 +12,14 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author kuupie
  */
-public class ChartBarProfile {
+public class ProfileChartBar {
     
     private final SimpleStringProperty ValueId;
     private final SimpleStringProperty ValueCol;
     private final SimpleStringProperty ValueName;
     private final SimpleIntegerProperty ValueCount;
     
-    public ChartBarProfile(String valueId, String valueCol, String valueName, int valueCount ){
+    public ProfileChartBar(String valueId, String valueCol, String valueName, int valueCount ){
         this.ValueId = new SimpleStringProperty(valueId);
         this.ValueCol = new SimpleStringProperty(valueCol);
         this.ValueName = new SimpleStringProperty(valueName);

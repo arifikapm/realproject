@@ -12,13 +12,13 @@ import javafx.beans.property.SimpleStringProperty;
  *
  * @author kuupie
  */
-public class ChartPieProfile {
+public class ProfileChartPie {
     
     private final SimpleStringProperty activityCol;
     private final SimpleStringProperty statusCol;
     private final SimpleIntegerProperty projectProfile;
     
-    public ChartPieProfile(String Activitycol,String Statuscol,int Projectprofile){
+    public ProfileChartPie(String Activitycol,String Statuscol,int Projectprofile){
         this.activityCol = new SimpleStringProperty(Activitycol);
         this.statusCol = new SimpleStringProperty(Statuscol);
         this.projectProfile = new SimpleIntegerProperty(Projectprofile);

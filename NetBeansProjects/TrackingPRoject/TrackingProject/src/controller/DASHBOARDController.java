@@ -30,14 +30,17 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import model.ChartBarProfile;
-import model.ChartBarProfileDao;
-import model.ChartPieProfile;
-import model.ChartPieProfileDao;
+import model.ProfileChartBar;
+import model.ProfileChartBarDao;
+import model.ProfileChartPie;
+import model.ProfileChartPieDao;
 import model.Count;
 import model.CountDao;
 import model.ListCountProject;
 import model.ListCountProjectDao;
+import model.ProfileAverageDao;
+import model.ProfileOverdue;
+import model.ProfileOverdueDao;
 
 /**
  * FXML Controller class
@@ -85,6 +88,10 @@ public class DASHBOARDController implements Initializable {
     @FXML
     private JFXListView<ListCountProject> listCountProject;
     @FXML
+    private JFXListView<ProfileOverdue> listOverdue;
+    @FXML
+    private JFXListView<ProfileOverdue> listAverage;
+    @FXML
     private Label valueCountProject;
     
     
@@ -92,16 +99,21 @@ public class DASHBOARDController implements Initializable {
     koneksi kon = new koneksi();
     ListCountProjectDao dao =new ListCountProjectDao();
     CountDao daoCount = new CountDao();
-    ChartPieProfileDao daoChartProfile = new ChartPieProfileDao();
-    ChartBarProfileDao barProfileDao = new ChartBarProfileDao();
+    ProfileChartPieDao daoChartProfile = new ProfileChartPieDao();
+    ProfileChartBarDao barProfileDao = new ProfileChartBarDao();
+    ProfileOverdueDao daoProfileOverdue = new ProfileOverdueDao();
+    ProfileAverageDao daoProfileAverage = new ProfileAverageDao();
     
-    private ObservableList<ChartBarProfile> datachartBarProfiles;
+    private ObservableList<ProfileChartBar> datachartBarProfiles;
     private ObservableList<ListCountProject> dataCountProject;
+    private ObservableList<ProfileOverdue> dataProfileOverdue;
+    private ObservableList<ProfileOverdue> dataProfileAverage;
     private ObservableList<Count> dataCount;
     private ObservableList<PieChart.Data> AssuranceData;
     private ObservableList<PieChart.Data> RiskAssesment;
     private ObservableList<PieChart.Data> Advisory;
     private ObservableList<PieChart.Data> Others;
+
 
 
     private void loadBarProfileRisk(){
@@ -322,6 +334,38 @@ public class DASHBOARDController implements Initializable {
         }
     }
     
+    private void loadListOverdueProject(){
+        try {
+                dataProfileOverdue=FXCollections.observableArrayList();
+                kon.res=kon.stat.executeQuery(daoProfileOverdue.queryLoadOverdue);
+
+                while (kon.res.next()) {                
+                    dataProfileOverdue.add(new ProfileOverdue(kon.res.getString(1), kon.res.getDouble(2), 
+                            kon.res.getDouble(3)));
+            }
+                listOverdue.setItems(dataProfileOverdue);
+                listOverdue.setCellFactory(list -> new ProfileOverdueDao());
+
+        } catch (Exception e) {
+        }
+    }
+        
+    private void loadListAverageProject(){
+        try {
+                dataProfileOverdue=FXCollections.observableArrayList();
+                kon.res=kon.stat.executeQuery(daoProfileAverage.queryLoadOverdue);
+
+                while (kon.res.next()) {                
+                    dataProfileOverdue.add(new ProfileOverdue(kon.res.getString(1), kon.res.getDouble(2), 
+                            kon.res.getDouble(3)));
+            }
+                listAverage.setItems(dataProfileOverdue);
+                listAverage.setCellFactory(list -> new ProfileAverageDao());
+
+        } catch (Exception e) {
+        }
+    }
+    
 
     /**
      * Initializes the controller class.
@@ -334,6 +378,8 @@ public class DASHBOARDController implements Initializable {
         kon.db();
         loadListCountProject();
         loadAllCountProject();
+        loadListOverdueProject();
+        loadListAverageProject();
         
         loadPieAss();
         labelPieAss();

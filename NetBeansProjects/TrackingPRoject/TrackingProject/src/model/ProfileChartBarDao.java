@@ -9,7 +9,7 @@ package model;
  *
  * @author kuupie
  */
-public class ChartBarProfileDao {
+public class ProfileChartBarDao {
 //    " where mac.idactivity = 1 \n" +
 //            "and mas.idstatus = 4\n" +
 //            "group by mas.idstatus, gac.idgroup_civitas";

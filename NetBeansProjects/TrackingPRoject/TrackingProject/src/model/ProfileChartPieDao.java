@@ -9,7 +9,7 @@ package model;
  *
  * @author kuupie
  */
-public class ChartPieProfileDao {
+public class ProfileChartPieDao {
     
     public String Select;
     public String Queryload="SELECT mac.activitycol,mas.statuscol,COUNT(pro.idproject) as projectprofile\n" +
