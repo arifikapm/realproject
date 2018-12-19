@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="rootLoad" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ROOTController">
+   <left>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="38.0" style="-fx-background-color: #000000;" styleClass="sidebar" stylesheets="@stylesheet.css" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" onMouseClicked="#loadHome" prefHeight="40.0" prefWidth="82.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <ImageView fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/ARMAProjecttracking.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ImageView>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" onMouseClicked="#loadAllTask" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <FontAwesomeIconView fill="#e4e1e1" glyphName="CALENDAR" size="23" />
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox fx:id="btnProject" alignment="CENTER" onMouseClicked="#loadProjectView" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <FontAwesomeIconView fill="#e4e1e1" glyphName="TASKS" size="23" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" onMouseClicked="#loadNewProject" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <FontAwesomeIconView fill="#e4e1e1" glyphName="NEWSPAPER_ALT" size="23" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" onMouseClicked="#loadMasterView" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <FontAwesomeIconView fill="#e4e1e1" glyphName="EDIT" size="23" />
+               </children>
+            </VBox>
+            <VBox fx:id="btnSetting" alignment="CENTER" onMouseClicked="#loadSetting" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <FontAwesomeIconView fill="#e4e1e1" glyphName="GEAR" size="23" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <FontAwesomeIconView fill="#e4e1e1" glyphName="SIGN_OUT" size="23" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #E7E7E7;" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
