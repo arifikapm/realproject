@@ -50,12 +50,30 @@ public class ProjectDao extends ListCell<Project>{
 
     private FXMLLoader mLLoader;
     
-    public String queryListProject="SELECT pr.idproject, pr.projectcol, monthname(pr.startmonth), "
-            + "monthname(pr.endmonth), ci.civitascol, ms.inisialprogres, ma.activitycol, pr.project_percentage, "
-            + "pr.create_date, pr.mod_date FROM project as pr, master_civitas as ci, master_activity as ma, "
-            + "master_status as ms WHERE pr.civitas_idcivitas= ci.idcivitas and pr.status_idstatus=ms.idstatus "
-            + "and pr.master_activity_idactivity=ma.idactivity "
-            + "ORDER BY pr.idproject";
+    public String SelectNeeded; 
+    
+    public String queryListProject="SELECT PRO.idproject, COUNT(PMK.master_task_idtask) AS LINE, MIC.civitascol,MAC.activitycol,RFA.risk_valuecol, AUG.audit_gradingcol, MAS.statuscol, MAS.INISIAL_STATUS, PRO.startmonth, PRO.endmonth,PRO.act_month_start,PRO.act_month_end,\n" +
+        "(COUNT(act_dateend)/ COUNT(PMK.master_task_idtask)) as PERCENTAGE,\n" +
+        "DATE_FORMAT(PRO.startmonth, '%b') as starMonth,\n" +
+        "DATE_FORMAT(PRO.endmonth, '%b') as endMonth,\n" +
+        "day(PRO.startmonth) as dateStart,month(PRO.startmonth)as monthStart, YEAR(PRO.startmonth) as yearStart, day(PRO.endmonth) as dateEnd, month(PRO.endmonth)as monthEnd, YEAR(PRO.endmonth) as yearEnd, day(PRO.act_month_start) as dateActStart, month(PRO.act_month_start) as monthActStart, year(PRO.act_month_start) as yearActStart, day(PRO.act_month_end) as dateActEnd, month(PRO.act_month_end) as monthActEnd, year(PRO.act_month_end) as yearActEnd \n" +
+        "FROM project AS PRO\n" +
+        "INNER JOIN project_has_master_task AS PMK ON PMK.project_idproject=PRO.idproject\n" +
+        "LEFT JOIN master_civitas AS MIC ON PRO.civitas_idcivitas=MIC.idcivitas\n" +
+        "LEFT JOIN master_activity AS MAC ON PRO.master_activity_idactivity=MAC.idactivity\n" +
+        "LEFT JOIN risk_factore AS RFA ON PRO.risk_factore_idrisk_factore=RFA.idrisk_value\n" +
+        "LEFT JOIN audit_grading as AUG ON PRO.audit_grading_idaudit_grading=AUG.idaudit_grading\n" +
+        "LEFT JOIN master_status AS MAS ON PRO.status_idstatus=MAS.idstatus\n" +
+        "\n" ;
+    public String where; 
+    public String groupBy; 
+    public String orderBy; 
+    
+    public void queryLoadAllListProject(){
+        groupBy=" GROUP BY PMK.project_idproject";
+        orderBy=" ORDER BY pr.idproject";
+        SelectNeeded = queryListProject+groupBy+orderBy;
+    }
     
     @Override
     protected void updateItem(Project project, boolean empty) {

@@ -48,7 +48,7 @@ public class PROJECTController implements Initializable {
     private void loadListProject(){
         try {
             data=FXCollections.observableArrayList();
-            kon.res=kon.stat.executeQuery(dao.queryListProject);
+            kon.res=kon.stat.executeQuery(dao.SelectNeeded);
             
             while (kon.res.next()) {                
                 data.add(new Project(kon.res.getString(1), kon.res.getString(2), kon.res.getString(3), 
@@ -63,6 +63,7 @@ public class PROJECTController implements Initializable {
             rootViewList.getStyleClass().add("mylistview");
         } catch (Exception e) {
         }
+        System.out.println(dao.SelectNeeded);
     }
 
     /**
