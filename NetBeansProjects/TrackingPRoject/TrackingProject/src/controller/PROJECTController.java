@@ -47,6 +47,7 @@ public class PROJECTController implements Initializable {
     
     private void loadListProject(){
         try {
+            
             data=FXCollections.observableArrayList();
             kon.res=kon.stat.executeQuery(dao.SelectNeeded);
             

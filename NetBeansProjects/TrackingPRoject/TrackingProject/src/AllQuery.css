@@ -58,14 +58,14 @@ WHERE mac.idactivity = 2
 group by mac.idactivity,mas.idstatus
 
 >>>>>>> LOAD ACTIVITY COUNT PROJCT PROFILE
-SELECT gac.group_civitascol, mas.statuscol,COUNT(pro.idproject) as projectprofile
-from project as pro
-INNER join master_activity as mac on pro.master_activity_idactivity = mac.idactivity
+SELECT mas.idstatus as valueId,mas.statuscol as valueCol,gac.group_civitascol as valueName,COUNT(pro.idproject) as valueCount
+from project as pro INNER join master_activity as mac on pro.master_activity_idactivity = mac.idactivity
 INNER join master_status as mas on pro.status_idstatus = mas.idstatus
 INNER join master_civitas as mci on pro.civitas_idcivitas = mci.idcivitas
 INNER join group_civitas as gac on mci.group_civitas_idgroup_civitas = gac.idgroup_civitas
-where mac.idactivity = 1  
-group by gac.idgroup_civitas, mas.idstatus
+where mac.idactivity = 1 
+and mas.idstatus = 4
+group by mas.idstatus, gac.idgroup_civitas
 
 >>>>>>>> LOAD ACTIVITY PROJECT GRADING AND RISK FACTOR COUNT PERCENTAGE
 SELECT mac.civitascol, DATE_FORMAT(pro.startmonth, '%b') as startMonth, DATE_FORMAT(pro.endmonth, '%b') AS endMonth, 
@@ -80,9 +80,14 @@ LEFT join project_has_master_task as pmt on pro.idproject = pmt.project_idprojec
 where mst.idstatus = 4
 GROUP by mac.idcivitas, rfa.idrisk_value, agr.idaudit_grading
 
-
-*/
-
+>>>>>>>> LOAD OVERDUE PROJECT
+SELECT MAC.activitycol, sum(DATEDIFF(pro.act_month_end, pro.endmonth)) AS DATEIFF, 
+(SUM(TOTAL_WEEKDAYS(pro.act_month_end, pro.endmonth))) AS TOTAL,
+round((SUM(TOTAL_WEEKDAYS(pro.act_month_end, pro.endmonth))/ COUNT(pro.act_month_end)),2) as overdue,
+round((SUM(TOTAL_WEEKDAYS(pro.act_month_end, pro.act_month_start))/ COUNT(pro.act_month_end)),2) as averageProject
+from project as pro
+INNER JOIN master_activity AS MAC ON pro.master_activity_idactivity = MAC.idactivity
+GROUP BY MAC.idactivity
 /*====================================
 
 

@@ -2,11 +2,11 @@
 
 <?import com.jfoenix.controls.JFXListView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -50,40 +50,56 @@
                <children>
                   <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <children>
-                        <PieChart fx:id="labelPieChart" />
+                        <PieChart fx:id="legendAss" cacheShape="false" centerShape="false" labelsVisible="false" legendSide="TOP" scaleShape="false" />
+                        <PieChart fx:id="labelPieChart">
+                           <StackPane.margin>
+                              <Insets top="50.0" />
+                           </StackPane.margin></PieChart>
                         <PieChart fx:id="pieChart" styleClass="chart-pie-label" stylesheets="@stylesheet.css">
                            <StackPane.margin>
-                              <Insets top="49.0" />
+                              <Insets top="50.0" />
                            </StackPane.margin>
                         </PieChart>
                      </children>
                   </StackPane>
                   <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="2" GridPane.rowIndex="6">
                      <children>
-                        <PieChart fx:id="labelPieChart1" />
+                        <PieChart fx:id="legendOthers" cacheShape="false" centerShape="false" labelsVisible="false" legendSide="TOP" scaleShape="false" />
+                        <PieChart fx:id="labelPieChart1">
+                           <StackPane.margin>
+                              <Insets top="50.0" />
+                           </StackPane.margin></PieChart>
                         <PieChart fx:id="pieChart1" styleClass="chart-pie-label" stylesheets="@stylesheet.css">
                            <StackPane.margin>
-                              <Insets top="49.0" />
+                              <Insets top="50.0" />
                            </StackPane.margin>
                         </PieChart>
                      </children>
                   </StackPane>
                   <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="4" GridPane.rowIndex="2">
                      <children>
-                        <PieChart fx:id="labelPieChart2" />
+                        <PieChart fx:id="legendRisk" cacheShape="false" centerShape="false" labelsVisible="false" legendSide="TOP" scaleShape="false" />
+                        <PieChart fx:id="labelPieChart2">
+                           <StackPane.margin>
+                              <Insets top="50.0" />
+                           </StackPane.margin></PieChart>
                         <PieChart fx:id="pieChart2" styleClass="chart-pie-label" stylesheets="@stylesheet.css">
                            <StackPane.margin>
-                              <Insets top="49.0" />
+                              <Insets top="50.0" />
                            </StackPane.margin>
                         </PieChart>
                      </children>
                   </StackPane>
                   <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: #F2F2F2;" GridPane.columnIndex="4" GridPane.rowIndex="6">
                      <children>
-                        <PieChart fx:id="labelPieChart3" />
+                        <PieChart fx:id="legendAdv" cacheShape="false" centerShape="false" labelsVisible="false" legendSide="TOP" scaleShape="false" />
+                        <PieChart fx:id="labelPieChart3" labelsVisible="false" legendVisible="false">
+                           <StackPane.margin>
+                              <Insets top="50.0" />
+                           </StackPane.margin></PieChart>
                         <PieChart fx:id="pieChart3" styleClass="chart-pie-label" stylesheets="@stylesheet.css">
                            <StackPane.margin>
-                              <Insets top="49.0" />
+                              <Insets top="50.0" />
                            </StackPane.margin>
                         </PieChart>
                      </children>
@@ -179,7 +195,7 @@
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.rowIndex="4">
                      <children>
                         <HBox maxWidth="5.0" minWidth="5.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #A02DB3;" />
-                        <Label text="Outstanding Project" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
+                        <Label text="Carry Project" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
                            <font>
                               <Font name="Ubuntu Bold" size="14.0" />
                            </font>
@@ -216,22 +232,6 @@
                         </Label>
                      </children>
                   </HBox>
-                  <StackedBarChart fx:id="stackedAssurance" GridPane.columnIndex="6" GridPane.rowIndex="2">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </StackedBarChart>
-                  <StackedBarChart fx:id="stackedRisk" prefHeight="336.0" prefWidth="516.0" GridPane.columnIndex="6" GridPane.rowIndex="6">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </StackedBarChart>
                   <GridPane GridPane.columnSpan="7" GridPane.rowIndex="8">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="641.0" minWidth="10.0" prefWidth="638.0" />
@@ -349,6 +349,22 @@
                         <JFXListView cacheShape="false" centerShape="false" focusTraversable="false" scaleShape="false" style="-fx-background-color: #F2F2F2;" stylesheets="@mylistview.css" GridPane.columnIndex="6" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
+                  <BarChart fx:id="barProfileRisk" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+                  <BarChart fx:id="barProfileAssurance" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </BarChart>
                </children>
             </GridPane>
          </content>

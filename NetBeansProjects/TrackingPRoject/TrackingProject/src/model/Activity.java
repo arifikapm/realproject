@@ -17,8 +17,8 @@ import javafx.beans.property.StringProperty;
 public class Activity {
     
     private final IntegerProperty IdAcitivity;
-    private final StringProperty Acitivitycol;
-    private final StringProperty Inisialjenis;
+    private final SimpleStringProperty Acitivitycol;
+    private final SimpleStringProperty Inisialjenis;
     
     public Activity(int idactivity, String activitycol, String inisial_jenis){
         this.IdAcitivity = new SimpleIntegerProperty(idactivity);
