@@ -243,7 +243,6 @@ public class NEWPROJECTController implements Initializable {
     public void setKaryawan() throws SQLException{
  
         kon.res=kon.stat.executeQuery(modelKaryawan.selectActive);
-        System.out.println(modelKaryawan.selectActive);
         dataKaryawan =FXCollections.observableArrayList();
         while (kon.res.next()) {                
                dataKaryawan.add(new Karyawan(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3),

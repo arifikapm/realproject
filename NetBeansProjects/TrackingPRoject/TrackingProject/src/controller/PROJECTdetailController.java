@@ -27,6 +27,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import model.ProfileProjectRoot;
+import model.ProfileProjectRootDao;
 import model.ProjectDetail;
 import model.ProjectDetailDao;
 import model.Scope;
@@ -56,7 +58,7 @@ import org.jfree.data.gantt.TaskSeriesCollection;
 public class PROJECTdetailController implements Initializable {
     
     
-    private String idPro, textCivitas, textActivity, textStratMonth, textEndMonth, datestartlbl, dateendLbl;
+    private String idPro, textCivitas, textActivity, textStratMonth, textEndMonth, datestartlbl, dateendLbl,textCountDown;
     public String idPorject, taskPlann;
     int dateStart, dateEnd, yearStart, monthStart, monthEnd, yearEnd;
     int dateActStart, dateActEnd, monthActStart, monthActEnd,yearActStart,yearActEnd;
@@ -79,35 +81,15 @@ public class PROJECTdetailController implements Initializable {
     @FXML
     private Label txtTglEnd;
     @FXML
-    private Label txtCount;
-    @FXML
-    private ProgressBar barOu;
-    @FXML
-    private ProgressBar barField;
-    @FXML
-    private ProgressBar barIara;
-    @FXML
-    private ProgressBar barFinalization;
-    @FXML
-    private Label txtPcrPreliminary;
-    @FXML
-    private Label txtPcrOu;
-    @FXML
-    private Label txtPcrIARA;
-    @FXML
-    private Label txtPcrField;
-    @FXML
-    private Label txtPcrFinalization;
-    @FXML
-    private ProgressBar barPreliminary;
-    @FXML
-    private Label lblProjectCivitas111;
+    private Label txtCountDown;
     @FXML
     private Label lblActivity;
     @FXML
     private Label lblProjectCivitas;
     @FXML
     private ScrollPane paneView;
+    @FXML
+    private JFXListView<ProfileProjectRoot> listProjectProfile;
     
     //Koneki
     koneksi kon = new koneksi();
@@ -115,12 +97,15 @@ public class PROJECTdetailController implements Initializable {
     ScopeDao modelScope = new ScopeDao();
     TeamDao modelTeam = new TeamDao();
     TaskFormDao modelTask = new TaskFormDao();
+    ProfileProjectRootDao modelProfileProjectRoot = new ProfileProjectRootDao();
     
    
     private ObservableList<ProjectDetail> data;
     private ObservableList<Scope>dataScope;
     private ObservableList<Team>dataTeam;
     private ObservableList<TaskForm>dataTaskForm;
+    private ObservableList<ProfileProjectRoot>dataProfileProject;
+
     
 
     
@@ -132,6 +117,7 @@ public class PROJECTdetailController implements Initializable {
         
         setScope(idProject);
         setTeamMember(idProject);
+        setProfileProjectRoot(idProject);
         //getCategoryDataset(idProject);
         loadDataTask();
         
@@ -143,13 +129,14 @@ public class PROJECTdetailController implements Initializable {
         
         while (kon.res.next()) {                
                 data.add(new ProjectDetail(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3),
-                kon.res.getString(4),kon.res.getString(5),kon.res.getString(6),kon.res.getString(7)));
+                kon.res.getString(4),kon.res.getString(5),kon.res.getString(6),kon.res.getString(7),kon.res.getString(8)));
                 textCivitas = kon.res.getString(2);
                 textActivity = kon.res.getString(3);
                 textStratMonth = kon.res.getString(4);
                 datestartlbl = kon.res.getString(5);
                 textEndMonth = kon.res.getString(6);
                 dateendLbl = kon.res.getString(7);
+                textCountDown = kon.res.getString(8);
                 
             }
                 
@@ -161,9 +148,10 @@ public class PROJECTdetailController implements Initializable {
                 
                 //label bawah
                 txtStartMonth.setText(textStratMonth);
-                //txtTglStart.setText(datestartlbl);
+                txtTglStart.setText(datestartlbl);
                 txtEndMonth.setText(textEndMonth);
                 txtTglEnd.setText(dateendLbl);
+                txtCountDown.setText(textCountDown);
                 
     }
     
@@ -183,10 +171,30 @@ public class PROJECTdetailController implements Initializable {
         dataTeam =FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(modelTeam.queryteam);
         while (kon.res.next()) {                
-                dataTeam.add(new Team(kon.res.getString(1),kon.res.getString(2)));
+                dataTeam.add(new Team(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3)));
             }
             listTeam.setItems(dataTeam);
             listTeam.setCellFactory(teamListView -> new TeamDao());
+    }
+    
+    public void setProfileProjectRoot(String idProject) throws SQLException{
+//        try {
+            modelProfileProjectRoot.loadProfileRoot(idProject);
+            dataProfileProject=FXCollections.observableArrayList();
+            kon.res=kon.stat.executeQuery(modelProfileProjectRoot.loadProfile);
+            ///
+
+            ////
+            while (kon.res.next()) {                
+                dataProfileProject.add(new ProfileProjectRoot(kon.res.getString(1), kon.res.getDouble(2)));
+            }
+            listProjectProfile.setItems(dataProfileProject);
+            listProjectProfile.setCellFactory(profileListView -> new ProfileProjectRootDao());
+                
+//        } catch (Exception e) {
+//        }
+        
+        
     }
     
     private static Date date(final int day, final int month, final int year) {

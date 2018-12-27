@@ -17,7 +17,7 @@
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="217.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="92.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="50.0" prefWidth="80.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
@@ -95,7 +95,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="121.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                <children>
-                  <ProgressBar fx:id="barProgress" cacheShape="false" maxHeight="12.0" maxWidth="1.7976931348623157E308" minHeight="12.0" opacity="0.57" prefHeight="12.0" prefWidth="151.0" progress="0.54">
+                  <ProgressBar fx:id="barProgress" cacheShape="false" maxHeight="12.0" maxWidth="1.7976931348623157E308" minHeight="12.0" opacity="0.57" prefHeight="12.0" prefWidth="141.0" progress="0.54">
                      <effect>
                         <Glow />
                      </effect>

@@ -29,7 +29,8 @@ public class TeamDao extends ListCell<Team> {
     private FXMLLoader mLLoader;
     
     public String queryteam;
-    public String select="SELECT mk.karyawancol as teammember, res.responsibilitycol as asa "
+    public String select="SELECT mk.karyawancol as teammember, res.responsibilitycol as asa, "
+            + "res.inisial_responsibility as inAs "
             + "FROM project as pr LEFT JOIN project_has_master_karyawan as pmk on pr.idproject=pmk.project_idproject "
             + "LEFT join master_karyawan as mk on pmk.master_karyawan_idkaryawan=mk.idkaryawan "
             + "LEFT JOIN responsibility as res on pmk.responsibility_idresponsibility=res.idresponsibility ";
@@ -59,7 +60,7 @@ public class TeamDao extends ListCell<Team> {
             }
 
             titleTeam.setText(team.getTeamMember());
-            titleAs.setText(team.getAsA());
+            titleAs.setText(team.getInAsa());
             
             
         }

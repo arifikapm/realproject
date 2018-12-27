@@ -38,7 +38,7 @@ public class PROJECTController implements Initializable {
     private static final String GREEN_BAR  = "green-bar";
     
     koneksi kon = new koneksi();
-    ProjectDao dao =new ProjectDao();
+    ProjectDao modelProject =new ProjectDao();
     PROJECTdetailController detail = new PROJECTdetailController();
     
     private ObservableList<Project> data;
@@ -47,15 +47,21 @@ public class PROJECTController implements Initializable {
     
     private void loadListProject(){
         try {
-            
+//            String load = "1";
+//            modelProject.queryLoadAllListProject(load);
             data=FXCollections.observableArrayList();
-            kon.res=kon.stat.executeQuery(dao.SelectNeeded);
-            
+            kon.res=kon.stat.executeQuery(modelProject.queryListProject);
             while (kon.res.next()) {                
-                data.add(new Project(kon.res.getString(1), kon.res.getString(2), kon.res.getString(3), 
-                        kon.res.getString(4), kon.res.getString(5), kon.res.getString(6), 
-                        kon.res.getString(7), kon.res.getString(8)));
+                data.add(new Project
+                        (kon.res.getString(1), kon.res.getInt(2), kon.res.getString(3), kon.res.getString(4), 
+                        kon.res.getString(5), kon.res.getString(6), kon.res.getString(7), kon.res.getString(8), 
+                        kon.res.getString(9), kon.res.getString(10),kon.res.getString(11), kon.res.getString(12), 
+                        kon.res.getDouble(13),kon.res.getString(14), kon.res.getString(15), kon.res.getInt(16), 
+                        kon.res.getInt(17), kon.res.getInt(18), kon.res.getInt(19), kon.res.getInt(20), kon.res.getInt(21),
+                        kon.res.getInt(22), kon.res.getInt(23), kon.res.getInt(24), kon.res.getInt(25), kon.res.getInt(26),
+                        kon.res.getInt(27), kon.res.getString(28), kon.res.getString(29), kon.res.getString(30)));
             }
+            
             rootViewList.setItems(data);
             rootViewList.setCellFactory(projectListView -> new ProjectDao());
             rootViewList.setVerticalGap(30.0);
@@ -63,8 +69,9 @@ public class PROJECTController implements Initializable {
             rootViewList.depthProperty().set(1);
             rootViewList.getStyleClass().add("mylistview");
         } catch (Exception e) {
+
         }
-        System.out.println(dao.SelectNeeded);
+        
     }
 
     /**
@@ -81,7 +88,7 @@ public class PROJECTController implements Initializable {
 
     @FXML
     private void loadDetailProject(MouseEvent event) throws IOException, SQLException {
-        idPro = rootViewList.getSelectionModel().getSelectedItem().getIdActivity();
+        idPro = rootViewList.getSelectionModel().getSelectedItem().getIdProject();
 //        civitas = rootViewList.getSelectionModel().getSelectedItem().getCivitasCol();
 //        startMonth = rootViewList.getSelectionModel().getSelectedItem().getStartmonth();
 //        endMonth = rootViewList.getSelectionModel().getSelectedItem().getEndmonth();

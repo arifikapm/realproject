@@ -97,7 +97,6 @@ public class ROOTController implements Initializable {
         BorderPane newScene = loader.load();
         DASHBOARDController mct = loader.getController();
         rootLoad.setCenter(newScene);
-        System.out.println("print dashboard");
         rootLoad.maxHeight(0);
     }
     
@@ -106,7 +105,6 @@ public class ROOTController implements Initializable {
         BorderPane newScene = loader.load();
         DashboardViewController mct = loader.getController();
         rootLoad.setCenter(newScene);
-        System.out.println("print dashboard");
     }
 
     @FXML

@@ -360,7 +360,7 @@
                   </VBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.rowIndex="2">
                      <children>
-                        <Label fx:id="txtTglStart1" text="09" textFill="#bfbdbd">
+                        <Label fx:id="txtTglStart" text="09" textFill="#bfbdbd">
                            <font>
                               <Font name="Cousine" size="36.0" />
                            </font>
@@ -378,7 +378,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="4" GridPane.rowIndex="2">
                      <children>
-                        <Label fx:id="txtCount" text="60" textFill="#bfbdbd">
+                        <Label fx:id="txtCountDown" text="60" textFill="#bfbdbd">
                            <font>
                               <Font name="Cousine" size="36.0" />
                            </font>

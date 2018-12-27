@@ -8,9 +8,12 @@ package controller;
 import com.jfoenix.controls.JFXListView;
 import db.koneksi;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
@@ -30,6 +33,9 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.ProfileChartBar;
 import model.ProfileChartBarDao;
 import model.ProfileChartPie;
@@ -39,8 +45,12 @@ import model.CountDao;
 import model.ListCountProject;
 import model.ListCountProjectDao;
 import model.ProfileAverageDao;
+import model.ProfileLine;
+import model.ProfileLineDao;
 import model.ProfileOverdue;
 import model.ProfileOverdueDao;
+import model.Project;
+import model.ProjectDao;
 
 /**
  * FXML Controller class
@@ -84,13 +94,29 @@ public class DASHBOARDController implements Initializable {
     @FXML
     private BarChart<String, Number> barProfileAssurance;
     @FXML
-    private LineChart<?, ?> lineChart;
+    private LineChart<String, Number> lineChart;
     @FXML
     private JFXListView<ListCountProject> listCountProject;
     @FXML
     private JFXListView<ProfileOverdue> listOverdue;
     @FXML
     private JFXListView<ProfileOverdue> listAverage;
+    @FXML
+    private TableView<Project> listProject;
+    @FXML
+    private TableColumn<Project, String> colBisnisUnit;
+    @FXML
+    private TableColumn<Project, String> colCategory;
+    @FXML
+    private TableColumn<Project, String> colStart;
+    @FXML
+    private TableColumn<Project, String> colFinisih;
+    @FXML
+    private TableColumn<Project, Double> colProgress;
+    @FXML
+    private TableColumn<Project, String> colRFactor;
+    @FXML
+    private TableColumn<Project, String> colIndex;
     @FXML
     private Label valueCountProject;
     
@@ -99,20 +125,60 @@ public class DASHBOARDController implements Initializable {
     koneksi kon = new koneksi();
     ListCountProjectDao dao =new ListCountProjectDao();
     CountDao daoCount = new CountDao();
+    ProjectDao daoProject = new ProjectDao();
     ProfileChartPieDao daoChartProfile = new ProfileChartPieDao();
     ProfileChartBarDao barProfileDao = new ProfileChartBarDao();
     ProfileOverdueDao daoProfileOverdue = new ProfileOverdueDao();
     ProfileAverageDao daoProfileAverage = new ProfileAverageDao();
+    ProfileLineDao daoProfileLine = new ProfileLineDao();
     
     private ObservableList<ProfileChartBar> datachartBarProfiles;
     private ObservableList<ListCountProject> dataCountProject;
+    private ObservableList<ProfileLine> dataProfileLine;
     private ObservableList<ProfileOverdue> dataProfileOverdue;
     private ObservableList<ProfileOverdue> dataProfileAverage;
     private ObservableList<Count> dataCount;
+    private ObservableList<Project> dataProject;
     private ObservableList<PieChart.Data> AssuranceData;
     private ObservableList<PieChart.Data> RiskAssesment;
     private ObservableList<PieChart.Data> Advisory;
     private ObservableList<PieChart.Data> Others;
+
+    
+    private void loadListProject() throws SQLException{
+        try {
+//            String load = "1";
+//            modelProject.queryLoadAllListProject(load);
+            double percent = 0;
+            dataProject=FXCollections.observableArrayList();
+            kon.res=kon.stat.executeQuery(daoProject.queryListProject);
+            
+            while (kon.res.next()) {                
+                dataProject.add(new Project
+                        (kon.res.getString(1), kon.res.getInt(2), kon.res.getString(3), kon.res.getString(4), 
+                        kon.res.getString(5), kon.res.getString(6), kon.res.getString(7), kon.res.getString(8), 
+                        kon.res.getString(9), kon.res.getString(10),kon.res.getString(11), kon.res.getString(12), 
+                        kon.res.getDouble(13),kon.res.getString(14), kon.res.getString(15), kon.res.getInt(16), 
+                        kon.res.getInt(17), kon.res.getInt(18), kon.res.getInt(19), kon.res.getInt(20), kon.res.getInt(21),
+                        kon.res.getInt(22), kon.res.getInt(23), kon.res.getInt(24), kon.res.getInt(25), kon.res.getInt(26),
+                        kon.res.getInt(27),kon.res.getString(28),kon.res.getString(29),kon.res.getString(30)));
+                
+                colBisnisUnit.setCellValueFactory(new PropertyValueFactory<>("CivitasCol"));
+                colCategory.setCellValueFactory(new PropertyValueFactory<>("InisialActivity"));
+                colStart.setCellValueFactory(new PropertyValueFactory<>("NameStartMonth"));
+                colFinisih.setCellValueFactory(new PropertyValueFactory<>("NameEndMonth"));
+                percent = kon.res.getDouble(13) * 100 ;
+                colProgress.setCellValueFactory(new PropertyValueFactory<>("ShowPercent"));
+                colRFactor.setCellValueFactory(new PropertyValueFactory<>("ValueRisk"));
+                colIndex.setCellValueFactory(new PropertyValueFactory<>("IndexAudit"));
+                listProject.setItems(null);
+                listProject.setItems(dataProject);
+
+            }
+        }catch (Exception e) {
+        }
+    }
+
 
 
 
@@ -121,7 +187,7 @@ public class DASHBOARDController implements Initializable {
         try {
             XYChart.Series<String, Number> series = new XYChart.Series<>();
             kon.res=kon.stat.executeQuery(barProfileDao.testLoad);
-            System.out.println(barProfileDao.testLoad);
+
             while (kon.res.next()) {
                 
                 series.getData().add(new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4)));
@@ -342,11 +408,13 @@ public class DASHBOARDController implements Initializable {
                 while (kon.res.next()) {                
                     dataProfileOverdue.add(new ProfileOverdue(kon.res.getString(1), kon.res.getDouble(2), 
                             kon.res.getDouble(3)));
+                    
             }
                 listOverdue.setItems(dataProfileOverdue);
                 listOverdue.setCellFactory(list -> new ProfileOverdueDao());
 
         } catch (Exception e) {
+            
         }
     }
         
@@ -366,6 +434,57 @@ public class DASHBOARDController implements Initializable {
         }
     }
     
+    private void loadProfileLine(){
+      XYChart.Series series1 = new XYChart.Series<>();  
+      series1.setName("Plan"); 
+      try {
+            kon.res=kon.stat.executeQuery(daoProfileLine.selectPlanLine);
+            
+            while (kon.res.next()) {
+                
+                series1.getData().add(new XYChart.Data<>(kon.res.getString(1),kon.res.getInt(2)));
+                //series1.setName(kon.res.getString(2)); 
+                
+            }
+            
+        } catch (Exception e) {
+            System.out.println("plan error ===! "+e);
+        }
+      
+      XYChart.Series series2 = new XYChart.Series<>();  
+      series2.setName("In Progres"); 
+      try {
+            kon.res=kon.stat.executeQuery(daoProfileLine.selectInprogress);
+            
+            while (kon.res.next()) {
+                
+                series2.getData().add(new XYChart.Data<>(kon.res.getString(1),kon.res.getInt(2)));
+                //series1.setName(kon.res.getString(2)); 
+                
+            }
+            
+        } catch (Exception e) {
+            System.out.println("plan error ===! "+e);
+        }
+      
+      XYChart.Series series3 = new XYChart.Series<>();  
+      series3.setName("Complete"); 
+      try {
+            kon.res=kon.stat.executeQuery(daoProfileLine.selectCompleteLine);
+            
+            while (kon.res.next()) {
+                
+                series3.getData().add(new XYChart.Data<>(kon.res.getString(1),kon.res.getInt(2)));
+                //series1.setName(kon.res.getString(2)); 
+                
+            }
+            
+        } catch (Exception e) {
+            System.out.println("plan error ===! "+e);
+        }
+      lineChart.getData().addAll(series1,series2,series3);
+      lineChart.setLegendVisible(true);
+    }
 
     /**
      * Initializes the controller class.
@@ -401,12 +520,18 @@ public class DASHBOARDController implements Initializable {
         
         loadProfileRisk();
         loadProfileAssurance();
+        loadProfileLine();
+        try {
+            loadListProject();
 //
 //        loadListCountProject();
-//        
-       
+//
+
 //        
 //        loadProfileQuarter();
+        } catch (SQLException ex) {
+            Logger.getLogger(DASHBOARDController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
     
     public void legendPieAss() {

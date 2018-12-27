@@ -18,7 +18,7 @@ GROUP by mt.roottask_idroottask
 */
 
 /*====================================
-QUERY PROJECT
+QUERY PROJECT 1 NO CHANGE FOR 0000-00-00
 ======================================
 SELECT PRO.idproject, COUNT(PMK.master_task_idtask) AS LINE, MIC.civitascol,MAC.activitycol,RFA.risk_valuecol, AUG.audit_gradingcol, MAS.statuscol, MAS.INISIAL_STATUS, PRO.startmonth, PRO.endmonth,PRO.act_month_start,PRO.act_month_end,
 (COUNT(act_dateend)/ COUNT(PMK.master_task_idtask)) as PERCENTAGE,
@@ -33,6 +33,77 @@ LEFT JOIN risk_factore AS RFA ON PRO.risk_factore_idrisk_factore=RFA.idrisk_valu
 LEFT JOIN audit_grading as AUG ON PRO.audit_grading_idaudit_grading=AUG.idaudit_grading
 LEFT JOIN master_status AS MAS ON PRO.status_idstatus=MAS.idstatus
 WHERE PRO.idproject=1
+GROUP BY PMK.project_idproject
+
+======================================
+QUERY PROJECT 1 CHANGE FOR 0000-00-00
+======================================
+
+SELECT PRO.idproject, 
+COUNT(PMK.master_task_idtask) AS line, MIC.civitascol,MAC.activitycol,
+RFA.risk_valuecol as valuerisk, AUG.audit_gradingcol, MAS.statuscol, MAS.INISIAL_STATUS, 
+(CASE WHEN PRO.startmonth = '0000-00-00' THEN NULL
+	ELSE 
+    PRO.startmonth 
+    END 
+    ) as fullStartMonth, 
+(CASE WHEN PRO.endmonth = '0000-00-00' THEN NULL
+ 	ELSE
+ 	PRO.endmonth
+ END
+ 	)as fullEndMonth,
+(CASE WHEN PRO.act_month_start = '0000-00-00' THEN NULL
+	ELSE
+	PRO.act_month_start
+END) AS act_month_start ,
+(CASE WHEN PRO.act_month_end = '0000-00-00' THEN NULL
+	ELSE
+	PRO.act_month_end
+END) AS act_month_end,
+(COUNT(act_dateend)/ COUNT(PMK.master_task_idtask)) as percentage,DATE_FORMAT(PRO.startmonth, '%b') as namestarMonth,DATE_FORMAT(PRO.endmonth, '%b') as nameendMonth,day(PRO.startmonth) as dateStart,month(PRO.startmonth)as monthStart, YEAR(PRO.startmonth) as yearStart, day(PRO.endmonth) as dateEnd, month(PRO.endmonth)as monthEnd, YEAR(PRO.endmonth) as yearEnd, day(PRO.act_month_start) as dateActStart, month(PRO.act_month_start) as monthActStart, year(PRO.act_month_start) as yearActStart, day(PRO.act_month_end) as dateActEnd, month(PRO.act_month_end) as monthActEnd, year(PRO.act_month_end) as yearActEnd FROM project AS PRO INNER JOIN project_has_master_task AS PMK ON PMK.project_idproject=PRO.idproject
+LEFT JOIN master_civitas AS MIC ON PRO.civitas_idcivitas=MIC.idcivitas
+LEFT JOIN master_activity AS MAC ON PRO.master_activity_idactivity=MAC.idactivity
+LEFT JOIN risk_factore AS RFA ON PRO.risk_factore_idrisk_factore=RFA.idrisk_value
+LEFT JOIN audit_grading as AUG ON PRO.audit_grading_idaudit_grading=AUG.idaudit_grading
+LEFT JOIN master_status AS MAS ON PRO.status_idstatus=MAS.idstatus
+GROUP BY PMK.project_idproject
+
+
+>>>>>>>>> Second choice TO SHOW UP PERCENTAGE COLOR AUDIT INDEX INISIAL ACTIVITY
+
+SELECT PRO.idproject, 
+COUNT(PMK.master_task_idtask) AS line, MIC.civitascol,MAC.activitycol,
+RFA.risk_valuecol as valuerisk, AUG.audit_gradingcol, MAS.statuscol, MAS.INISIAL_STATUS, 
+(CASE WHEN PRO.startmonth = '0000-00-00' THEN NULL
+	ELSE 
+    PRO.startmonth 
+    END 
+    ) as fullStartMonth, 
+(CASE WHEN PRO.endmonth = '0000-00-00' THEN NULL
+ 	ELSE
+ 	PRO.endmonth
+ END
+ 	)as fullEndMonth,
+(CASE WHEN PRO.act_month_start = '0000-00-00' THEN NULL
+	ELSE
+	PRO.act_month_start
+END) AS act_month_start ,
+(CASE WHEN PRO.act_month_end = '0000-00-00' THEN NULL
+	ELSE
+	PRO.act_month_end
+END) AS act_month_end,
+(COUNT(act_dateend)/ COUNT(PMK.master_task_idtask)) as percentage,DATE_FORMAT(PRO.startmonth, '%b') as namestarMonth,
+DATE_FORMAT(PRO.endmonth, '%b') as nameendMonth,day(PRO.startmonth) as dateStart,month(PRO.startmonth)as monthStart, 
+YEAR(PRO.startmonth) as yearStart, day(PRO.endmonth) as dateEnd, month(PRO.endmonth)as monthEnd, YEAR(PRO.endmonth) as yearEnd, 
+day(PRO.act_month_start) as dateActStart, month(PRO.act_month_start) as monthActStart, year(PRO.act_month_start) as yearActStart, 
+day(PRO.act_month_end) as dateActEnd, month(PRO.act_month_end) as monthActEnd, year(PRO.act_month_end) as yearActEnd, MAC.inisial_jenis as inisialActivity,
+concat(round((COUNT(act_dateend)/ COUNT(PMK.master_task_idtask))*100),"%") as showPercent,AUG.color_index AS indexAudit
+FROM project AS PRO INNER JOIN project_has_master_task AS PMK ON PMK.project_idproject=PRO.idproject
+LEFT JOIN master_civitas AS MIC ON PRO.civitas_idcivitas=MIC.idcivitas
+LEFT JOIN master_activity AS MAC ON PRO.master_activity_idactivity=MAC.idactivity
+LEFT JOIN risk_factore AS RFA ON PRO.risk_factore_idrisk_factore=RFA.idrisk_value
+LEFT JOIN audit_grading as AUG ON PRO.audit_grading_idaudit_grading=AUG.idaudit_grading
+LEFT JOIN master_status AS MAS ON PRO.status_idstatus=MAS.idstatus
 GROUP BY PMK.project_idproject
 
 
@@ -89,6 +160,14 @@ from project as pro
 INNER JOIN master_activity AS MAC ON pro.master_activity_idactivity = MAC.idactivity
 GROUP BY MAC.idactivity
 
+>>>>>>>> LOAD LINE PROFILE
+SELECT quarter,countPlan,
+(@sum:=@sum + countPlan) as accumPlanEnd
+from
+(SELECT idproject, quarter(endmonth) as quarter, COUNT(endmonth) as countPlan from project group by quarter HAVING countPlan >1 ) as counttable,
+(SELECT @sum:=0) as total
+group by quarter
+
 
 
 
@@ -98,7 +177,7 @@ GROUP BY MAC.idactivity
 # FUNCTION PENTING UNTUK 
     MYSQL YANG DIGUNAKAN MEMBEDAKAN WEEKDAYS
 
-****************&&&&&&++++++++++++**********
+****************&&&&&&++++++++++++*********
 
 CREATE FUNCTION TOTAL_WEEKDAYS(date1 DATE, date2 DATE)
 RETURNS INT

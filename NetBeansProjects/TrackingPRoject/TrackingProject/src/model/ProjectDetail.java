@@ -22,11 +22,12 @@ public class ProjectDetail {
     private final StringProperty dayproject;
     private final StringProperty endproject;
     private final StringProperty dayendproject;
+    private StringProperty CountDown;
     //private final StringProperty percentage;
     
    
     public ProjectDetail(String idproject, String civitascol, String activitycol, String startproject, String dayproject, String endproject ,
-            String dayendproject){
+            String dayendproject,String countDown){
         this.idproject = new SimpleStringProperty(idproject);
         this.civitascol = new SimpleStringProperty(civitascol);
         this.activitycol = new SimpleStringProperty(activitycol);
@@ -34,6 +35,7 @@ public class ProjectDetail {
         this.dayproject = new SimpleStringProperty(dayproject);
         this.endproject = new SimpleStringProperty(endproject);
         this.dayendproject = new SimpleStringProperty(dayendproject);
+        this.CountDown = new SimpleStringProperty(countDown);
         //this.percentage = new SimpleStringProperty(percentage);
         
     }
@@ -64,6 +66,14 @@ public class ProjectDetail {
 
     public String getDayendproject() {
         return dayendproject.get();
+    }
+
+    public String getCountDown() {
+        return CountDown.get();
+    }
+
+    public void setCountDown(String value) {
+        this.CountDown.setValue(value);
     }
 
     public void setIdactivity(String value) {

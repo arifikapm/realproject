@@ -102,7 +102,6 @@ public class TIMEtableController implements Initializable {
                 
                 if(dateActStart!=0 ){
                     if(dateActEnd==0){
-                        System.out.println("dateActStart " +dateActStart);
                     } else {
                         s2.add(new Task(taskPlann, Date.from(LocalDate.of(yearActStart, monthActStart, dateActStart).atStartOfDay().toInstant(ZoneOffset.UTC)),
                         Date.from(LocalDate.of(yearActEnd, monthActEnd, dateActEnd).atStartOfDay().toInstant(ZoneOffset.UTC))));

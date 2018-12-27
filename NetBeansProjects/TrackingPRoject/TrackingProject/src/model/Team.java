@@ -16,10 +16,12 @@ public class Team {
     
     private final StringProperty teamMember;
     private final StringProperty asA;
+    private final StringProperty InAsa;
     
-    public Team(String teammember, String asa){
+    public Team(String teammember, String asa, String inAsa){
         this.teamMember=new SimpleStringProperty(teammember);
         this.asA=new SimpleStringProperty(asa);
+        this.InAsa=new SimpleStringProperty(inAsa);
     }
 
     public String getTeamMember() {
@@ -29,6 +31,10 @@ public class Team {
     public String getAsA() {
         return asA.get();
     }
+    
+    public String getInAsa() {
+        return InAsa.get();
+    }
 
     public void setTeamMember(String value) {
         teamMember.setValue(value);
@@ -36,6 +42,10 @@ public class Team {
 
     public void setAsA(String value) {
         asA.setValue(value);
+    }
+    
+    public void setInAsa(String value) {
+        InAsa.setValue(value);
     }
     
 }

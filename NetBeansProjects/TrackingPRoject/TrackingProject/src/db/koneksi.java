@@ -54,8 +54,9 @@ public class koneksi {
             else{
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                con=DriverManager.getConnection("jdbc:mysql://"+server+":"+port+"/"+database,username,password);
+                con=DriverManager.getConnection("jdbc:mysql://"+server+":"+port+"/"+database+"?zeroDateTimeBehavior=convertToNull",username,password);
                 stat=con.createStatement();
+                System.out.println("jdbc:mysql://"+server+":"+port+"/"+database+"?zeroDateTimeBehavior=convertToNull"+username+password);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Sukses");
                 alert.setHeaderText(null);
@@ -68,6 +69,7 @@ public class koneksi {
                 alert.setContentText(String.valueOf(e.getMessage()));
                 alert.showAndWait();
             }
+                
             }
     }
     public void simpanKoneksi(String server, String port, String database, String username, String password){
@@ -92,8 +94,9 @@ public class koneksi {
 
                 try {
                     Class.forName("com.mysql.jdbc.Driver");
-                    con=DriverManager.getConnection("jdbc:mysql://"+server+":"+port+"/"+database,username,password);
+                    con=DriverManager.getConnection("jdbc:mysql://"+server+":"+port+"/"+database+"?zeroDateTimeBehavior=convertToNull",username,password);
                     stat=con.createStatement();
+                    System.out.println(""+con);
                     properties.store(new FileOutputStream("setting.properties"), "Setting Koneksi MySQL");
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Sukses");
@@ -107,6 +110,7 @@ public class koneksi {
                     alert.setContentText(String.valueOf(ex));
                     alert.showAndWait();
                 }
+                
                 
             } catch (Throwable e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
