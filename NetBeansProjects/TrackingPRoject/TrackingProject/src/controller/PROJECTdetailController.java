@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXListView;
 import db.koneksi;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -22,11 +23,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.ProfileProjectRoot;
 import model.ProfileProjectRootDao;
 import model.ProjectDetail;
@@ -315,5 +325,30 @@ public class PROJECTdetailController implements Initializable {
         }
         
     }    
+
+    @FXML
+    private void loadTaskProject(MouseEvent event) throws IOException {
+         // New window (Stage)
+            final Stage primaryStage = null;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NEWPROJECT_1.fxml"));
+            BorderPane newScene = loader.load();
+            NEWPROJECTController mct = loader.getController();
+            Scene scene = new Scene(newScene);
+           
+            //new Scene load new windows
+            Stage newWindow = new Stage();
+            newWindow.setScene(scene);
+ 
+            // Specifies the modality for new window.
+            newWindow.initModality(Modality.WINDOW_MODAL);
+ 
+            // Specifies the owner Window (parent) for new window
+            newWindow.initOwner(primaryStage);
+ 
+            // Set position of second window, related to primary window.
+            
+ 
+            newWindow.show();
+    }
     
 }

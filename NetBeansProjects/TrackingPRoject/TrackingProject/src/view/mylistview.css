@@ -113,3 +113,73 @@ Scroll Style
     -fx-background-insets: 0, 0, 0;
     -fx-background-radius: 0.1em;
 }
+
+
+.table-view {
+    -fx-base:  #F2F2F2;
+    -fx-control-inner-background: #F2F2F2;
+    -fx-background-color: #F2F2F2;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+.table-view:hover{
+    -fx-background-color :  #F1F1F1;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 20;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: #9E9E9E;
+    -fx-border-color: 
+        transparent
+        transparent
+        derive(-fx-base, 80%) 
+        transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 8pt;
+    -fx-font-family: "Ubuntu";
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center;
+    -fx-opacity: 1;
+}
+
+.table-view:focused .table-row-cell:filled:focused:selected {
+    -fx-background-color: -fx-focus-color;
+}
+
+/* Default row background is black */
+
+
+/* Text in the rows will be white */
+.table-row-cell .text {
+       -fx-fill: #9E9E9E ;
+       -fx-font-size:10pt;
+}
+
+/*
+Pseudo class 'up' will change the row background
+ color to green when activated 
+ */
+.table-row-cell:up 
+{
+    -fx-background-color: #007054; 
+}
+
+/*
+Pseudo class 'down' will change the row background 
+color to red when activated
+*/
+.table-row-cell:down {
+    -fx-background-color: #A30029;
+}
+
+/*689 801 002 113 533*/

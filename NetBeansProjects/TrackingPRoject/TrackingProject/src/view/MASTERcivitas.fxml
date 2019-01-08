@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #f1f1f1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MASTERcivitasController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #e7e7e7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MASTERcivitasController">
    <top>
       <GridPane prefHeight="65.0" prefWidth="580.0" BorderPane.alignment="TOP_RIGHT">
         <columnConstraints>
@@ -35,7 +35,7 @@
                <children>
                   <Label text="Civitas" textFill="#a8a8a8">
                      <font>
-                        <Font size="12.0" />
+                        <Font name="Ubuntu" size="12.0" />
                      </font></Label>
                   <VBox prefHeight="3.0" style="-fx-background-color: #60E4D8;">
                      <VBox.margin>
@@ -55,23 +55,6 @@
             <VBox opacity="0.21" prefHeight="1.0" style="-fx-background-color: #5D5D5D;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <VBox opacity="0.21" prefHeight="1.0" style="-fx-background-color: #5D5D5D;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <VBox opacity="0.21" prefHeight="1.0" style="-fx-background-color: #5D5D5D;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <VBox alignment="CENTER" prefHeight="40.0" prefWidth="100.0" GridPane.columnIndex="1">
-               <children>
-                  <Label text="Jenis" textFill="#a8a8a8">
-                     <font>
-                        <Font size="12.0" />
-                     </font>
-                  </Label>
-                  <VBox prefHeight="3.0" style="-fx-background-color: #60E4D8;">
-                     <VBox.margin>
-                        <Insets top="14.0" />
-                     </VBox.margin>
-                  </VBox>
-               </children>
-               <GridPane.margin>
-                  <Insets left="5.0" right="5.0" />
-               </GridPane.margin>
-            </VBox>
             <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3">
                <children>
                   <FontAwesomeIconView fill="#d0d3d3" glyphName="COGS" size="22" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE">

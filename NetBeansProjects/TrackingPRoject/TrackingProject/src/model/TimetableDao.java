@@ -14,9 +14,20 @@ import db.koneksi;
 public class TimetableDao {
     koneksi kon = new koneksi();
     
+    public String loadData;
     public String queryloadString = "SELECT idproject, projectcol as task, day(startmonth) as dateStart, "
             + "month(startmonth)as monthStart, YEAR(startmonth) as yearStart, day(endmonth) as dateEnd, "
             + "month(endmonth)as monthEnd, YEAR(endmonth) as yearEnd, day(act_month_start) as dateActStart, "
-            + "month(act_month_start) as monthActStart, year(act_month_start) as yearActStart, day(act_month_end) as dateActEnd, "
+            + "month(act_month_start) as monthActStart, year(act_month_start) as yearActStart, "
+            + "day(act_month_end) as dateActEnd, "
             + "month(act_month_end) as monthActEnd, year(act_month_end) as yearActEnd from project";
+    public String where;
+    public String groupBy;
+    public String like;
+    
+            
+    public void loadActivityTimeTable(int idAcitivity){
+        where = " where master_activity_idactivity = " +idAcitivity+ " ";
+        loadData = queryloadString+where;
+    }
 }

@@ -86,7 +86,7 @@ public class ROOTController implements Initializable {
 
     @FXML
     private void loadNewProject(MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NEWPROJECT.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NEWPROJECT_1.fxml"));
         BorderPane newScene = loader.load();
         NEWPROJECTController mct = loader.getController();
         rootLoad.setCenter(newScene);

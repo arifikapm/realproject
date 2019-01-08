@@ -54,9 +54,11 @@ public class koneksi {
             else{
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                con=DriverManager.getConnection("jdbc:mysql://"+server+":"+port+"/"+database+"?zeroDateTimeBehavior=convertToNull",username,password);
+                //con=DriverManager.getConnection("jdbc:mysql://"+server+":"+port+"/"+database+"?zeroDateTimeBehavior=convertToNull",username,password);
+                con=DriverManager.getConnection("jdbc:mysql://"+server+":"+port+"/"+database,username,password);
                 stat=con.createStatement();
                 System.out.println("jdbc:mysql://"+server+":"+port+"/"+database+"?zeroDateTimeBehavior=convertToNull"+username+password);
+                System.out.println("jdbc:mysql://"+server+":"+port+"/"+database+username+password);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Sukses");
                 alert.setHeaderText(null);
@@ -68,6 +70,9 @@ public class koneksi {
                 alert.setHeaderText(null);
                 alert.setContentText(String.valueOf(e.getMessage()));
                 alert.showAndWait();
+                System.out.println(String.valueOf(e.getMessage()));
+                System.out.println("jdbc:mysql://"+server+":"+port+"/"+database+"?zeroDateTimeBehavior=convertToNull"+username+password);
+                System.out.println("jdbc:mysql://"+server+":"+port+"/"+database+username+password);
             }
                 
             }

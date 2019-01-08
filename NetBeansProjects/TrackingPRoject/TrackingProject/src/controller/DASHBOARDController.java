@@ -36,6 +36,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import model.ProfileChartBar;
 import model.ProfileChartBarDao;
 import model.ProfileChartPie;
@@ -59,7 +61,7 @@ import model.ProjectDao;
  */
 public class DASHBOARDController implements Initializable {
   
-    private String textProject, testStringValue;;
+    public String textProject, testStringValue;
 
 //    @FXML
 //    private BorderPane viewProject;
@@ -122,15 +124,16 @@ public class DASHBOARDController implements Initializable {
     
     
     
+    
     koneksi kon = new koneksi();
-    ListCountProjectDao dao =new ListCountProjectDao();
-    CountDao daoCount = new CountDao();
-    ProjectDao daoProject = new ProjectDao();
-    ProfileChartPieDao daoChartProfile = new ProfileChartPieDao();
+    ListCountProjectDao model =new ListCountProjectDao();
+    CountDao modelCount = new CountDao();
+    ProjectDao modelProject = new ProjectDao();
+    ProfileChartPieDao modelChartProfile = new ProfileChartPieDao();
     ProfileChartBarDao barProfileDao = new ProfileChartBarDao();
-    ProfileOverdueDao daoProfileOverdue = new ProfileOverdueDao();
-    ProfileAverageDao daoProfileAverage = new ProfileAverageDao();
-    ProfileLineDao daoProfileLine = new ProfileLineDao();
+    ProfileOverdueDao modelProfileOverdue = new ProfileOverdueDao();
+    ProfileAverageDao modelProfileAverage = new ProfileAverageDao();
+    ProfileLineDao modelProfileLine = new ProfileLineDao();
     
     private ObservableList<ProfileChartBar> datachartBarProfiles;
     private ObservableList<ListCountProject> dataCountProject;
@@ -144,40 +147,41 @@ public class DASHBOARDController implements Initializable {
     private ObservableList<PieChart.Data> Advisory;
     private ObservableList<PieChart.Data> Others;
 
-    
-    private void loadListProject() throws SQLException{
-        try {
-//            String load = "1";
-//            modelProject.queryLoadAllListProject(load);
-            double percent = 0;
-            dataProject=FXCollections.observableArrayList();
-            kon.res=kon.stat.executeQuery(daoProject.queryListProject);
-            
-            while (kon.res.next()) {                
-                dataProject.add(new Project
-                        (kon.res.getString(1), kon.res.getInt(2), kon.res.getString(3), kon.res.getString(4), 
-                        kon.res.getString(5), kon.res.getString(6), kon.res.getString(7), kon.res.getString(8), 
-                        kon.res.getString(9), kon.res.getString(10),kon.res.getString(11), kon.res.getString(12), 
-                        kon.res.getDouble(13),kon.res.getString(14), kon.res.getString(15), kon.res.getInt(16), 
-                        kon.res.getInt(17), kon.res.getInt(18), kon.res.getInt(19), kon.res.getInt(20), kon.res.getInt(21),
-                        kon.res.getInt(22), kon.res.getInt(23), kon.res.getInt(24), kon.res.getInt(25), kon.res.getInt(26),
-                        kon.res.getInt(27),kon.res.getString(28),kon.res.getString(29),kon.res.getString(30)));
-                
-                colBisnisUnit.setCellValueFactory(new PropertyValueFactory<>("CivitasCol"));
-                colCategory.setCellValueFactory(new PropertyValueFactory<>("InisialActivity"));
-                colStart.setCellValueFactory(new PropertyValueFactory<>("NameStartMonth"));
-                colFinisih.setCellValueFactory(new PropertyValueFactory<>("NameEndMonth"));
-                percent = kon.res.getDouble(13) * 100 ;
-                colProgress.setCellValueFactory(new PropertyValueFactory<>("ShowPercent"));
-                colRFactor.setCellValueFactory(new PropertyValueFactory<>("ValueRisk"));
-                colIndex.setCellValueFactory(new PropertyValueFactory<>("IndexAudit"));
-                listProject.setItems(null);
-                listProject.setItems(dataProject);
 
-            }
-        }catch (Exception e) {
-        }
-    }
+    
+//    private void loadListProject() throws SQLException{
+//        try {
+////            String load = "1";
+////            modelProject.queryLoadAllListProject(load);
+//            double percent = 0;
+//            dataProject=FXCollections.observableArrayList();
+//            kon.res=kon.stat.executeQuery(modelProject.queryListProject);
+//            
+//            while (kon.res.next()) {                
+//                dataProject.add(new Project
+//                        (kon.res.getString(1), kon.res.getInt(2), kon.res.getString(3), kon.res.getString(4), 
+//                        kon.res.getString(5), kon.res.getString(6), kon.res.getString(7), kon.res.getString(8), 
+//                        kon.res.getString(9), kon.res.getString(10),kon.res.getString(11), kon.res.getString(12), 
+//                        kon.res.getDouble(13),kon.res.getString(14), kon.res.getString(15), kon.res.getInt(16), 
+//                        kon.res.getInt(17), kon.res.getInt(18), kon.res.getInt(19), kon.res.getInt(20), kon.res.getInt(21),
+//                        kon.res.getInt(22), kon.res.getInt(23), kon.res.getInt(24), kon.res.getInt(25), kon.res.getInt(26),
+//                        kon.res.getInt(27),kon.res.getString(28),kon.res.getString(29),kon.res.getString(30)));
+//                
+//                colBisnisUnit.setCellValueFactory(new PropertyValueFactory<>("CivitasCol"));
+//                colCategory.setCellValueFactory(new PropertyValueFactory<>("InisialActivity"));
+//                colStart.setCellValueFactory(new PropertyValueFactory<>("NameStartMonth"));
+//                colFinisih.setCellValueFactory(new PropertyValueFactory<>("NameEndMonth"));
+//                percent = kon.res.getDouble(13) * 100 ;
+//                colProgress.setCellValueFactory(new PropertyValueFactory<>("ShowPercent"));
+//                colRFactor.setCellValueFactory(new PropertyValueFactory<>("ValueRisk"));
+//                colIndex.setCellValueFactory(new PropertyValueFactory<>("IndexAudit"));
+//                listProject.setItems(null);
+//                listProject.setItems(dataProject);
+//
+//            }
+//        }catch (Exception e) {
+//        }
+//    }
 
 
 
@@ -373,7 +377,7 @@ public class DASHBOARDController implements Initializable {
     private void loadListCountProject(){
         try {
                 dataCountProject=FXCollections.observableArrayList();
-                kon.res=kon.stat.executeQuery(dao.queryLoadCountProject);
+                kon.res=kon.stat.executeQuery(model.queryLoadCountProject);
 
                 while (kon.res.next()) {                
                     dataCountProject.add(new ListCountProject(kon.res.getString(1),kon.res.getString(2)));
@@ -388,7 +392,7 @@ public class DASHBOARDController implements Initializable {
     private void loadAllCountProject(){
         try {
             dataCount=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoCount.selectCount);
+            kon.res = kon.stat.executeQuery(modelCount.selectCount);
             
             while (kon.res.next()) {                
                 dataCount.add(new Count(kon.res.getString(1)));
@@ -403,7 +407,7 @@ public class DASHBOARDController implements Initializable {
     private void loadListOverdueProject(){
         try {
                 dataProfileOverdue=FXCollections.observableArrayList();
-                kon.res=kon.stat.executeQuery(daoProfileOverdue.queryLoadOverdue);
+                kon.res=kon.stat.executeQuery(modelProfileOverdue.queryLoadOverdue);
 
                 while (kon.res.next()) {                
                     dataProfileOverdue.add(new ProfileOverdue(kon.res.getString(1), kon.res.getDouble(2), 
@@ -421,7 +425,7 @@ public class DASHBOARDController implements Initializable {
     private void loadListAverageProject(){
         try {
                 dataProfileOverdue=FXCollections.observableArrayList();
-                kon.res=kon.stat.executeQuery(daoProfileAverage.queryLoadOverdue);
+                kon.res=kon.stat.executeQuery(modelProfileAverage.queryLoadOverdue);
 
                 while (kon.res.next()) {                
                     dataProfileOverdue.add(new ProfileOverdue(kon.res.getString(1), kon.res.getDouble(2), 
@@ -438,7 +442,7 @@ public class DASHBOARDController implements Initializable {
       XYChart.Series series1 = new XYChart.Series<>();  
       series1.setName("Plan"); 
       try {
-            kon.res=kon.stat.executeQuery(daoProfileLine.selectPlanLine);
+            kon.res=kon.stat.executeQuery(modelProfileLine.selectPlanLine);
             
             while (kon.res.next()) {
                 
@@ -454,7 +458,7 @@ public class DASHBOARDController implements Initializable {
       XYChart.Series series2 = new XYChart.Series<>();  
       series2.setName("In Progres"); 
       try {
-            kon.res=kon.stat.executeQuery(daoProfileLine.selectInprogress);
+            kon.res=kon.stat.executeQuery(modelProfileLine.selectInprogress);
             
             while (kon.res.next()) {
                 
@@ -470,7 +474,7 @@ public class DASHBOARDController implements Initializable {
       XYChart.Series series3 = new XYChart.Series<>();  
       series3.setName("Complete"); 
       try {
-            kon.res=kon.stat.executeQuery(daoProfileLine.selectCompleteLine);
+            kon.res=kon.stat.executeQuery(modelProfileLine.selectCompleteLine);
             
             while (kon.res.next()) {
                 
@@ -522,7 +526,8 @@ public class DASHBOARDController implements Initializable {
         loadProfileAssurance();
         loadProfileLine();
         try {
-            loadListProject();
+            int idStatusLoad = 4;
+            loadListProject(idStatusLoad);
 //
 //        loadListCountProject();
 //
@@ -538,9 +543,9 @@ public class DASHBOARDController implements Initializable {
 
         try {
             String set_idacticvity = "1";
-            daoChartProfile.returnLoadProfile(set_idacticvity);
+            modelChartProfile.returnLoadProfile(set_idacticvity);
             AssuranceData=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoChartProfile.Select);
+            kon.res = kon.stat.executeQuery(modelChartProfile.Select);
             
             while (kon.res.next()) {                
                 AssuranceData.add(new PieChart.Data(kon.res.getString(2),kon.res.getInt(3)));
@@ -565,9 +570,9 @@ public class DASHBOARDController implements Initializable {
 
         try {
             String set_idacticvity = "1";
-            daoChartProfile.returnLoadProfile(set_idacticvity);
+            modelChartProfile.returnLoadProfile(set_idacticvity);
             AssuranceData=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoChartProfile.Select);
+            kon.res = kon.stat.executeQuery(modelChartProfile.Select);
             
             while (kon.res.next()) {                
                 AssuranceData.add(new PieChart.Data(kon.res.getString(2),kon.res.getInt(3)));
@@ -590,9 +595,9 @@ public class DASHBOARDController implements Initializable {
 
         try {
             String set_idacticvity = "1";
-            daoChartProfile.returnLoadProfile(set_idacticvity);
+            modelChartProfile.returnLoadProfile(set_idacticvity);
             AssuranceData=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoChartProfile.Select);
+            kon.res = kon.stat.executeQuery(modelChartProfile.Select);
             
             while (kon.res.next()) {                
                 AssuranceData.add(new PieChart.Data(kon.res.getString(2),kon.res.getInt(3)));
@@ -630,9 +635,9 @@ public class DASHBOARDController implements Initializable {
 
         try {
             String set_idacticvity = "2";
-            daoChartProfile.returnLoadProfile(set_idacticvity);
+            modelChartProfile.returnLoadProfile(set_idacticvity);
             RiskAssesment=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoChartProfile.Select);
+            kon.res = kon.stat.executeQuery(modelChartProfile.Select);
             
             while (kon.res.next()) {                
                 RiskAssesment.add(new PieChart.Data(kon.res.getString(2),kon.res.getInt(3)));
@@ -656,9 +661,9 @@ public class DASHBOARDController implements Initializable {
     public void loadPieRisk() {
         try {
             String set_idacticvity = "2";
-            daoChartProfile.returnLoadProfile(set_idacticvity);
+            modelChartProfile.returnLoadProfile(set_idacticvity);
             RiskAssesment=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoChartProfile.Select);
+            kon.res = kon.stat.executeQuery(modelChartProfile.Select);
             
             while (kon.res.next()) {                
                 RiskAssesment.add(new PieChart.Data(kon.res.getString(2),kon.res.getInt(3)));
@@ -683,9 +688,9 @@ public class DASHBOARDController implements Initializable {
     public void labelPieRisk(){
         try {
             String set_idacticvity = "2";
-            daoChartProfile.returnLoadProfile(set_idacticvity);
+            modelChartProfile.returnLoadProfile(set_idacticvity);
             RiskAssesment=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoChartProfile.Select);
+            kon.res = kon.stat.executeQuery(modelChartProfile.Select);
             
             while (kon.res.next()) {                
                 RiskAssesment.add(new PieChart.Data(kon.res.getString(2),kon.res.getInt(3)));
@@ -722,9 +727,9 @@ public class DASHBOARDController implements Initializable {
 
         try {
             String set_idacticvity = "4";
-            daoChartProfile.returnLoadProfile(set_idacticvity);
+            modelChartProfile.returnLoadProfile(set_idacticvity);
             Others=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoChartProfile.Select);
+            kon.res = kon.stat.executeQuery(modelChartProfile.Select);
             
             while (kon.res.next()) {                
                 Others.add(new PieChart.Data(kon.res.getString(2),kon.res.getInt(3)));
@@ -748,9 +753,9 @@ public class DASHBOARDController implements Initializable {
     public void loadPieOth() {
         try {
             String set_idacticvity = "4";
-            daoChartProfile.returnLoadProfile(set_idacticvity);
+            modelChartProfile.returnLoadProfile(set_idacticvity);
             Others=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoChartProfile.Select);
+            kon.res = kon.stat.executeQuery(modelChartProfile.Select);
             
             while (kon.res.next()) {                
                 Others.add(new PieChart.Data(kon.res.getString(2),kon.res.getInt(3)));
@@ -774,9 +779,9 @@ public class DASHBOARDController implements Initializable {
     public void labelPieOth(){
         try {
             String set_idacticvity = "4";
-            daoChartProfile.returnLoadProfile(set_idacticvity);
+            modelChartProfile.returnLoadProfile(set_idacticvity);
             Others=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoChartProfile.Select);
+            kon.res = kon.stat.executeQuery(modelChartProfile.Select);
             
             while (kon.res.next()) {                
                 Others.add(new PieChart.Data(kon.res.getString(2),kon.res.getInt(3)));
@@ -814,9 +819,9 @@ public class DASHBOARDController implements Initializable {
 
         try {
             String set_idacticvity = "3";
-            daoChartProfile.returnLoadProfile(set_idacticvity);
+            modelChartProfile.returnLoadProfile(set_idacticvity);
             Advisory=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoChartProfile.Select);
+            kon.res = kon.stat.executeQuery(modelChartProfile.Select);
             
             while (kon.res.next()) {                
                 Advisory.add(new PieChart.Data(kon.res.getString(2),kon.res.getInt(3)));
@@ -840,9 +845,9 @@ public class DASHBOARDController implements Initializable {
     public void loadPieAdv() {
         try {
             String set_idacticvity = "3";
-            daoChartProfile.returnLoadProfile(set_idacticvity);
+            modelChartProfile.returnLoadProfile(set_idacticvity);
             Advisory=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoChartProfile.Select);
+            kon.res = kon.stat.executeQuery(modelChartProfile.Select);
             
             while (kon.res.next()) {                
                 Advisory.add(new PieChart.Data(kon.res.getString(2),kon.res.getInt(3)));
@@ -866,9 +871,9 @@ public class DASHBOARDController implements Initializable {
     public void labelPieAdv(){
         try {
             String set_idacticvity = "3";
-            daoChartProfile.returnLoadProfile(set_idacticvity);
+            modelChartProfile.returnLoadProfile(set_idacticvity);
             Advisory=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(daoChartProfile.Select);
+            kon.res = kon.stat.executeQuery(modelChartProfile.Select);
             
             while (kon.res.next()) {                
                 Advisory.add(new PieChart.Data(kon.res.getString(2),kon.res.getInt(3)));
@@ -899,6 +904,71 @@ public class DASHBOARDController implements Initializable {
             int idx = Advisory.indexOf(data);
             data.getNode().setStyle("-fx-pie-color: #ffffff");
             
+        }
+    }
+    
+    private void loadListProject(int idStatusLoad) throws SQLException{
+        try {
+//            String load = "1";
+//            modelProject.queryLoadAllListProject(load);
+            double percent = 0;
+            modelProject.loadProfilePerStatus(idStatusLoad);
+            dataProject=FXCollections.observableArrayList();
+            kon.res=kon.stat.executeQuery(modelProject.SelectNeeded);
+            
+            while (kon.res.next()) {                
+                dataProject.add(new Project
+                        (kon.res.getString(1), kon.res.getInt(2), kon.res.getString(3), kon.res.getString(4), 
+                        kon.res.getString(5), kon.res.getString(6), kon.res.getString(7), kon.res.getString(8), 
+                        kon.res.getString(9), kon.res.getString(10),kon.res.getString(11), kon.res.getString(12), 
+                        kon.res.getDouble(13),kon.res.getString(14), kon.res.getString(15), kon.res.getInt(16), 
+                        kon.res.getInt(17), kon.res.getInt(18), kon.res.getInt(19), kon.res.getInt(20), kon.res.getInt(21),
+                        kon.res.getInt(22), kon.res.getInt(23), kon.res.getInt(24), kon.res.getInt(25), kon.res.getInt(26),
+                        kon.res.getInt(27),kon.res.getString(28),kon.res.getString(29),kon.res.getString(30)));
+                
+                colBisnisUnit.setCellValueFactory(new PropertyValueFactory<>("CivitasCol"));
+                colCategory.setCellValueFactory(new PropertyValueFactory<>("InisialActivity"));
+                colStart.setCellValueFactory(new PropertyValueFactory<>("NameStartMonth"));
+                colFinisih.setCellValueFactory(new PropertyValueFactory<>("NameEndMonth"));
+                percent = kon.res.getDouble(13) * 100 ;
+                colProgress.setCellValueFactory(new PropertyValueFactory<>("ShowPercent"));
+                colRFactor.setCellValueFactory(new PropertyValueFactory<>("ValueRisk"));
+                colIndex.setCellValueFactory(new PropertyValueFactory<>("IndexAudit"));
+                listProject.setItems(null);
+                listProject.setItems(dataProject);
+
+            }
+        }catch (Exception e) {
+        }
+    }
+
+    @FXML
+    private void loadComplete(MouseEvent event) {
+        int idStatusLoad = 4;
+        try {
+            loadListProject(idStatusLoad);
+        } catch (SQLException ex) {
+            Logger.getLogger(DASHBOARDController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void loadInProgress(MouseEvent event) {
+        int idStatusLoad = 2;
+        try {
+            loadListProject(idStatusLoad);
+        } catch (SQLException ex) {
+            Logger.getLogger(DASHBOARDController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void loadNotYet(MouseEvent event) {
+        int idStatusLoad = 1;
+        try {
+            loadListProject(idStatusLoad);
+        } catch (SQLException ex) {
+            Logger.getLogger(DASHBOARDController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

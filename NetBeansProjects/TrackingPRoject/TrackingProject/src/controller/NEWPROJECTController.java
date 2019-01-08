@@ -49,8 +49,6 @@ public class NEWPROJECTController implements Initializable {
     @FXML
     private JFXComboBox<Civitas> comboCivitas;
     @FXML
-    private JFXComboBox<?> comboStatus;
-    @FXML
     private JFXComboBox<Activity> comboAcitivity;
     @FXML
     private JFXListView<Scope> listScope;
@@ -76,6 +74,8 @@ public class NEWPROJECTController implements Initializable {
     private ObservableList<Activity> dataAcitivy;
     private ObservableList<Scope>dataScope;
     private ObservableList<Karyawan>dataKaryawan;
+    @FXML
+    private JFXComboBox<?> comboRiskFactor;
 
     
     
@@ -233,11 +233,19 @@ public class NEWPROJECTController implements Initializable {
                             }
                         });
                         listScope.getItems().remove(newValue);
+                        currentScope.setVerticalGap(30.0);
+                        currentScope.setExpanded(true);
+                        currentScope.depthProperty().set(1);
+                        currentScope.getStyleClass().add("mylistview");
                     });
 
                 } 
                 
             });
+            listScope.setVerticalGap(30.0);
+            listScope.setExpanded(true);
+            listScope.depthProperty().set(1);
+            listScope.getStyleClass().add("mylistview");
     }
     
     public void setKaryawan() throws SQLException{
@@ -258,11 +266,19 @@ public class NEWPROJECTController implements Initializable {
                         currentTeam.getItems().add(newValue);
                         currentTeam.setCellFactory(karywanListView -> new KaryawanDao());
                         listKaryawan.getItems().remove(newValue);
+                        currentTeam.setVerticalGap(30.0);
+                        currentTeam.setExpanded(true);
+                        currentTeam.depthProperty().set(1);
+                        currentTeam.getStyleClass().add("mylistview");
                     });
 
                 } 
                 
             });
+            listKaryawan.setVerticalGap(30.0);
+            listKaryawan.setExpanded(true);
+            listKaryawan.depthProperty().set(1);
+            listKaryawan.getStyleClass().add("mylistview");
     }
     
     /**
