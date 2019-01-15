@@ -19,6 +19,7 @@ import javafx.beans.property.StringProperty;
 public class Project {
 
     private final StringProperty IdProject;
+    private final StringProperty ProjectCol;
     private final IntegerProperty Line ;
     private final StringProperty CivitasCol;
     private final StringProperty ActivityCol;
@@ -50,7 +51,7 @@ public class Project {
     private final StringProperty IndexAudit;
     
     
-    public Project(String idproject, int line, String civitascol, String activitycol,
+    public Project(String idproject, String projectcol, int line, String civitascol, String activitycol,
             String valuerisk, String audit_gradingcol, String statuscol, String INISIAL_STATUS, 
             String fullStartMonth ,String fullEndMonth, String act_month_start, String act_month_end,
             double percentage, String namestarMonth, String nameendMonth, int dateStart, int monthStart,
@@ -59,6 +60,7 @@ public class Project {
             String showPercent, String indexAudit){
        
         this.IdProject = new SimpleStringProperty(idproject);
+        this.ProjectCol = new SimpleStringProperty(projectcol);
         this.Line = new SimpleIntegerProperty(line);
         this.CivitasCol = new SimpleStringProperty(civitascol);
         this.ActivityCol = new SimpleStringProperty(activitycol);
@@ -90,8 +92,13 @@ public class Project {
         this.IndexAudit = new SimpleStringProperty(indexAudit);
     }
 
+
     public String getIdProject() {
         return IdProject.get();
+    }
+
+    public String getProjectCol() {
+        return ProjectCol.get();
     }
 
     public int getLine() {
@@ -224,6 +231,10 @@ public class Project {
     
     public void setIdProject(String value) {
         IdProject.setValue(value);
+    }
+    
+    public void setProjectCol(String value) {
+        ProjectCol.setValue(value);
     }
 
     public void setLine(int value) {

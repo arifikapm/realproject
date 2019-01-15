@@ -13,96 +13,169 @@ import javafx.beans.property.StringProperty;
  * @author kuupie
  */
 public class ProjectDetail {
-    //`idproject`, `projectcol`, 
-    //`startmonth`, `endmonth`, `civitas_idcivitas`, `status_idstatus`, `master_activity_idactivity`, `project_percentage`
-    private final StringProperty idproject;
-    private final StringProperty civitascol;
-    private final StringProperty activitycol;
-    private final StringProperty startproject;
-    private final StringProperty dayproject;
-    private final StringProperty endproject;
-    private final StringProperty dayendproject;
-    private StringProperty CountDown;
-    //private final StringProperty percentage;
     
-   
-    public ProjectDetail(String idproject, String civitascol, String activitycol, String startproject, String dayproject, String endproject ,
-            String dayendproject,String countDown){
-        this.idproject = new SimpleStringProperty(idproject);
-        this.civitascol = new SimpleStringProperty(civitascol);
-        this.activitycol = new SimpleStringProperty(activitycol);
-        this.startproject = new SimpleStringProperty(startproject);
-        this.dayproject = new SimpleStringProperty(dayproject);
-        this.endproject = new SimpleStringProperty(endproject);
-        this.dayendproject = new SimpleStringProperty(dayendproject);
-        this.CountDown = new SimpleStringProperty(countDown);
-        //this.percentage = new SimpleStringProperty(percentage);
+    private final StringProperty IdProject;
+    private final StringProperty ProjectCol;
+    private final StringProperty CivitasCol;
+    private final StringProperty ActivityCol;
+    private final StringProperty StatusCol;
+    private final StringProperty StartProject;
+    private final StringProperty EndProject;
+    private final StringProperty TglStart;
+    private final StringProperty TglEnd;
+    private final StringProperty DayStart;
+    private final StringProperty MonthnameStart;
+    private final StringProperty DayEnd;
+    private final StringProperty MonthnameEnd;
+    private final StringProperty TglActEnd;
+    private final StringProperty CountDown;
+
+    public ProjectDetail(String idProject, String projectCol, String civitasCol, 
+            String activityCol, String statusCol, String startProject, 
+            String endProject, String tglStart, String tglEnd, String dayStart, 
+            String monthnameStart, String dayEnd, String monthnameEnd, String tglActEnd, 
+            String countDown) {
         
+        this.IdProject = new SimpleStringProperty(idProject);
+        this.ProjectCol = new SimpleStringProperty(projectCol);
+        this.CivitasCol = new SimpleStringProperty(civitasCol);
+        this.ActivityCol = new SimpleStringProperty(activityCol);
+        this.StatusCol = new SimpleStringProperty(statusCol);
+        this.StartProject = new SimpleStringProperty(startProject);
+        this.EndProject = new SimpleStringProperty(endProject);
+        this.TglStart = new SimpleStringProperty(tglStart);
+        this.TglEnd = new SimpleStringProperty(tglEnd);
+        this.DayStart = new SimpleStringProperty(dayStart);
+        this.MonthnameStart = new SimpleStringProperty(monthnameStart);
+        this.DayEnd = new SimpleStringProperty(dayEnd);
+        this.MonthnameEnd = new SimpleStringProperty(monthnameEnd);
+        this.TglActEnd = new SimpleStringProperty(tglActEnd);
+        this.CountDown = new SimpleStringProperty(countDown);
     }
 
-    public String getIdproject() {
-        return idproject.get();
+     public String getIdProject() {
+        return IdProject.get();
     }
 
-    public String getCivitascol() {
-        return civitascol.get();
+     public String getProjectCol() {
+        return ProjectCol.get();
     }
 
-    public String getActivitycol() {
-        return activitycol.get();
+     public String getCivitasCol() {
+        return CivitasCol.get();
     }
 
-    public String getStartproject() {
-        return startproject.get();
+     public String getActivityCol() {
+        return ActivityCol.get();
     }
 
-    public String getDayproject() {
-        return dayproject.get();
+     public String getStatusCol() {
+        return StatusCol.get();
     }
 
-    public String getEndproject() {
-        return endproject.get();
+     public String getStartProject() {
+        return StartProject.get();
     }
 
-    public String getDayendproject() {
-        return dayendproject.get();
+     public String getEndProject() {
+        return EndProject.get();
     }
 
-    public String getCountDown() {
+     public String getTglStart() {
+        return TglStart.get();
+    }
+
+     public String getTglEnd() {
+        return TglEnd.get();
+    }
+
+     public String getDayStart() {
+        return DayStart.get();
+    }
+
+     public String getMonthnameStart() {
+        return MonthnameStart.get();
+    }
+
+     public String getDayEnd() {
+        return DayEnd.get();
+    }
+
+     public String getMonthnameEnd() {
+        return MonthnameEnd.get();
+    }
+
+     public String getTglActEnd() {
+        return TglActEnd.get();
+    }
+
+     public String getCountDown() {
         return CountDown.get();
+    }
+
+    public void setIdProject(String value) {
+        this.IdProject.setValue(value);
+    }
+
+    public void setProjectCol(String value) {
+        this.ProjectCol.setValue(value);
+    }
+
+    public void setCivitasCol(String value) {
+        this.CivitasCol.setValue(value);
+    }
+
+    public void setActivityCol(String value) {
+        this.ActivityCol.setValue(value);
+    }
+
+    public void setStatusCol(String value) {
+        this.StatusCol.setValue(value);
+    }
+
+    public void setStartProject(String value) {
+        this.StartProject.setValue(value);
+    }
+
+    public void setEndProject(String value) {
+        this.EndProject.setValue(value);
+    }
+
+    public void setTglStart(String value) {
+        this.TglStart.setValue(value);
+    }
+
+    public void setTglEnd(String value) {
+        this.TglEnd.setValue(value);
+    }
+
+    public void setDayStart(String value) {
+        this.DayStart.setValue(value);
+    }
+
+    public void setMonthnameStart(String value) {
+        this.MonthnameStart.setValue(value);
+    }
+
+    public void setDayEnd(String value) {
+        this.DayEnd.setValue(value);
+    }
+
+    public void setMonthnameEnd(String value) {
+        this.MonthnameEnd.setValue(value);
+    }
+
+    public void setTglActEnd(String value) {
+        this.TglActEnd.setValue(value);
     }
 
     public void setCountDown(String value) {
         this.CountDown.setValue(value);
     }
-
-    public void setIdactivity(String value) {
-       idproject.setValue(value);
-    }
-
-    public void setCivitas(String value) {
-        civitascol.setValue(value);
-    }
-
-    public void setActivity(String value) {
-        activitycol.setValue(value);
-    }
-
-    public void setStartmonthName(String value) {
-        startproject.setValue(value);
-    }
-
-    public void setTglStartMonth(String value){
-        dayproject.setValue(value);
-    }
-
-    public void setEndmonthName(String value) {
-        endproject.setValue(value);
-    }
-
-    public void setTglEndMonth(String value) {
-        dayendproject.setValue(value);
-    }
+    
 
     
-}
+    //private final StringProperty percentage;
+    
+        
+    }

@@ -53,13 +53,14 @@ public class PROJECTController implements Initializable {
             kon.res=kon.stat.executeQuery(modelProject.queryListProject);
             while (kon.res.next()) {                
                 data.add(new Project
-                        (kon.res.getString(1), kon.res.getInt(2), kon.res.getString(3), kon.res.getString(4), 
+                        (kon.res.getString(1), kon.res.getString(2), kon.res.getInt(3), kon.res.getString(4), 
                         kon.res.getString(5), kon.res.getString(6), kon.res.getString(7), kon.res.getString(8), 
                         kon.res.getString(9), kon.res.getString(10),kon.res.getString(11), kon.res.getString(12), 
-                        kon.res.getDouble(13),kon.res.getString(14), kon.res.getString(15), kon.res.getInt(16), 
+                        kon.res.getString(13),kon.res.getDouble(14), kon.res.getString(15), kon.res.getString(16), 
                         kon.res.getInt(17), kon.res.getInt(18), kon.res.getInt(19), kon.res.getInt(20), kon.res.getInt(21),
                         kon.res.getInt(22), kon.res.getInt(23), kon.res.getInt(24), kon.res.getInt(25), kon.res.getInt(26),
-                        kon.res.getInt(27), kon.res.getString(28), kon.res.getString(29), kon.res.getString(30)));
+                        kon.res.getInt(27), kon.res.getInt(28), kon.res.getString(29), kon.res.getString(30),
+                        kon.res.getString(31)));
             }
             
             rootViewList.setItems(data);

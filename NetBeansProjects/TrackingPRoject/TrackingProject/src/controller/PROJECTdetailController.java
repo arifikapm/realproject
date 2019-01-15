@@ -30,6 +30,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -68,7 +70,8 @@ import org.jfree.data.gantt.TaskSeriesCollection;
 public class PROJECTdetailController implements Initializable {
     
     
-    private String idPro, textCivitas, textActivity, textStratMonth, textEndMonth, datestartlbl, dateendLbl,textCountDown;
+    private String idPro, textCivitas, textActivity, textStratMonth, textEndMonth, startlbl, endLbl,
+            textCountDown, jtsDayStart, jtsDayEnd, jtsMonthStart, jtsMonthEnd;
     public String idPorject, taskPlann;
     int dateStart, dateEnd, yearStart, monthStart, monthEnd, yearEnd;
     int dateActStart, dateActEnd, monthActStart, monthActEnd,yearActStart,yearActEnd;
@@ -101,6 +104,31 @@ public class PROJECTdetailController implements Initializable {
     @FXML
     private JFXListView<ProfileProjectRoot> listProjectProfile;
     
+    
+    @FXML
+    private TableView<TaskForm> tblTask;
+
+    @FXML
+    private TableColumn<TaskForm, String> colTask;
+
+    @FXML
+    private TableColumn<TaskForm, String> colStartPlan;
+
+    @FXML
+    private TableColumn<TaskForm, String> colEndPlan;
+
+    @FXML
+    private TableColumn<TaskForm, String> colActStart;
+
+    @FXML
+    private TableColumn<TaskForm, String> colActEnd;
+
+    @FXML
+    private TableColumn<TaskForm, String> colEdit;
+
+    @FXML
+    private TableColumn<TaskForm, String> colDelete;
+    
     //Koneki
     koneksi kon = new koneksi();
     ProjectDetailDao model = new ProjectDetailDao();
@@ -132,21 +160,28 @@ public class PROJECTdetailController implements Initializable {
         loadDataTask();
         
         
-        model.loadDetail(idProject);
+        //model.loadDetail(idProject);
+        model.loadProjectDetail(idProject);
+        
         
         data=FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(model.queryload);
         
         while (kon.res.next()) {                
-                data.add(new ProjectDetail(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3),
-                kon.res.getString(4),kon.res.getString(5),kon.res.getString(6),kon.res.getString(7),kon.res.getString(8)));
-                textCivitas = kon.res.getString(2);
-                textActivity = kon.res.getString(3);
-                textStratMonth = kon.res.getString(4);
-                datestartlbl = kon.res.getString(5);
-                textEndMonth = kon.res.getString(6);
-                dateendLbl = kon.res.getString(7);
-                textCountDown = kon.res.getString(8);
+                data.add(new ProjectDetail(kon.res.getString(1), kon.res.getString(2), kon.res.getString(3), 
+                        kon.res.getString(5), kon.res.getString(4), 
+                        kon.res.getString(6), kon.res.getString(7), kon.res.getString(8), kon.res.getString(9), 
+                        kon.res.getString(10), kon.res.getString(11), kon.res.getString(12), kon.res.getString(13), 
+                        kon.res.getString(14), kon.res.getString(15)));
+                textCivitas = kon.res.getString(3);
+                textActivity = kon.res.getString(4);
+                textStratMonth = kon.res.getString(6);
+                textEndMonth = kon.res.getString(7);
+                jtsDayStart = kon.res.getString(11);
+                jtsMonthStart = kon.res.getString(12);
+                jtsDayEnd = kon.res.getString(13);
+                jtsMonthEnd = kon.res.getString(14);
+                textCountDown = kon.res.getString(15);
                 
             }
                 
@@ -157,12 +192,11 @@ public class PROJECTdetailController implements Initializable {
                 lblEndMonth.setText(textEndMonth);
                 
                 //label bawah
-                txtStartMonth.setText(textStratMonth);
-                txtTglStart.setText(datestartlbl);
-                txtEndMonth.setText(textEndMonth);
-                txtTglEnd.setText(dateendLbl);
+                txtTglStart.setText(jtsDayStart);
+                txtStartMonth.setText(jtsMonthStart);
+                txtTglEnd.setText(jtsDayEnd);
+                txtEndMonth.setText(jtsMonthEnd);
                 txtCountDown.setText(textCountDown);
-                
     }
     
     public void setScope(String idProject) throws SQLException{
@@ -253,7 +287,7 @@ public class PROJECTdetailController implements Initializable {
     }
     
     private IntervalCategoryDataset getCategoryDataset(String idProject) throws SQLException{
-        modelTask.loadData(idProject);
+        modelTask.loadDataSelected(idProject);
         dataTaskForm=FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(modelTask.queryload);
         
@@ -264,7 +298,8 @@ public class PROJECTdetailController implements Initializable {
                 dataTaskForm.add(new TaskForm(kon.res.getString(1), kon.res.getString(2), 
                 kon.res.getInt(3),kon.res.getInt(4),kon.res.getInt(5),kon.res.getInt(6),kon.res.getInt(7),
                 kon.res.getInt(8),kon.res.getInt(9),kon.res.getInt(10),kon.res.getInt(11),kon.res.getInt(12)
-                ,kon.res.getInt(13),kon.res.getInt(14)));
+                ,kon.res.getInt(13),kon.res.getInt(14),kon.res.getString(15),kon.res.getString(16),kon.res.getString(17)
+                ,kon.res.getString(18),kon.res.getString(19)));
                 
                 taskPlann=kon.res.getString(2);
                 dateStart=kon.res.getInt(3);
@@ -333,6 +368,7 @@ public class PROJECTdetailController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NEWPROJECT_1.fxml"));
             BorderPane newScene = loader.load();
             NEWPROJECTController mct = loader.getController();
+            mct.setData(idPorject);
             Scene scene = new Scene(newScene);
            
             //new Scene load new windows

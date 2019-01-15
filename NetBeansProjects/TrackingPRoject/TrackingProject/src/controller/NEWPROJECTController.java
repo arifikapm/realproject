@@ -58,7 +58,8 @@ public class NEWPROJECTController implements Initializable {
     private JFXListView<Scope> currentScope;
     @FXML
     private JFXListView<Karyawan> currentTeam;
-
+    @FXML
+    private JFXComboBox<?> comboRiskFactor;
     
     
     //Koneksi
@@ -74,8 +75,7 @@ public class NEWPROJECTController implements Initializable {
     private ObservableList<Activity> dataAcitivy;
     private ObservableList<Scope>dataScope;
     private ObservableList<Karyawan>dataKaryawan;
-    @FXML
-    private JFXComboBox<?> comboRiskFactor;
+
 
     
     
@@ -311,8 +311,8 @@ public class NEWPROJECTController implements Initializable {
     }
     
     
-    private void saveMode(int idAll){
-        
+    public void setData(String idProject){
+        System.out.println(idProject);
         
         
     }

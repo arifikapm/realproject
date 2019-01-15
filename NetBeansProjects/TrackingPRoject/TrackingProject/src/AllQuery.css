@@ -1,3 +1,71 @@
+/*=================================
+query countdown
+===================================
+SELECT pmt.project_idproject, pro.projectcol, mci.civitascol, mac.activitycol,mas.statuscol, 
+                    monthname(pro.startmonth) as startproject,monthname(pro.endmonth) as endproject
+                    , tglstart,tglend
+                    , day(tglstart),monthname(tglstart),day(tglend),monthname(tglend),tglactend,
+                    (CASE 
+                     WHEN pro.status_idstatus=4 then  
+                     (TOTAL_WEEKDAYS(tglactend,tglend)) 
+                     WHEN pro.status_idstatus < 4 and tglend > now() THEN 
+                     (TOTAL_WEEKDAYS(now(),tglend)*-1) 
+                     WHEN pro.status_idstatus <  4 and tglend < now() THEN
+                     concat("+",(TOTAL_WEEKDAYS(now(),tglend)))
+                            end 
+                    )as countDown
+FROM
+
+(SELECT est_datestart as tglstart 
+ from project_has_master_task 
+ WHERE project_idproject = 2
+ and master_task_idtask = 1) as tgl_start, 
+ (SELECT est_datestart as tglend 
+  from project_has_master_task  
+  wHERE project_idproject = 2
+  and master_task_idtask = 15) as tgl_end, 
+  (SELECT act_dateend as tglactend 
+   from project_has_master_task  
+   WHERE project_idproject = 2
+   and master_task_idtask = 15) as tgl_Actend,
+
+project_has_master_task as pmt
+
+LEFT join project as pro on pmt.project_idproject = pro.idproject 
+                    INNER join master_civitas as mci on pro.civitas_idcivitas = mci.idcivitas 
+                    INNER join master_activity as mac on pro.master_activity_idactivity = mac.idactivity
+                    INNER join master_status as mas on pro.status_idstatus = mas.idstatus
+                    
+WHERE pro.idproject=2
+GROUP by pmt.project_idproject
+
+
+*/
+
+
+/*
+====================================
+QUERY TASK FORM
+====================================
+SELECT pmt.project_idproject as idproject, mt.taskcol as task, day(pmt.est_datestart) as dateStart, 
+month(pmt.est_datestart) as monthStart, year(pmt.est_datestart) as yearStart,
+day(pmt.est_dateend) as dateEnd, month(pmt.est_dateend) as monthEnd,
+year(pmt.est_dateend) as yearEnd,
+day(pmt.act_datestart) as dateActStart, month(pmt.act_datestart) as monthActStart,
+YEAR(pmt.act_datestart) as yearActStart,
+day(pmt.act_dateend) as dateActEnd, month(pmt.act_dateend) as monthActEnd,
+Year(pmt.act_dateend) as yearActEnd,
+pmt.master_task_idtask,
+pmt.est_datestart, pmt.est_dateend, pmt.act_datestart, pmt.act_dateend
+FROM project as pr
+LEFT JOIN project_has_master_task as pmt
+on pr.idproject=pmt.project_idproject
+LEFT JOIN master_task as mt
+on pmt.master_task_idtask=mt.idtask
+
+*/
+
+
 /*==================================
 query menghitung percentage
 ===================================
@@ -110,7 +178,7 @@ GROUP BY PMK.project_idproject
 */
 
 /*===================================
-QUERY LOAD COUNT PROJECT
+QUERY LOAD COUNT PROJECT DASHBOARD
 =====================================
 SELECT COUNT(*) AS COUNTPROJECT FROM `project`
 
@@ -168,6 +236,23 @@ from
 (SELECT @sum:=0) as total
 group by quarter
 
+>>>>>>>> CARRY OVER PORJECT
+SELECT pmt.project_idproject, pro.projectcol, mci.civitascol, mac.inisial_jenis,mas.statuscol, 
+                    monthname(pro.startmonth) as startproject,monthname(pro.endmonth) as endproject,
+                    (COUNT(pmt.act_dateend)/ COUNT(pmt.master_task_idtask)) as percentage
+                    
+FROM
+project_has_master_task as pmt
+
+LEFT join project as pro on pmt.project_idproject = pro.idproject 
+                    INNER join master_civitas as mci on pro.civitas_idcivitas = mci.idcivitas 
+                    INNER join master_activity as mac on pro.master_activity_idactivity = mac.idactivity
+                    INNER join master_status as mas on pro.status_idstatus = mas.idstatus
+WHERE
+mas.idstatus <4
+AND
+year(pro.endmonth) < year(now())
+GROUP by pmt.project_idproject
 
 
 

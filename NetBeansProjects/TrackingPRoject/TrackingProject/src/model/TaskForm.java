@@ -15,6 +15,7 @@ import javafx.beans.property.StringProperty;
  * @author kuupie
  */
 public class TaskForm {
+   
 
     private final StringProperty idProject;
     private final StringProperty task;
@@ -30,11 +31,16 @@ public class TaskForm {
     private final IntegerProperty dateActEnd;
     private final IntegerProperty monthActEnd;
     private final IntegerProperty yearActEnd;
-    
+    private final StringProperty IdTask;
+    private final StringProperty EstDateStart;
+    private final StringProperty EstDateEnd;
+    private final StringProperty ActDateStart;
+    private final StringProperty ActDateEnd;
     
     public TaskForm(String idproject, String task,int dateStart,int monthStart,int yearStart,int dateEnd, 
             int monthEnd, int yearEnd, int dateActStart, int monthActStart, int yearActStart, 
-            int dateActEnd, int monthActEnd, int yearActEnd){
+            int dateActEnd, int monthActEnd, int yearActEnd, String idTask, String estDateStart,
+            String estDateEnd,String actDateStart, String actDateEnd){
         
         
         this.idProject =new SimpleStringProperty(idproject);
@@ -51,6 +57,11 @@ public class TaskForm {
         this.dateActEnd =new SimpleIntegerProperty(dateActEnd);
         this.monthActEnd =new SimpleIntegerProperty(monthActEnd);
         this.yearActEnd =new SimpleIntegerProperty(yearActEnd);
+        this.IdTask =new SimpleStringProperty(idTask);
+        this.EstDateStart =new SimpleStringProperty(estDateStart);
+        this.EstDateEnd =new SimpleStringProperty(estDateEnd);
+        this.ActDateStart =new SimpleStringProperty(actDateStart);
+        this.ActDateEnd =new SimpleStringProperty(actDateEnd);
         
     }
 
@@ -109,6 +120,22 @@ public class TaskForm {
     public int getYearActEnd() {
         return yearActEnd.get();
     }
+    public String getIdTask() {
+        return IdTask.get();
+    }
+  
+    public String getEstDateStart() {
+        return EstDateStart.get();
+    }
+    public String getEstDateEnd() {
+        return EstDateEnd.get();
+    }
+    public String getActDateStart() {
+        return ActDateStart.get();
+    }
+    public String getActDateEnd() {
+        return ActDateEnd.get();
+    }
 
     public void setIdProject(String value) {
         this.idProject.setValue(value);
@@ -166,6 +193,21 @@ public class TaskForm {
         this.yearActEnd.setValue(value);
     }
     
-
+    public void setIdTask(String value) {
+        this.IdTask.setValue(value);
+    }
+    
+    public void setEstDateStart(String value) {
+        this.EstDateStart.setValue(value);
+    }
+    public void setEstDateEnd(String value) {
+        this.EstDateEnd.setValue(value);
+    }
+    public void setActDateStart(String value) {
+        this.ActDateStart.setValue(value);
+    }
+    public void setActDateEnd(String value) {
+        this.ActDateEnd.setValue(value);
+    }
     
 }

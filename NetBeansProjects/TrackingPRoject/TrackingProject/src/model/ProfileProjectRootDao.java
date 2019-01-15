@@ -84,7 +84,6 @@ public class ProfileProjectRootDao extends ListCell<ProfileProjectRoot>{
             labelRoot.setText(project.getRootTask());
             valueRoot.setText(valPro);
             barRoot.setProgress(project.getPercentage());
-            System.out.println(loadProfile);
 
             
         }

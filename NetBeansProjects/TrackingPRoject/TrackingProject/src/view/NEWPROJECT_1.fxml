@@ -56,6 +56,7 @@
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="381.0" minHeight="10.0" prefHeight="293.0" vgrow="SOMETIMES" />
@@ -69,15 +70,15 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
          <children>
-            <TableView prefHeight="200.0" prefWidth="200.0" stylesheets="@mylistview.css" GridPane.columnSpan="6" GridPane.rowIndex="2">
+            <TableView fx:id="tblTask" prefHeight="200.0" prefWidth="200.0" stylesheets="@mylistview.css" GridPane.columnSpan="6" GridPane.rowIndex="2">
                <columns>
-                  <TableColumn prefWidth="122.0" text="Root Activity" />
-                  <TableColumn prefWidth="208.0" text="Activity" />
-                  <TableColumn prefWidth="138.0" text="Est Start Date" />
-                  <TableColumn prefWidth="123.0" text="Est End Date" />
-                  <TableColumn prefWidth="134.0" text="Act Start Date" />
-                  <TableColumn prefWidth="133.0" text="Act Endt Date" />
-                  <TableColumn maxWidth="1.7976931348623157E308" prefWidth="200.0" text="Modified" />
+                  <TableColumn fx:id="colTask" prefWidth="122.0" text="Task" />
+                  <TableColumn fx:id="colStartPlan" prefWidth="190.0" text="Start Plan" />
+                  <TableColumn fx:id="colEndPlan" prefWidth="190.0" text="End Plan" />
+                  <TableColumn fx:id="colActStart" prefWidth="190.0" text="Actual Start" />
+                  <TableColumn fx:id="colActEnd" prefWidth="190.0" text="Actual End" />
+                  <TableColumn fx:id="colEdit" text="Edit" />
+                  <TableColumn fx:id="colDelete" text="Delete" />
                </columns>
             </TableView>
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="76.0" prefWidth="210.0">
@@ -389,6 +390,16 @@
                   </GridPane>
                </children>
             </GridPane>
+            <TableView fx:id="tblTask1" prefHeight="200.0" prefWidth="200.0" stylesheets="@mylistview.css">
+               <columns>
+                  <TableColumn fx:id="colTask1" prefWidth="122.0" text="Task" />
+                  <TableColumn fx:id="colStartPlan1" prefWidth="170.0" text="Start Plan" />
+                  <TableColumn fx:id="colEndPlan1" prefWidth="170.0" text="End Plan" />
+                  <TableColumn fx:id="colActStart1" prefWidth="170.0" text="Actual Start" />
+                  <TableColumn fx:id="colActEnd1" prefWidth="261.0" text="Actual End" />
+                  <TableColumn prefWidth="157.0" text="Modified" />
+               </columns>
+            </TableView>
          </children>
       </GridPane>
    </center>

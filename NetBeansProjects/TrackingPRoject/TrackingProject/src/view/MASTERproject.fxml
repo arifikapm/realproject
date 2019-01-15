@@ -33,7 +33,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="40.0" prefWidth="100.0">
                <children>
-                  <Label text="Scope" textFill="#a8a8a8">
+                  <Label text="Scope" textFill="#807d7d">
                      <font>
                         <Font size="12.0" />
                      </font></Label>
@@ -57,7 +57,7 @@
             <VBox opacity="0.21" prefHeight="1.0" style="-fx-background-color: #5D5D5D;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <VBox alignment="CENTER" prefHeight="40.0" prefWidth="100.0" GridPane.columnIndex="1">
                <children>
-                  <Label text="Activity" textFill="#a8a8a8">
+                  <Label text="Activity" textFill="#807d7d">
                      <font>
                         <Font size="12.0" />
                      </font>
@@ -74,7 +74,7 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="40.0" prefWidth="100.0" GridPane.columnIndex="2">
                <children>
-                  <Label text="Status" textFill="#a8a8a8">
+                  <Label text="Status" textFill="#807d7d">
                      <font>
                         <Font size="12.0" />
                      </font>
@@ -91,7 +91,7 @@
             </VBox>
             <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="3">
                <children>
-                  <FontAwesomeIconView fill="#d0d3d3" glyphName="LINE_CHART" size="22" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE">
+                  <FontAwesomeIconView fill="#8e9090" glyphName="LINE_CHART" size="22" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
