@@ -33,7 +33,7 @@ public class ListCarryProject {
         this.ProjectCol = new SimpleStringProperty(projectCol);
         this.CivitasCol = new SimpleStringProperty(civitasCol);
         this.InisialJenis = new SimpleStringProperty(inisialJenis);
-        this.StatusCol = new SimpleStringProperty(startProject);
+        this.StatusCol = new SimpleStringProperty(statusCol);
         this.StartProject = new SimpleStringProperty(startProject);
         this.EndProject = new SimpleStringProperty(endProject);
         this.Percentage = new SimpleStringProperty(percentage);

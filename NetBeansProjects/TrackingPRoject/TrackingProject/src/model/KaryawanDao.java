@@ -47,7 +47,12 @@ public class KaryawanDao extends ListCell<Karyawan> {
             + " where mk.status_karyawan_idstatus_karyawan=1 " +
             "ORDER by jb.idjabatan";
     
-    public String selectTerm;
+    public String selectTerm="SELECT mk.idkaryawan, mk.karyawancol as teammember, mk.inisial_karyawan, \n" +
+            "res.responsibilitycol as asa, \n" +
+            "res.inisial_responsibility as inAs, res.inisial_responsibility as inAs \n" +
+            "FROM project as pr LEFT JOIN project_has_master_karyawan as pmk on pr.idproject=pmk.project_idproject \n" +
+            "LEFT join master_karyawan as mk on pmk.master_karyawan_idkaryawan=mk.idkaryawan \n" +
+            "            LEFT JOIN responsibility as res on pmk.responsibility_idresponsibility=res.idresponsibility \n" ;
     
     public String where;
     
@@ -89,6 +94,11 @@ public class KaryawanDao extends ListCell<Karyawan> {
         where=" where pr.idproject="+IdProject+"  ";
         queryteam=selectAll+where;
         
+    }
+    
+    public void loadTeamProject(String IdProject){
+        where = "            where pr.idproject =  "+IdProject+"";
+        queryteam= selectTerm+where;
     }
     
 }

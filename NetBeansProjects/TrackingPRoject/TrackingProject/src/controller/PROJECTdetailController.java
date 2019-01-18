@@ -362,7 +362,7 @@ public class PROJECTdetailController implements Initializable {
     }    
 
     @FXML
-    private void loadTaskProject(MouseEvent event) throws IOException {
+    private void loadTaskProject(MouseEvent event) throws IOException, SQLException {
          // New window (Stage)
             final Stage primaryStage = null;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NEWPROJECT_1.fxml"));

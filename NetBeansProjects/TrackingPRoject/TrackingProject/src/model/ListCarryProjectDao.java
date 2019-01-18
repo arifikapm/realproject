@@ -85,7 +85,9 @@ public class ListCarryProjectDao extends ListCell<ListCarryProject>{
             
             //textCivitas.setText(list.getCivitascol());
             textProject.setText(list.getProjectCol());
+
             valueCount.setText(list.getStatusCol());
+            
             textInisial.setText(list.getInisialJenis());
             textPercentage.setText(list.getPercentage());
 

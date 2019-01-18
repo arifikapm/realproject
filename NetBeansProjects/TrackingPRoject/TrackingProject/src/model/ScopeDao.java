@@ -39,6 +39,12 @@ public class ScopeDao extends ListCell<Scope> {
     
     public String queryCoPro="SELECT idscope, idscope,scopecol FROM master_scope";
     
+    public void loadScopeProject(String idProject){
+        where = " WHERE pms.project_idproject =  "+idProject+" ";
+        scopequery = select+where;
+        
+    }
+    
     
     @Override
     protected void updateItem(Scope project, boolean empty) {
