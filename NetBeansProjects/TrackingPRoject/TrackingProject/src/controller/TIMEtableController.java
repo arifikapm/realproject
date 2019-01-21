@@ -27,10 +27,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.BorderPane;
-import model.Activity;
-import model.ActivityDao;
-import model.Scope;
-import model.ScopeDao;
+import model.MasActivity;
+import model.MasActivityDao;
+import model.MasScope;
+import model.MasScopeDao;
 
 import model.Timetable;
 import model.TimetableDao;
@@ -55,7 +55,7 @@ public class TIMEtableController implements Initializable {
     @FXML
     private ScrollPane chartView;
     @FXML
-    private JFXListView<Activity> listActivityView;
+    private JFXListView<MasActivity> listActivityView;
     
     //
     public String idPorject, taskPlann;
@@ -66,10 +66,10 @@ public class TIMEtableController implements Initializable {
     koneksi kon = new koneksi();
     TimetableDao dao =new TimetableDao();
     Timetable model;
-    ActivityDao modelActivity = new ActivityDao();
+    MasActivityDao modelActivity = new MasActivityDao();
     
     private ObservableList<Timetable> dataTimeTable;
-    private ObservableList<Activity> dataAcitivity;
+    private ObservableList<MasActivity> dataAcitivity;
 
     private static Date date(final int day, final int month, final int year) {
 
@@ -189,10 +189,10 @@ public class TIMEtableController implements Initializable {
         dataAcitivity =FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(modelActivity.selectall);
         while (kon.res.next()) {                
-                dataAcitivity.add(new Activity(kon.res.getInt(1),kon.res.getString(2),kon.res.getString(3)));
+                dataAcitivity.add(new MasActivity(kon.res.getInt(1),kon.res.getString(2),kon.res.getString(3)));
             }
             listActivityView.setItems(dataAcitivity);
-            listActivityView.setCellFactory(activityListView -> new ActivityDao());
+            listActivityView.setCellFactory(activityListView -> new MasActivityDao());
             listActivityView.setVerticalGap(80.0);
             listActivityView.setExpanded(true);
             listActivityView.depthProperty().set(1);

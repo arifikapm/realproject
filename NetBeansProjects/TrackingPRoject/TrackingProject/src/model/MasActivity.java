@@ -14,13 +14,13 @@ import javafx.beans.property.StringProperty;
  *
  * @author kuupie
  */
-public class Activity {
+public class MasActivity {
     
     private final IntegerProperty IdAcitivity;
     private final SimpleStringProperty Acitivitycol;
     private final SimpleStringProperty Inisialjenis;
     
-    public Activity(int idactivity, String activitycol, String inisial_jenis){
+    public MasActivity(int idactivity, String activitycol, String inisial_jenis){
         this.IdAcitivity = new SimpleIntegerProperty(idactivity);
         this.Acitivitycol = new SimpleStringProperty(activitycol);
         this.Inisialjenis = new SimpleStringProperty(inisial_jenis);

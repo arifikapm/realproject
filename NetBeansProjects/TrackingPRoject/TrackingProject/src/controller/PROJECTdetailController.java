@@ -43,8 +43,8 @@ import model.ProfileProjectRoot;
 import model.ProfileProjectRootDao;
 import model.ProjectDetail;
 import model.ProjectDetailDao;
-import model.Scope;
-import model.ScopeDao;
+import model.MasScope;
+import model.MasScopeDao;
 import model.TaskForm;
 import model.TaskFormDao;
 import model.Team;
@@ -82,7 +82,7 @@ public class PROJECTdetailController implements Initializable {
     @FXML
     private Label lblEndMonth;
     @FXML
-    private JFXListView<Scope> listScope;
+    private JFXListView<MasScope> listScope;
     @FXML
     private JFXListView<Team> listTeam;
     @FXML
@@ -132,14 +132,14 @@ public class PROJECTdetailController implements Initializable {
     //Koneki
     koneksi kon = new koneksi();
     ProjectDetailDao model = new ProjectDetailDao();
-    ScopeDao modelScope = new ScopeDao();
+    MasScopeDao modelScope = new MasScopeDao();
     TeamDao modelTeam = new TeamDao();
     TaskFormDao modelTask = new TaskFormDao();
     ProfileProjectRootDao modelProfileProjectRoot = new ProfileProjectRootDao();
     
    
     private ObservableList<ProjectDetail> data;
-    private ObservableList<Scope>dataScope;
+    private ObservableList<MasScope>dataScope;
     private ObservableList<Team>dataTeam;
     private ObservableList<TaskForm>dataTaskForm;
     private ObservableList<ProfileProjectRoot>dataProfileProject;
@@ -204,10 +204,10 @@ public class PROJECTdetailController implements Initializable {
         dataScope =FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(modelScope.scopequery);
         while (kon.res.next()) {                
-                dataScope.add(new Scope(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3)));
+                dataScope.add(new MasScope(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3)));
             }
             listScope.setItems(dataScope);
-            listScope.setCellFactory(scopeListView -> new ScopeDao());
+            listScope.setCellFactory(scopeListView -> new MasScopeDao());
     }
     
     public void setTeamMember(String idProject) throws SQLException{

@@ -5,6 +5,7 @@
  */
 package controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
@@ -16,11 +17,15 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.MonthDay;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,21 +41,31 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+import javafx.util.converter.LocalDateStringConverter;
 import javax.swing.JOptionPane;
-import model.Activity;
-import model.ActivityDao;
-import model.Civitas;
-import model.CivitasDao;
+import model.MasActivity;
+import model.MasActivityDao;
+import model.MasCivitas;
+import model.MasCivitasDao;
 import model.ListTaskDatePicker;
 import model.ListTaskProject;
-import model.Karyawan;
-import model.KaryawanDao;
+import model.MasAuditIndex;
+import model.MasAuditIndexDao;
+import model.MasKaryawan;
+import model.MasKaryawanDao;
+import model.MasRiskFactor;
+import model.MasRiskFactorDao;
 import model.ProjectDetail;
 import model.ProjectDetailDao;
-import model.Scope;
-import model.ScopeDao;
+import model.MasScope;
+import model.MasScopeDao;
+import model.MasStatusProject;
+import model.MasStatusProjectDao;
+import model.Project;
+import model.ProjectDao;
 import model.Team;
 import model.TeamDao;
+import org.jfree.data.time.Day;
 
 /**
  * FXML Controller class
@@ -59,32 +74,47 @@ import model.TeamDao;
  */
 public class NEWPROJECTController implements Initializable {
     
-   // Civitas civitasData;
+   // MasCivitas civitasData;
     
     public  String textProject, textActivity, textCivitas, textStartDate, textEndDate, textRiskFactore;
+    private String idProject;
 
     @FXML
     private BorderPane viewMaster;
     @FXML
-    private JFXComboBox<Civitas> comboCivitas;
+    private JFXComboBox<MasCivitas> comboCivitas;
     @FXML
-    private JFXComboBox<Activity> comboAcitivity;
+    private JFXComboBox<MasActivity> comboAcitivity;
     @FXML
-    private JFXListView<Scope> listScope;
+    private JFXListView<MasScope> listScope;
     @FXML
-    private JFXListView<Karyawan> listKaryawan;
+    private JFXListView<MasKaryawan> listKaryawan;
     @FXML
-    private JFXListView<Scope> currentScope;
+    private JFXListView<MasScope> currentScope;
     @FXML
-    private JFXListView<Karyawan> currentTeam;
+    private JFXListView<MasKaryawan> currentTeam;
+    
     @FXML
-    private JFXComboBox<?> comboRiskFactor;
+    private JFXComboBox<MasRiskFactor> comboRiskFactor;
+
+    @FXML
+    private JFXComboBox<MasAuditIndex> comboAuditIndex;
+
+    @FXML
+    private JFXComboBox<MasStatusProject> comboStatus;
+    
     @FXML
     private JFXTextField valueProject;
     @FXML
     private JFXDatePicker dateStart;
     @FXML
     private JFXDatePicker dateEnd;
+    
+    @FXML
+    private JFXButton btnMod;
+
+    @FXML
+    private JFXButton btnSave;
     
     @FXML
     private TableView<ListTaskProject> tblTask;
@@ -104,22 +134,32 @@ public class NEWPROJECTController implements Initializable {
     @FXML
     private TableColumn<ListTaskProject, Date> colActEnd;
     
-    //Koneksi
+    //load data
     koneksi kon = new koneksi();
-    CivitasDao modelCivitas = new CivitasDao();
-    ActivityDao modelActivity = new ActivityDao();
-    KaryawanDao modelKaryawan= new KaryawanDao();
-    ScopeDao modelScope = new ScopeDao();
+    MasCivitasDao modelCivitas = new MasCivitasDao();
+    MasActivityDao modelActivity = new MasActivityDao();
+    MasKaryawanDao modelKaryawan= new MasKaryawanDao();
+    MasScopeDao modelScope = new MasScopeDao();
     ProjectDetailDao modelDetail = new ProjectDetailDao();
     ListTaskDatePicker modelDate2 = new ListTaskDatePicker();
+    MasRiskFactorDao modelRiskFactor = new MasRiskFactorDao();
+    MasAuditIndexDao modelAuditIndex = new MasAuditIndexDao();
+    MasStatusProjectDao modelStatusProject = new MasStatusProjectDao();
+    
+    //insert
+    ProjectDao modelProject = new ProjectDao();
     
     //list
-    private ObservableList<Civitas> dataCivitas;
-    private ObservableList<Activity> dataAcitivy;
-    private ObservableList<Scope>dataScope;
-    private ObservableList<Karyawan>dataKaryawan;
+    private ObservableList<MasCivitas> dataCivitas;
+    private ObservableList<MasActivity> dataAcitivy;
+    private ObservableList<MasScope>dataScope;
+    private ObservableList<MasKaryawan>dataKaryawan;
     private ObservableList<ProjectDetail>dataProjectDetail;
+    private ObservableList<Project>dataProject;
     private ObservableList<ListTaskProject>dataDate1;
+    private ObservableList<MasRiskFactor>dataRiskFactor;
+    private ObservableList<MasAuditIndex>dataAuditIndex;
+    private ObservableList<MasStatusProject>dataStatusProject;
 
 
     
@@ -133,7 +173,7 @@ public class NEWPROJECTController implements Initializable {
         kon.res=kon.stat.executeQuery(modelCivitas.selectNameId);
         try {
             while (kon.res.next()) {                
-                dataCivitas.add(new Civitas(kon.res.getInt(1), kon.res.getString(2)) );
+                dataCivitas.add(new MasCivitas(kon.res.getInt(1), kon.res.getString(2)) );
             }
             
             //load all query result or model on combo box
@@ -141,11 +181,11 @@ public class NEWPROJECTController implements Initializable {
             comboCivitas.getItems().addAll(dataCivitas);
             
             //load the field value every query row
-            comboCivitas.setCellFactory(new Callback<ListView<Civitas>, ListCell<Civitas>>() {
-            @Override public ListCell<Civitas> call(ListView<Civitas> param) {
-                final ListCell<Civitas> cell = new ListCell<Civitas>() {
+            comboCivitas.setCellFactory(new Callback<ListView<MasCivitas>, ListCell<MasCivitas>>() {
+            @Override public ListCell<MasCivitas> call(ListView<MasCivitas> param) {
+                final ListCell<MasCivitas> cell = new ListCell<MasCivitas>() {
 
-                    @Override public void updateItem(Civitas item, boolean empty) {
+                    @Override public void updateItem(MasCivitas item, boolean empty) {
                         super.updateItem(item, empty);
                         if (item != null) {
                             setText(item.getCivitasCol());
@@ -161,9 +201,9 @@ public class NEWPROJECTController implements Initializable {
             });
             
             //show the selected value
-            comboCivitas.setConverter(new StringConverter<Civitas>() {
+            comboCivitas.setConverter(new StringConverter<MasCivitas>() {
               @Override
-              public String toString(Civitas civitasCol) {
+              public String toString(MasCivitas civitasCol) {
                 if (civitasCol == null){
                   return null;
                 } else {
@@ -174,7 +214,7 @@ public class NEWPROJECTController implements Initializable {
               }
 
             @Override
-            public Civitas fromString(String userId) {
+            public MasCivitas fromString(String userId) {
                 return null;
             }
         });
@@ -182,8 +222,12 @@ public class NEWPROJECTController implements Initializable {
         //combo box style
         comboCivitas.setMaxHeight(25);    
         
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+        } catch (SQLException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf(ex));
+                    alert.showAndWait();
         }
     }
     
@@ -197,7 +241,7 @@ public class NEWPROJECTController implements Initializable {
         kon.res=kon.stat.executeQuery(modelActivity.selectall);
         try {
             while (kon.res.next()) {                
-                dataAcitivy.add(new Activity(kon.res.getInt(1), kon.res.getString(2), kon.res.getString(3)));
+                dataAcitivy.add(new MasActivity(kon.res.getInt(1), kon.res.getString(2), kon.res.getString(3)));
             }
             
             //load all query result or model on combo box
@@ -205,11 +249,11 @@ public class NEWPROJECTController implements Initializable {
             comboAcitivity.getItems().addAll(dataAcitivy);
             
             //load the field value every query row
-            comboAcitivity.setCellFactory(new Callback<ListView<Activity>, ListCell<Activity>>() {
-            @Override public ListCell<Activity> call(ListView<Activity> param) {
-                final ListCell<Activity> cell = new ListCell<Activity>() {
+            comboAcitivity.setCellFactory(new Callback<ListView<MasActivity>, ListCell<MasActivity>>() {
+            @Override public ListCell<MasActivity> call(ListView<MasActivity> param) {
+                final ListCell<MasActivity> cell = new ListCell<MasActivity>() {
 
-                    @Override public void updateItem(Activity item, boolean empty) {
+                    @Override public void updateItem(MasActivity item, boolean empty) {
                         super.updateItem(item, empty);
                         if (item != null) {
                             setText(item.getAcitivitycol());
@@ -225,9 +269,9 @@ public class NEWPROJECTController implements Initializable {
             });
             
             //show the selected value
-            comboAcitivity.setConverter(new StringConverter<Activity>() {
+            comboAcitivity.setConverter(new StringConverter<MasActivity>() {
               @Override
-              public String toString(Activity activityCol) {
+              public String toString(MasActivity activityCol) {
                 if (activityCol == null){
                   return null;
                 } else {
@@ -238,7 +282,7 @@ public class NEWPROJECTController implements Initializable {
               }
 
             @Override
-            public Activity fromString(String userId) {
+            public MasActivity fromString(String userId) {
                 return null;
             }
         });
@@ -246,8 +290,209 @@ public class NEWPROJECTController implements Initializable {
         //combo box style
         comboAcitivity.setMaxHeight(25);    
         
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+        } catch (SQLException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf(ex));
+                    alert.showAndWait();
+        }
+    }
+    
+    public void comboBoxRiskFactor() throws SQLException{
+        
+        //query set on class
+        dataRiskFactor=FXCollections.observableArrayList();
+        kon.res=kon.stat.executeQuery(modelRiskFactor.select);
+        try {
+            while (kon.res.next()) {                
+                dataRiskFactor.add(new MasRiskFactor(kon.res.getInt(1), kon.res.getString(2)));
+            }
+            
+            //load all query result or model on combo box
+            //you will show the container every query row
+            comboRiskFactor.getItems().addAll(dataRiskFactor);
+            
+            //load the field value every query row
+            comboRiskFactor.setCellFactory(new Callback<ListView<MasRiskFactor>, ListCell<MasRiskFactor>>() {
+            @Override public ListCell<MasRiskFactor> call(ListView<MasRiskFactor> param) {
+                final ListCell<MasRiskFactor> cell = new ListCell<MasRiskFactor>() {
+
+                    @Override public void updateItem(MasRiskFactor item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            setText(item.getRisk_Valuecol());
+                            
+                        }else {
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            }
+                    
+            });
+            
+            //show the selected value
+            comboRiskFactor.setConverter(new StringConverter<MasRiskFactor>() {
+              @Override
+              public String toString(MasRiskFactor activityCol) {
+                if (activityCol == null){
+                  return null;
+                } else {
+                    //System.out.println("load the id = "+civitasCol.getIdCivitas());
+                    //saveMode(civitasCol.getIdCivitas());
+                  return activityCol.getRisk_Valuecol();
+                }
+              }
+
+            @Override
+            public MasRiskFactor fromString(String userId) {
+                return null;
+            }
+        });
+            
+        //combo box style
+        comboRiskFactor.setMaxHeight(25);    
+        
+        } catch (SQLException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf(ex));
+                    alert.showAndWait();
+        }
+    }
+    
+    public void comboBoxAuditIndex() throws SQLException{
+        
+        //query set on class
+        dataAuditIndex=FXCollections.observableArrayList();
+        kon.res=kon.stat.executeQuery(modelAuditIndex.selectall);
+        try {
+            while (kon.res.next()) {                
+                dataAuditIndex.add(new MasAuditIndex(kon.res.getInt(1), kon.res.getString(2), kon.res.getString(3)));
+            }
+            
+            //load all query result or model on combo box
+            //you will show the container every query row
+            comboAuditIndex.getItems().addAll(dataAuditIndex);
+            
+            //load the field value every query row
+            comboAuditIndex.setCellFactory(new Callback<ListView<MasAuditIndex>, ListCell<MasAuditIndex>>() {
+            @Override public ListCell<MasAuditIndex> call(ListView<MasAuditIndex> param) {
+                final ListCell<MasAuditIndex> cell = new ListCell<MasAuditIndex>() {
+
+                    @Override public void updateItem(MasAuditIndex item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            setText(item.getAudit_Gradingcol());
+                            
+                        }else {
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            }
+                    
+            });
+            
+            //show the selected value
+            comboAuditIndex.setConverter(new StringConverter<MasAuditIndex>() {
+              @Override
+              public String toString(MasAuditIndex activityCol) {
+                if (activityCol == null){
+                  return null;
+                } else {
+                    //System.out.println("load the id = "+civitasCol.getIdCivitas());
+                    //saveMode(civitasCol.getIdCivitas());
+                  return activityCol.getAudit_Gradingcol();
+                }
+              }
+
+            @Override
+            public MasAuditIndex fromString(String userId) {
+                return null;
+            }
+        });
+            
+        //combo box style
+        comboAuditIndex.setMaxHeight(25);    
+        
+        } catch (SQLException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf(ex));
+                    alert.showAndWait();
+        }
+    }
+    
+     public void comboBoxStatusProject() throws SQLException{
+        
+        //query set on class
+        int statusId= 5;
+        modelStatusProject.statusLoad(statusId);
+        dataStatusProject=FXCollections.observableArrayList();
+        kon.res=kon.stat.executeQuery(modelStatusProject.queryLoad);
+        try {
+            while (kon.res.next()) {                
+                dataStatusProject.add(new MasStatusProject(kon.res.getInt(1), kon.res.getString(2), kon.res.getString(3)));
+            }
+            
+            //load all query result or model on combo box
+            //you will show the container every query row
+            comboStatus.getItems().addAll(dataStatusProject);
+            
+            //load the field value every query row
+            comboStatus.setCellFactory(new Callback<ListView<MasStatusProject>, ListCell<MasStatusProject>>() {
+            @Override public ListCell<MasStatusProject> call(ListView<MasStatusProject> param) {
+                final ListCell<MasStatusProject> cell = new ListCell<MasStatusProject>() {
+
+                    @Override public void updateItem(MasStatusProject item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item != null) {
+                            setText(item.getStatusCol());
+                            
+                        }else {
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            }
+                    
+            });
+            
+            //show the selected value
+            comboStatus.setConverter(new StringConverter<MasStatusProject>() {
+              @Override
+              public String toString(MasStatusProject activityCol) {
+                if (activityCol == null){
+                  return null;
+                } else {
+                    //System.out.println("load the id = "+civitasCol.getIdCivitas());
+                    //saveMode(civitasCol.getIdCivitas());
+                  return activityCol.getStatusCol();
+                }
+              }
+
+            @Override
+            public MasStatusProject fromString(String userId) {
+                return null;
+            }
+        });
+            
+        //combo box style
+        comboStatus.setMaxHeight(25);    
+        
+        } catch (SQLException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf(ex));
+                    alert.showAndWait();
         }
     }
     
@@ -256,27 +501,27 @@ public class NEWPROJECTController implements Initializable {
         dataScope =FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(modelScope.queryCoPro);
         while (kon.res.next()) {                
-                dataScope.add(new Scope(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3)));
+                dataScope.add(new MasScope(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3)));
             }
             listScope.setItems(dataScope);
-            listScope.setCellFactory(scopeListView -> new ScopeDao());
+            listScope.setCellFactory(scopeListView -> new MasScopeDao());
             listScope.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue)->{
                 if(newValue!=null){
                     Platform.runLater(() -> {
                         listScope.getSelectionModel().select(-1);
                         currentScope.getItems().add(newValue);
-                        currentScope.setCellFactory(scopeListView -> new ScopeDao());
-                        currentScope.getSelectionModel().selectedItemProperty().addListener((obt, bfrValue, afrValue)->{
-                            if(afrValue!=null){
-                                Platform.runLater(() -> {
-                                    currentScope.getSelectionModel().select(-1);
-                                    //listScope.getItems();
-                                    currentScope.getItems().remove(afrValue);
-                                    
-                                    //listScope.setCellFactory(scopeListView -> new ScopeDao());
-                                });
-                            }
-                        });
+                        currentScope.setCellFactory(scopeListView -> new MasScopeDao());
+//                        currentScope.getSelectionModel().selectedItemProperty().addListener((obt, bfrValue, afrValue)->{
+//                            if(afrValue!=null){
+//                                Platform.runLater(() -> {
+//                                    currentScope.getSelectionModel().select(-1);
+//                                    //listScope.getItems();
+//                                    currentScope.getItems().remove(afrValue);
+//                                    
+//                                    //listScope.setCellFactory(scopeListView -> new MasScopeDao());
+//                                });
+//                            }
+//                        });
                         listScope.getItems().remove(newValue);
                         currentScope.setVerticalGap(30.0);
                         currentScope.setExpanded(true);
@@ -298,18 +543,19 @@ public class NEWPROJECTController implements Initializable {
         kon.res=kon.stat.executeQuery(modelKaryawan.selectActive);
         dataKaryawan =FXCollections.observableArrayList();
         while (kon.res.next()) {                
-               dataKaryawan.add(new Karyawan(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3),
+               dataKaryawan.add(new MasKaryawan(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3),
                        kon.res.getString(4),kon.res.getString(5),kon.res.getString(6)));
             }
 
             listKaryawan.setItems(dataKaryawan);
-            listKaryawan.setCellFactory(karyawanListView -> new KaryawanDao());
+            listKaryawan.setCellFactory(karyawanListView -> new MasKaryawanDao());
             listKaryawan.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue)->{
                 if(newValue!=null){
                     Platform.runLater(() -> {
                         listKaryawan.getSelectionModel().select(-1);
+                        
                         currentTeam.getItems().add(newValue);
-                        currentTeam.setCellFactory(karywanListView -> new KaryawanDao());
+                        currentTeam.setCellFactory(karywanListView -> new MasKaryawanDao());
                         listKaryawan.getItems().remove(newValue);
                         currentTeam.setVerticalGap(30.0);
                         currentTeam.setExpanded(true);
@@ -336,8 +582,16 @@ public class NEWPROJECTController implements Initializable {
         try {
             comboBoxCivitas();
             comboBoxActivity();
+            comboBoxAuditIndex();
+            comboBoxStatusProject();
+            comboBoxRiskFactor();
+            
             setKaryawan();
             setScope();
+            
+//            listKaryawan.setDisable(true);
+//            listScope.setDisable(true);
+            
         } catch (SQLException ex) {
             Logger.getLogger(NEWPROJECTController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -346,8 +600,136 @@ public class NEWPROJECTController implements Initializable {
 
 
     @FXML
-    private void btnSave(MouseEvent event) {
-        //ystem.out.println();
+    private void btnSave(MouseEvent event) throws SQLException {
+        //Initiate to get value form
+            String civitasValue;
+            String activityValue;
+            String auditindexValue;
+            String statusValue;
+            String riskfactorValue;
+            
+            if(comboCivitas.getValue()==null){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo CIvitas kosong"));
+                    alert.showAndWait();
+            }else if(comboAcitivity.getValue()==null){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo comboAcitivity kosong"));
+                    alert.showAndWait();
+            }else if(comboAuditIndex.getValue()==null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo comboAuditIndex kosong"));
+                    alert.showAndWait();
+            }else if(comboRiskFactor.getValue()==null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo comboRiskFactor kosong"));
+                    alert.showAndWait();
+            
+            } else if(dateStart.getValue()==null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo dateStart kosong"));
+                    alert.showAndWait();
+            }else if(dateEnd.getValue()==null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo dateEnd kosong"));
+                    alert.showAndWait();
+            }else if(valueProject.getText()==null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo valueProject kosong"));
+                    alert.showAndWait();
+            }else {
+                String projectValue = valueProject.getText();
+                civitasValue = Integer.toString(comboCivitas.getSelectionModel().getSelectedItem().getIdCivitas());
+                activityValue = Integer.toString(comboAcitivity.getSelectionModel().getSelectedItem().getIdAcitivity());
+                auditindexValue = Integer.toString(comboAuditIndex.getSelectionModel().getSelectedItem().getIdaudit_Grading());
+                riskfactorValue = Integer.toString(comboRiskFactor.getSelectionModel().getSelectedItem().getIdrisk_Value());
+                LocalDate start = dateStart.getValue();
+                LocalDate end = dateEnd.getValue();
+                LocalDate nowDate = LocalDate.now();
+                                           
+                //create id
+                
+                String startDate = Integer.toString(start.getDayOfMonth());
+                String startMonth = Integer.toString(start.getMonthValue());
+                String endDate = Integer.toString(end.getDayOfMonth());
+                String endMonth = Integer.toString(end.getMonthValue());
+
+                idProject = ""+startMonth+""+civitasValue+""+activityValue+""+auditindexValue+""+riskfactorValue;
+                
+                if (comboStatus.getValue() == null){
+                    
+                    statusValue = "1";
+                    //int status_idstatus = 1;
+                    try {
+                         //setquery save
+                        modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
+                            riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
+                       // kon.stat.executeUpdate(modelProject.SelectNeeded);
+                        
+                        setDataListTask(idProject);
+                        
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Input Success");
+                        alert.setHeaderText(null);
+                        alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
+                        alert.showAndWait();
+                        
+                    } catch (SQLException ex) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText(String.valueOf(ex));
+                        alert.showAndWait();
+                    }
+                    
+                   
+                    
+                } else{
+                    
+                    statusValue = Integer.toString(comboStatus.getSelectionModel().getSelectedItem().getIdStatus());
+                    //int status_idstatus = 1;
+                    try {
+                         //setquery save
+                        modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
+                            riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
+                        //kon.stat.executeUpdate(modelProject.SelectNeeded);
+                        
+                        setDataListTask(idProject);
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Input Success");
+                        alert.setHeaderText(null);
+                        alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
+                        alert.showAndWait();
+                        
+                    } catch (SQLException ex) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText(String.valueOf(ex));
+                        alert.showAndWait();
+                    }
+
+                }
+                   
+ 
+            }
+            setIdProject(idProject);
+            //handleCurrentTeam(event, idProject);
+            //handleCurrentScope(event, idProject);
     }
 
 
@@ -365,26 +747,38 @@ public class NEWPROJECTController implements Initializable {
         setDataListTask(idProject);
         // load data project
         setDataProject(idProject);
+        //set idProject for all project they need to modified
+        setIdProject(idProject);
+        
+        btnSave.setDisable(true);
+        
+        listKaryawan.setDisable(false);
+        listScope.setDisable(false);
         
     }
     
     public  void setDataProject(String idProject) throws SQLException{
         kon.db();
-        modelDetail.loadProjectDetail(idProject);
-        dataProjectDetail =FXCollections.observableArrayList();
-        kon.res=kon.stat.executeQuery(modelDetail.queryload);
+        modelProject.loadPerProject(idProject);
+        
+        dataProject=FXCollections.observableArrayList();
+        kon.res=kon.stat.executeQuery(modelProject.SelectNeeded);
         try {
              while (kon.res.next()) {                
-                dataProjectDetail.add(new ProjectDetail(kon.res.getString(1), kon.res.getString(2), kon.res.getString(3), 
-                        kon.res.getString(5), kon.res.getString(4), 
-                        kon.res.getString(6), kon.res.getString(7), kon.res.getString(8), kon.res.getString(9), 
-                        kon.res.getString(10), kon.res.getString(11), kon.res.getString(12), kon.res.getString(13), 
-                        kon.res.getString(14), kon.res.getString(15)));
+                dataProject.add(new Project
+                        (kon.res.getString(1), kon.res.getString(2), kon.res.getInt(3), kon.res.getString(4), 
+                        kon.res.getString(5), kon.res.getString(6), kon.res.getString(7), kon.res.getString(8), 
+                        kon.res.getString(9), kon.res.getString(10),kon.res.getString(11), kon.res.getString(12), 
+                        kon.res.getString(13),kon.res.getDouble(14), kon.res.getString(15), kon.res.getString(16), 
+                        kon.res.getInt(17), kon.res.getInt(18), kon.res.getInt(19), kon.res.getInt(20), kon.res.getInt(21),
+                        kon.res.getInt(22), kon.res.getInt(23), kon.res.getInt(24), kon.res.getInt(25), kon.res.getInt(26),
+                        kon.res.getInt(27), kon.res.getInt(28), kon.res.getString(29), kon.res.getString(30),
+                        kon.res.getString(31)));
                 textProject = kon.res.getString(2);
-                textCivitas = kon.res.getString(3);
-                textActivity = kon.res.getString(4);
-                textStartDate = kon.res.getString(8);
-                textEndDate = kon.res.getString(9);
+                textCivitas = kon.res.getString(4);
+                textActivity = kon.res.getString(5);
+                textStartDate = kon.res.getString(10);
+                textEndDate = kon.res.getString(11);
                 //textRiskFactore = kon.res.getString(textEndDate)
                  System.out.println(textProject);
                  System.out.println(textActivity);
@@ -402,16 +796,29 @@ public class NEWPROJECTController implements Initializable {
              valueProject.setText(textProject);
              valueProject.setDisable(true);
              
-             // Date Start
              DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-             LocalDate localDateSt = LocalDate.parse(textStartDate, formatter);
-             dateStart.setValue(localDateSt);
-             dateStart.setDisable(true);
+             
+             // Date Start
+             if(textStartDate == null){
+                 dateStart.setValue(null);
+                 dateStart.setDisable(false);
+             } else{
+                LocalDate localDateSt = LocalDate.parse(textStartDate, formatter);
+                dateStart.setValue(localDateSt);
+                dateStart.setDisable(true);                 
+             }
+
              
              // date End
-             LocalDate localDateEnd = LocalDate.parse(textEndDate, formatter);
-             dateEnd.setValue(localDateEnd);
-             dateEnd.setDisable(true);
+             if(textEndDate == null){
+                 dateEnd.setValue(null);
+                 dateEnd.setDisable(false);
+             } else{
+                LocalDate localDateEnd = LocalDate.parse(textEndDate, formatter);
+                dateEnd.setValue(localDateEnd);
+                dateEnd.setDisable(true);                
+             }
+             
             
 
         } catch (SQLException ex) {
@@ -430,10 +837,10 @@ public class NEWPROJECTController implements Initializable {
     
         try {
             while (kon.res.next()) {                
-                dataScope.add(new Scope(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3)));
+                dataScope.add(new MasScope(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3)));
             }
             currentScope.setItems(dataScope);
-            currentScope.setCellFactory(scopeListView -> new ScopeDao());
+            currentScope.setCellFactory(scopeListView -> new MasScopeDao());
             currentScope.setVerticalGap(30.0);
             currentScope.setExpanded(true);
             currentScope.depthProperty().set(1);
@@ -456,12 +863,12 @@ public class NEWPROJECTController implements Initializable {
         try {
             
         while (kon.res.next()) {                
-               dataKaryawan.add(new Karyawan(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3),
+               dataKaryawan.add(new MasKaryawan(kon.res.getString(1),kon.res.getString(2),kon.res.getString(3),
                        kon.res.getString(4),kon.res.getString(5),kon.res.getString(6)));
             }
 
             currentTeam.setItems(dataKaryawan);
-            currentTeam.setCellFactory(karyawanListView -> new KaryawanDao());
+            currentTeam.setCellFactory(karyawanListView -> new MasKaryawanDao());
             currentTeam.setVerticalGap(30.0);
             currentTeam.setExpanded(true);
             currentTeam.depthProperty().set(1);
@@ -529,4 +936,91 @@ public class NEWPROJECTController implements Initializable {
         }
 //        
     }
+
+
+    @FXML
+    void loadRefreshTeam(MouseEvent event) throws SQLException {
+        setKaryawan();
+    }
+    
+   @FXML
+    private void handleModTeam(MouseEvent event) {
+        
+        List<String> list = currentTeam.getItems().stream().
+                map(MasKaryawan::getIdKaryawan).
+                collect(Collectors.toList());
+        for (String string : list) {
+            System.out.println(string);
+            modelKaryawan.setQueryProjectHasTeamSave(getIdProject(),string);
+        }
+    }
+    
+    @FXML
+    void handleCurrentTeam(MouseEvent event) {
+        String getIdKaryawan = currentTeam.getSelectionModel().getSelectedItem().getIdKaryawan();
+        System.out.println("get id karyawaan = "+ getIdKaryawan);
+    }
+    
+    @FXML
+    void handleListTeam(MouseEvent event) {
+        
+    }
+    
+        
+    @FXML
+    void loadRefresScope(MouseEvent event) throws SQLException {
+        setScope();
+    }
+    
+    @FXML
+    void handleModCurrentScope(MouseEvent event) {
+        String getIdScope = currentScope.getSelectionModel().getSelectedItem().getIdScope();
+        System.out.println("get id karyawaan = "+ getIdScope);
+    }
+    
+     @FXML
+    void handleCurrentScope(MouseEvent event) {
+        List<String> list = currentScope.getItems().stream().
+                map(MasScope::getIdScope).
+                collect(Collectors.toList());
+        for (String string : list) {
+            System.out.println(string);
+            modelScope.setQueryProjectHasScopeSave(getIdProject(),string);
+        }
+    }
+    
+     @FXML
+    void handleModListScope(MouseEvent event) {
+
+    }
+
+
+    @FXML
+    void handleDelete(MouseEvent event) {
+        String idTask = tblTask.getSelectionModel().getSelectedItem().getIdTask();
+        modelDetail.setDeleteTask(getIdProject(),idTask);
+    }
+
+    @FXML
+    void handleInput(MouseEvent event) {
+
+    }
+
+  
+    @FXML
+    void handleModTask(MouseEvent event) {
+
+    }
+
+
+    
+    
+    public String getIdProject() {
+        return idProject;
+    }
+
+    public void setIdProject(String idProject) {
+        this.idProject = idProject;
+    }
+
 }

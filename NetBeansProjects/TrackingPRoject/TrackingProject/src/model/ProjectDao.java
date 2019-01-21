@@ -6,6 +6,7 @@
 package model;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -122,12 +123,21 @@ public class ProjectDao extends ListCell<Project>{
     public String where; 
     public String groupBy=" GROUP BY PMK.project_idproject" ; 
     public String orderBy;
+    public String insert;
     
     public void loadProfilePerStatus(int idStatus){
         where = " where PRO.status_idstatus = "+idStatus+"";
         SelectNeeded = querySelect+where+groupBy;
         
     }
+    
+    public void loadPerProject(String idProject){
+        where = " where PMK.project_idproject = "+idProject+"";
+        SelectNeeded = querySelect+where+groupBy;
+        System.out.println(idProject);
+    }
+    
+  
     
     
     @Override
@@ -196,5 +206,21 @@ public class ProjectDao extends ListCell<Project>{
         setGraphic(project == null ? null : gridPane);
         
 
+    }
+
+    public void insertProject(String idProject, String projectValue, String civitasValue, 
+            String activityValue, String riskfactorValue, String auditindexValue, String status_idstatus, LocalDate start, 
+            LocalDate end, LocalDate nowDate) {
+        insert = "INSERT INTO `project` (`idproject`, `projectcol`, `lineproject`, \n" +
+"                       `civitas_idcivitas`, `master_activity_idactivity`, \n" +
+"                       `risk_factore_idrisk_factore`, `audit_grading_idaudit_grading`, \n" +
+"                       `status_idstatus`, `startmonth`, `endmonth`, `act_month_start`, \n" +
+"                       `act_month_end`, `create_date`, `mod_date`) \n" +
+"                       VALUES ('"+idProject+"', '"+projectValue+"', '0', '"+civitasValue+"', "
+                + "'"+activityValue+"', '"+riskfactorValue+"', '"+auditindexValue+"', '"+status_idstatus+"', \n" +
+"                               '"+start+"', '"+end+"', NULL, NULL, '"+nowDate+"', NULL)";
+        
+        SelectNeeded = insert;
+        
     }
 }

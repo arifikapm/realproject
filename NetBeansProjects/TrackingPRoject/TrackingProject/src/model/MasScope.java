@@ -12,13 +12,13 @@ import javafx.beans.property.StringProperty;
  *
  * @author kuupie
  */
-public class Scope {
+public class MasScope {
     
     private final StringProperty idProject;
     private final StringProperty idScope;
     private final StringProperty scopeCol;
     
-    public Scope(String idproject, String idscope, String scopecol) {
+    public MasScope(String idproject, String idscope, String scopecol) {
         this.idProject = new SimpleStringProperty(idproject);
         this.idScope = new SimpleStringProperty(idscope);
         this.scopeCol = new SimpleStringProperty(scopecol);

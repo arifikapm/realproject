@@ -15,7 +15,7 @@ import javafx.scene.control.ListCell;
  *
  * @author kuupie
  */
-public class CivitasDao {
+public class MasCivitasDao {
     
 //    @FXML
 //    private JFXComboBox<Civitas> comboCivitas;

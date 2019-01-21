@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
  *
  * @author kuupie
  */
-public class ScopeDao extends ListCell<Scope> {
+public class MasScopeDao extends ListCell<MasScope> {
     
     @FXML
     private Label titleScope;
@@ -39,6 +39,10 @@ public class ScopeDao extends ListCell<Scope> {
     
     public String queryCoPro="SELECT idscope, idscope,scopecol FROM master_scope";
     
+    public String insertInto;
+    
+    
+    
     public void loadScopeProject(String idProject){
         where = " WHERE pms.project_idproject =  "+idProject+" ";
         scopequery = select+where;
@@ -47,7 +51,7 @@ public class ScopeDao extends ListCell<Scope> {
     
     
     @Override
-    protected void updateItem(Scope project, boolean empty) {
+    protected void updateItem(MasScope project, boolean empty) {
         super.updateItem(project, empty);
         
         if(empty || project == null) {
@@ -80,5 +84,12 @@ public class ScopeDao extends ListCell<Scope> {
         public void loadScope(String idScope){
         where ="where pr.idproject="+idScope+" ";
         scopequery=select+where;
+    }
+
+    public void setQueryProjectHasScopeSave(String idProject, String string) {
+        insertInto = "INSERT INTO `project_has_master_scope` \n" +
+            "(`project_idproject`, `master_scope_idscope`) \n" +
+            "VALUES ('"+idProject+"', '"+string+"')";
+        System.out.println(insertInto);
     }
 }

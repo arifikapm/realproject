@@ -14,7 +14,7 @@ import javafx.beans.property.StringProperty;
  *
  * @author kuupie
  */
-public class Karyawan {
+public class MasKaryawan {
     
     private final StringProperty idKaryawan;
     private final StringProperty karyawanCol;
@@ -23,7 +23,7 @@ public class Karyawan {
     private final StringProperty jabatanCol;
     private final StringProperty status_Karyawancol;
     
-    public Karyawan(String idkaryawan, String karyawancol, String inisial_karyawan, String unitcol, 
+    public MasKaryawan(String idkaryawan, String karyawancol, String inisial_karyawan, String unitcol, 
             String jabatancol, String status_karyawancol){
         this.idKaryawan=new SimpleStringProperty(idkaryawan);
         this.karyawanCol=new SimpleStringProperty(karyawancol);

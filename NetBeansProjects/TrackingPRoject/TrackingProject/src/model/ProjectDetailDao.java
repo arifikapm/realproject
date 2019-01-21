@@ -16,6 +16,10 @@ public class ProjectDetailDao {
     koneksi kon = new koneksi();
     
     public String queryload;
+    public String insertInto;
+    public String update;
+    public String delete;
+    
     
     public String select="SELECT pr.idproject, ci.civitascol, ma.activitycol,"
             + "monthname(pr.startmonth) as startproject,day(pr.startmonth) as dayproject ,"
@@ -80,6 +84,12 @@ public class ProjectDetailDao {
         
         where=  " WHERE pr.idproject="+IdProject+"  ";
         queryload=select+where+and;
+    }
+
+    public void setDeleteTask(String idProject, String idTask) {
+        delete ="DELETE FROM `project_has_master_task` \n" +
+            "WHERE `project_has_master_task`.`project_idproject` = "+idProject+" \n" +
+            "AND `project_has_master_task`.`master_task_idtask` = "+idTask+"";
     }
     
 }

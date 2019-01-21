@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
  *
  * @author kuupie
  */
-public class KaryawanDao extends ListCell<Karyawan> {
+public class MasKaryawanDao extends ListCell<MasKaryawan> {
     
     @FXML
     private HBox gridPane;
@@ -27,6 +27,7 @@ public class KaryawanDao extends ListCell<Karyawan> {
     private FXMLLoader mLLoader;
     
     public String queryteam;
+    public String insertInto;
     
     public String selectAll="SELECT mk.idkaryawan, mk.karyawancol, mk.inisial_karyawan, dp.unitcol,"
             + "jb.jabatancol, st.status_karyawancol FROM master_karyawan as mk left join departemen as dp\n" +
@@ -61,7 +62,7 @@ public class KaryawanDao extends ListCell<Karyawan> {
     //public String queryKaryawan="SELECT idkaryawan, karyawancol FROM master_karyawan";
     
      @Override
-    protected void updateItem(Karyawan karyawan, boolean empty) {
+    protected void updateItem(MasKaryawan karyawan, boolean empty) {
         super.updateItem(karyawan, empty);
         
         if(empty || karyawan == null) {
@@ -101,4 +102,16 @@ public class KaryawanDao extends ListCell<Karyawan> {
         queryteam= selectTerm+where;
     }
     
+    public void setQueryProjectHasTeamSave(String IdProject, String string){
+        System.out.println("ini di setQuery = "+string);
+        insertInto = "INSERT INTO `project_has_master_karyawan` \n" +
+                "(`project_idproject`, `master_karyawan_idkaryawan`, \n" +
+                "`responsibility_idresponsibility`) \n" +
+                "VALUES ('"+IdProject+"', '"+string+"', NULL);";
+        System.out.println(insertInto);
+    }
+    
+    public void setQueryProjectHasTeamMod(){
+        
+    }
 }

@@ -15,7 +15,7 @@ import javafx.scene.layout.GridPane;
  *
  * @author kuupie
  */
-public class ActivityDao extends ListCell<Activity>{
+public class MasStatusProjectDao extends ListCell<MasStatusProject>{
 
     @FXML
     private GridPane gridPane;
@@ -26,9 +26,22 @@ public class ActivityDao extends ListCell<Activity>{
     private FXMLLoader mLLoader;
     
     public String selectall= "SELECT * FROM master_activity ORDER BY idactivity ASC";
+    public String select= "SELECT `idstatus`, `statuscol`, `inisial_status` "
+            + " ";
+    public String from = " FROM `master_status` ";
+    public String join;
+    public String where;
+    public String groupBy;
+    public String queryLoad;
+    
+    public void statusLoad(int IdStatus){
+        where = "WHERE idstatus = "+IdStatus+" ";
+        queryLoad = select+from+where;
+    }
+    
     
     @Override
-    protected void updateItem(Activity team, boolean empty) {
+    protected void updateItem(MasStatusProject team, boolean empty) {
         super.updateItem(team, empty);
         
         if(empty || team == null) {
@@ -49,7 +62,7 @@ public class ActivityDao extends ListCell<Activity>{
 
             }
 
-            textActivity.setText(team.getAcitivitycol());
+            textActivity.setText(team.getStatusCol());
             
             
         }

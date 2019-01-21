@@ -14,12 +14,12 @@ import javafx.beans.property.StringProperty;
  *
  * @author kuupie
  */
-public class Civitas {
+public class MasCivitas {
     
     private final IntegerProperty idCivitas;
     private final StringProperty civitasCol;
     
-    public Civitas(int idcivitas, String civitascol){
+    public MasCivitas(int idcivitas, String civitascol){
         this.idCivitas = new SimpleIntegerProperty(idcivitas);
         this.civitasCol = new SimpleStringProperty(civitascol);
     }

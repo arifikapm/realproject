@@ -9,6 +9,14 @@ package model;
  *
  * @author kuupie
  */
-public class RiskFactorDao {
+public class MasRiskFactorDao {
+    
+    public String select="SELECT * FROM risk_factore";
+    public String join="";
+    public String where="";
+    public String groupBy="";
+    public String queryload="";
+    
+    
     
 }
