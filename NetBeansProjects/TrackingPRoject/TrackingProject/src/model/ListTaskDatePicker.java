@@ -61,7 +61,7 @@ public void loadTaskProject(String idProject){
     @Override
     public void updateItem(Date item, boolean empty) {
 //        super.updateItem(item, empty);
-        System.out.println("test item2 = "+item);
+        
         if (empty) {
 //            System.out.println("item empty2");
             setText(null);

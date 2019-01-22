@@ -95,6 +95,8 @@ public class MasScopeDao extends ListCell<MasScope> {
     }
 
     public void setOnDeleteProjectHasScope(String idProject, String idScope) {
-        deleteProjectScope ="";
+        deleteProjectScope ="DELETE FROM `project_has_master_scope` \n" +
+            "WHERE `project_has_master_scope`.`project_idproject` = "+idProject+" \n" +
+            "AND `project_has_master_scope`.`master_scope_idscope` = "+idScope+"";
     }
 }

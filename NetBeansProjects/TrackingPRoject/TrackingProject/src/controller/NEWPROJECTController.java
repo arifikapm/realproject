@@ -22,6 +22,7 @@ import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
@@ -35,6 +36,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
@@ -958,25 +960,40 @@ public class NEWPROJECTController implements Initializable {
     @FXML
     void handleListCurrentScope(MouseEvent event) throws SQLException {
         // the way to delete scope from project has master scope
-        transferListMasScope(currentScope, listScope);
-//        String idScope = currentScope.getSelectionModel().getSelectedItem().getIdScope();
-//        try {
-//            modelScope.setOnDeleteProjectHasScope(getIdProject(), idScope);
-//            kon.stat.execute(modelScope.deleteProjectScope);
-//            
-//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//            alert.setTitle("Error");
-//            alert.setHeaderText(null);
-//            alert.setContentText(String.valueOf(currentScope.getSelectionModel().getSelectedItem().getScopeCol()));
-//            alert.showAndWait();
-//            
-//        } catch (SQLException ex) {
-//                    Alert alert = new Alert(Alert.AlertType.ERROR);
-//                    alert.setTitle("Error");
-//                    alert.setHeaderText(null);
-//                    alert.setContentText(String.valueOf(ex));
-//                    alert.showAndWait();
-//        }
+        int hd = 1;
+        transferListMasScope(currentScope, listScope, hd );
+        try {
+            
+            
+            
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Look, a Confirmation Dialog");
+                alert.setContentText("Are you ok with this?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    
+                    modelScope.setOnDeleteProjectHasScope(getIdProject(),getIdScope());
+                    kon.stat.executeUpdate(modelScope.deleteProjectScope);
+                    System.out.println(modelScope.deleteProjectScope);
+                    // ... user chose OK
+                    
+                    System.out.println("Delete Scope ");
+                } else {
+                   alert.close();
+                    // ... user chose CANCEL or closed the dialog
+                }
+
+        } catch (Exception e) {
+                        System.out.println("idScope Contains on list");
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText(String.valueOf("Duplicate Scope "));
+                        alert.showAndWait();
+        }
+//       
         
         
     }
@@ -984,10 +1001,22 @@ public class NEWPROJECTController implements Initializable {
     @FXML
     private void handleListScope(MouseEvent event) throws SQLException {
         //the way to insert scope on project has master scope
-        transferListMasScope(listScope, currentScope);
-        modelScope.setQueryProjectHasScopeSave(getIdProject(),getIdScope());
-        System.out.println("getIdProject = "+getIdProject());
-        System.out.println("getIdScope = "+getIdScope());
+        int hd = 2;
+        
+        try {
+            transferListMasScope(listScope, currentScope, hd);
+            modelScope.setQueryProjectHasScopeSave(getIdProject(),getIdScope());
+            kon.stat.executeUpdate(modelScope.insertInto);
+        } catch (Exception e) {
+                        System.out.println("idScope Contains on list");
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText(String.valueOf("Duplicate Scope "));
+                        alert.showAndWait();
+        }
+//        System.out.println("getIdProject = "+getIdProject());
+//        System.out.println("getIdScope = "+getIdScope());
         //kon.stat.execute(modelScope.insertInto);
 //         List<String> list = listScope.getItems().stream().
 //                                map(MasScope::getIdScope).
@@ -1073,7 +1102,7 @@ public class NEWPROJECTController implements Initializable {
         
     }
 
-    private void transferListMasScope(JFXListView<MasScope> listRemover, JFXListView<MasScope> listAddiver){
+    private void transferListMasScope(JFXListView<MasScope> listRemover, JFXListView<MasScope> listContainer, int hd){
         MasScope masScope= listRemover.getSelectionModel().getSelectedItem();
         idScope = listRemover.getSelectionModel().getSelectedItem().getIdScope();
         
@@ -1083,38 +1112,58 @@ public class NEWPROJECTController implements Initializable {
 //            listAddiver.getItems().add(masScope);
 //            listAddiver.setCellFactory(masScopeView -> new MasScopeDao());
 //                        //currentTeam.setVerticalGap(30.0);
-
+//
 //        }
-        
+       
         if(masScope != null){
-            if(listAddiver != null){
-                List<String> list = listAddiver.getItems().stream().
-                                map(MasScope::getIdScope).
-                                collect(Collectors.toList());
-            for (String string : list) {
-                if(masScope.getIdScope().contains(string)){
-                    listRemover.getItems().remove(masScope);
-                    System.out.println("scope sudah ada");
-                } else{
-                    listRemover.getItems().remove(masScope);
-                    
-                    System.out.println("scope berhasil di add");
-                    //listAddiver.setCellFactory(masScopeView -> new MasScopeDao());
-                }
-            }
-            //listRemover.getItems().remove(masScope);
-            //listAddiver.getItems().add(masScope);
-//            listAddiver.getItems().add(masScope);
-//            listAddiver.setCellFactory(masScopeView -> new MasScopeDao());
-                
-            } 
+            if(listContainer == null){
+                System.out.println("go");
                 listRemover.getItems().remove(masScope);
-                listAddiver.getItems().add(masScope);
-                listAddiver.setCellFactory(masScopeView -> new MasScopeDao());
-            
-            
-            
+                listContainer.getItems().add(masScope);
+                
+            } else{
+                
+                if(checkIdExisScope(listRemover, listContainer) == true){
+                    
+                    if (hd == 2) {
+
+                        listRemover.getItems().remove(masScope);
+                        
+                    } else{
+                        listRemover.getItems().remove(masScope);
+                        listContainer.getItems().add(masScope);
+                        System.out.println("hd current scope");
+                    }
+                    
+                } else{
+                    System.out.println("just go");
+                    listRemover.getItems().remove(masScope);
+                    listContainer.getItems().add(masScope);
+                    //listContainer.setCellFactory(masScopeView -> new MasScopeDao());
+                }
+//                System.out.println("check yout idscope on current list first");
+//                List<String> listChecker = listContainer.getItems().stream().
+//                        map(MasScope::getIdScope).
+//                        collect(Collectors.toList());
+//                for (String listAdapter : listChecker) {
+//                    System.out.println(listAdapter);
+//                    if (listAdapter.trim().contains(idScope)) {
+//                        System.out.println("idScope Contains on list");
+//                     break;
+//                    } 
+//                     
+//                    
+//                    
+//                        
+//                        //System.out.println("show it all "+idScope);
+//                    
+//                }
+                
+                
+            }
+            listContainer.setCellFactory(masScopeView -> new MasScopeDao());
         }
+        
         currentScope.setVerticalGap(30.0);
         currentScope.setExpanded(true);
         currentScope.depthProperty().set(1);
@@ -1146,5 +1195,29 @@ public class NEWPROJECTController implements Initializable {
     public void setIdKaryawan(String value) {
         this.idKaryawan = value;
     }
+    
+    public boolean checkCurrentList(){
+        List<String> listChecker = currentScope.getItems().stream().
+                        map(MasScope::getIdScope).
+                        collect(Collectors.toList());
+        for (String listChecker1 : listChecker) {
+            if (listChecker1.trim().contains(idScope)) {
+                    return true;
+            }
+        }
+        return false;
+    }
 
+    private boolean checkIdExisScope(JFXListView<MasScope> listRemover, JFXListView<MasScope> listContainer) {
+        List<String> listChecker = listContainer.getItems().stream().
+                        map(MasScope::getIdScope).
+                        collect(Collectors.toList());
+        for (String listChecker1 : listChecker) {
+            if (listChecker1.trim().contains(idScope)) {
+                
+                return true;
+            }
+        }
+        return false;
+    }
 }
