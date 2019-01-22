@@ -40,6 +40,7 @@ public class MasScopeDao extends ListCell<MasScope> {
     public String queryCoPro="SELECT idscope, idscope,scopecol FROM master_scope";
     
     public String insertInto;
+    public String deleteProjectScope;
     
     
     
@@ -90,6 +91,10 @@ public class MasScopeDao extends ListCell<MasScope> {
         insertInto = "INSERT INTO `project_has_master_scope` \n" +
             "(`project_idproject`, `master_scope_idscope`) \n" +
             "VALUES ('"+idProject+"', '"+string+"')";
-        System.out.println(insertInto);
+        //System.out.println(insertInto);
+    }
+
+    public void setOnDeleteProjectHasScope(String idProject, String idScope) {
+        deleteProjectScope ="";
     }
 }

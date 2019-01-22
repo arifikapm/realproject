@@ -53,17 +53,17 @@ public void loadTaskProject(String idProject){
     public ListTaskDatePicker() {
 
         super();
-        System.out.println("DatePickerCell2");
+//        System.out.println("DatePickerCell2");
          formatter = new SimpleDateFormat("yyyy-MM-dd");  
 
     }
 
     @Override
     public void updateItem(Date item, boolean empty) {
-        super.updateItem(item, empty);
+//        super.updateItem(item, empty);
         System.out.println("test item2 = "+item);
         if (empty) {
-            System.out.println("item empty2");
+//            System.out.println("item empty2");
             setText(null);
             setGraphic(null);
         } else {
@@ -71,10 +71,10 @@ public void loadTaskProject(String idProject){
             if (isEditing()) {
                 System.out.println(" editing2");
                 if(datePicker != null) {
-                    System.out.println(" editing datepicker isnull2");
+//                    System.out.println(" editing datepicker isnull2");
                     datePicker.setValue(getDate());
                 } 
-                    System.out.println(" editing datepicker notnull2");
+//                    System.out.println(" editing datepicker notnull2");
                 setText(null);
                 setGraphic(datePicker);
                 
@@ -85,7 +85,7 @@ public void loadTaskProject(String idProject){
                     setGraphic(null);
                 } else{
                     setText(formatter.format(item));
-                    System.out.println("updateItem2");
+//                    System.out.println("updateItem2");
                     setGraphic(null);
                 }
             }
@@ -95,14 +95,14 @@ public void loadTaskProject(String idProject){
     private void createDatePicker() {
         this.datePicker = new DatePicker(getDate());
         //String str = new DatePicker(getDate());
-        System.out.println(" prepare for createdate picker2");
+//        System.out.println(" prepare for createdate picker2");
         datePicker.setPromptText("yyyy-MM-dd");
         datePicker.setEditable(true);
 
 
         datePicker.setOnAction(new EventHandler() {
                 public void handle(Event t) {
-                    System.out.println(" setOnAction2");
+//                    System.out.println(" setOnAction2");
                     LocalDate date = datePicker.getValue();
                     int index = getIndex();
 
@@ -124,7 +124,7 @@ public void loadTaskProject(String idProject){
     @Override
     public void startEdit() {
         super.startEdit();
-        System.out.println("startEdit2");
+//        System.out.println("startEdit2");
         if(!isEmpty()) {
             createDatePicker();
             setText(null);
@@ -135,7 +135,7 @@ public void loadTaskProject(String idProject){
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-        System.out.println("cancelEdit2");
+//        System.out.println("cancelEdit2");
         if(getDate() == null){
             setGraphic(null);
         } else{
@@ -146,19 +146,19 @@ public void loadTaskProject(String idProject){
     }
 
     public LocalDate getDate() {
-        System.out.println("getDate2");
+        //System.out.println("getDate2");
         LocalDate date;
         if (getItem() instanceof java.sql.Date) {
             date = ((java.sql.Date) getItem()).toLocalDate();
-            System.out.println("sql2");
-            System.out.println(date);
+//            System.out.println("sql2");
+//            System.out.println(date);
         } else {
-            System.out.println("util2");
+//            System.out.println("util2");
             if(getItem() == null ){
                 return null;
             }else{
                 date = getItem().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                System.out.println("test date 2 ="+date);
+//                System.out.println("test date 2 ="+date);
             }
             
         }

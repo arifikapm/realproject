@@ -285,15 +285,31 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                      </GridPane.margin>
                      <children>
-                        <JFXListView fx:id="currentScope" onMouseClicked="#handleModCurrentScope" style="-fx-background-color: #E7E7E7;" stylesheets="@mylistview.css" verticalGap="120.0" GridPane.rowIndex="2" />
-                        <JFXListView fx:id="listScope" onMouseClicked="#handleModListScope" style="-fx-background-color: #E7E7E7;" stylesheets="@mylistview.css" verticalGap="120.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleCurrentScope" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #9E9E9E;">
+                        <JFXListView fx:id="currentScope" onMouseClicked="#handleListCurrentScope" style="-fx-background-color: #E7E7E7;" stylesheets="@mylistview.css" verticalGap="120.0" GridPane.rowIndex="2" />
+                        <JFXListView fx:id="listScope" onMouseClicked="#handleListScope" style="-fx-background-color: #E7E7E7;" stylesheets="@mylistview.css" verticalGap="120.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #9E9E9E;">
                            <children>
-                              <Label text="Scope" textAlignment="CENTER" textFill="WHITE">
-                                 <font>
-                                    <Font name="Ubuntu" size="12.0" />
-                                 </font>
-                              </Label>
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="146.0" />
+                                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="80.0" minWidth="10.0" prefWidth="26.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Scope" textAlignment="CENTER" textFill="WHITE">
+                                       <font>
+                                          <Font name="Ubuntu" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="SAVE" onMouseClicked="#handleCurrentScope" GridPane.columnIndex="1">
+                                       <GridPane.margin>
+                                          <Insets right="5.0" />
+                                       </GridPane.margin>
+                                    </FontAwesomeIconView>
+                                 </children>
+                              </GridPane>
                            </children>
                         </VBox>
                         <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #34495e;" GridPane.columnIndex="2">
@@ -385,7 +401,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
                      </GridPane.margin>
                      <children>
-                        <JFXListView fx:id="currentTeam" onMouseClicked="#handleCurrentTeam" style="-fx-background-color: #E7E7E7;" stylesheets="@mylistview.css" verticalGap="120.0" GridPane.rowIndex="2" />
+                        <JFXListView fx:id="currentTeam" onMouseClicked="#handleListCurrentTeam" style="-fx-background-color: #E7E7E7;" stylesheets="@mylistview.css" GridPane.rowIndex="2" />
                         <JFXListView fx:id="listKaryawan" onMouseClicked="#handleListTeam" style="-fx-background-color: #E7E7E7;" stylesheets="@mylistview.css" verticalGap="120.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleModTeam" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #9E9E9E;">
                            <children>

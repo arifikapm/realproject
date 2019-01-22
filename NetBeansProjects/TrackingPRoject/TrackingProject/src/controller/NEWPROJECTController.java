@@ -23,10 +23,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -77,7 +80,7 @@ public class NEWPROJECTController implements Initializable {
    // MasCivitas civitasData;
     
     public  String textProject, textActivity, textCivitas, textStartDate, textEndDate, textRiskFactore;
-    private String idProject;
+    private String idProject, idScope, idKaryawan;
 
     @FXML
     private BorderPane viewMaster;
@@ -405,8 +408,6 @@ public class NEWPROJECTController implements Initializable {
                 if (activityCol == null){
                   return null;
                 } else {
-                    //System.out.println("load the id = "+civitasCol.getIdCivitas());
-                    //saveMode(civitasCol.getIdCivitas());
                   return activityCol.getAudit_Gradingcol();
                 }
               }
@@ -472,8 +473,6 @@ public class NEWPROJECTController implements Initializable {
                 if (activityCol == null){
                   return null;
                 } else {
-                    //System.out.println("load the id = "+civitasCol.getIdCivitas());
-                    //saveMode(civitasCol.getIdCivitas());
                   return activityCol.getStatusCol();
                 }
               }
@@ -505,33 +504,33 @@ public class NEWPROJECTController implements Initializable {
             }
             listScope.setItems(dataScope);
             listScope.setCellFactory(scopeListView -> new MasScopeDao());
-            listScope.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue)->{
-                if(newValue!=null){
-                    Platform.runLater(() -> {
-                        listScope.getSelectionModel().select(-1);
-                        currentScope.getItems().add(newValue);
-                        currentScope.setCellFactory(scopeListView -> new MasScopeDao());
+//            listScope.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue)->{
+//                if(newValue!=null){
+//                    Platform.runLater(() -> {
+//                        listScope.getSelectionModel().select(-1);
+//                        currentScope.getItems().add(newValue);
+//                        currentScope.setCellFactory(scopeListView -> new MasScopeDao());
 //                        currentScope.getSelectionModel().selectedItemProperty().addListener((obt, bfrValue, afrValue)->{
 //                            if(afrValue!=null){
 //                                Platform.runLater(() -> {
 //                                    currentScope.getSelectionModel().select(-1);
-//                                    //listScope.getItems();
+//                                    listScope.getItems().add(afrValue);
 //                                    currentScope.getItems().remove(afrValue);
 //                                    
 //                                    //listScope.setCellFactory(scopeListView -> new MasScopeDao());
 //                                });
 //                            }
 //                        });
-                        listScope.getItems().remove(newValue);
-                        currentScope.setVerticalGap(30.0);
-                        currentScope.setExpanded(true);
-                        currentScope.depthProperty().set(1);
-                        currentScope.getStyleClass().add("mylistview");
-                    });
-
-                } 
-                
-            });
+//                        listScope.getItems().remove(newValue);
+//                        currentScope.setVerticalGap(30.0);
+//                        currentScope.setExpanded(true);
+//                        currentScope.depthProperty().set(1);
+//                        currentScope.getStyleClass().add("mylistview");
+//                    });
+//
+//                } 
+//                
+//            });
             listScope.setVerticalGap(30.0);
             listScope.setExpanded(true);
             listScope.depthProperty().set(1);
@@ -549,23 +548,6 @@ public class NEWPROJECTController implements Initializable {
 
             listKaryawan.setItems(dataKaryawan);
             listKaryawan.setCellFactory(karyawanListView -> new MasKaryawanDao());
-            listKaryawan.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue)->{
-                if(newValue!=null){
-                    Platform.runLater(() -> {
-                        listKaryawan.getSelectionModel().select(-1);
-                        
-                        currentTeam.getItems().add(newValue);
-                        currentTeam.setCellFactory(karywanListView -> new MasKaryawanDao());
-                        listKaryawan.getItems().remove(newValue);
-                        currentTeam.setVerticalGap(30.0);
-                        currentTeam.setExpanded(true);
-                        currentTeam.depthProperty().set(1);
-                        currentTeam.getStyleClass().add("mylistview");
-                    });
-
-                } 
-                
-            });
             listKaryawan.setVerticalGap(30.0);
             listKaryawan.setExpanded(true);
             listKaryawan.depthProperty().set(1);
@@ -589,8 +571,8 @@ public class NEWPROJECTController implements Initializable {
             setKaryawan();
             setScope();
             
-//            listKaryawan.setDisable(true);
-//            listScope.setDisable(true);
+            listKaryawan.setDisable(true);
+            listScope.setDisable(true);
             
         } catch (SQLException ex) {
             Logger.getLogger(NEWPROJECTController.class.getName()).log(Level.SEVERE, null, ex);
@@ -670,66 +652,67 @@ public class NEWPROJECTController implements Initializable {
 
                 idProject = ""+startMonth+""+civitasValue+""+activityValue+""+auditindexValue+""+riskfactorValue;
                 
-                if (comboStatus.getValue() == null){
-                    
-                    statusValue = "1";
-                    //int status_idstatus = 1;
-                    try {
-                         //setquery save
-                        modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
-                            riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
-                       // kon.stat.executeUpdate(modelProject.SelectNeeded);
-                        
-                        setDataListTask(idProject);
-                        
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Input Success");
-                        alert.setHeaderText(null);
-                        alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
-                        alert.showAndWait();
-                        
-                    } catch (SQLException ex) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText(null);
-                        alert.setContentText(String.valueOf(ex));
-                        alert.showAndWait();
-                    }
-                    
-                   
-                    
-                } else{
-                    
-                    statusValue = Integer.toString(comboStatus.getSelectionModel().getSelectedItem().getIdStatus());
-                    //int status_idstatus = 1;
-                    try {
-                         //setquery save
-                        modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
-                            riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
-                        //kon.stat.executeUpdate(modelProject.SelectNeeded);
-                        
-                        setDataListTask(idProject);
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Input Success");
-                        alert.setHeaderText(null);
-                        alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
-                        alert.showAndWait();
-                        
-                    } catch (SQLException ex) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText(null);
-                        alert.setContentText(String.valueOf(ex));
-                        alert.showAndWait();
-                    }
-
-                }
+//                if (comboStatus.getValue() == null){
+//                    
+//                    statusValue = "1";
+//                    //int status_idstatus = 1;
+//                    try {
+//                         //setquery save
+//                        modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
+//                            riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
+//                        kon.stat.executeUpdate(modelProject.SelectNeeded);
+//                        
+//                        setDataListTask(idProject);
+//                        
+//                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                        alert.setTitle("Input Success");
+//                        alert.setHeaderText(null);
+//                        alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
+//                        alert.showAndWait();
+//                        
+//                    } catch (SQLException ex) {
+//                        Alert alert = new Alert(Alert.AlertType.ERROR);
+//                        alert.setTitle("Error");
+//                        alert.setHeaderText(null);
+//                        alert.setContentText(String.valueOf(ex));
+//                        alert.showAndWait();
+//                    }
+//                    
+//                   
+//                    
+//                } else{
+//                    
+//                    statusValue = Integer.toString(comboStatus.getSelectionModel().getSelectedItem().getIdStatus());
+//                    //int status_idstatus = 1;
+//                    try {
+//                         //setquery save
+//                        modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
+//                            riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
+//                        kon.stat.executeUpdate(modelProject.SelectNeeded);
+//                        
+//                        setDataListTask(idProject);
+//                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                        alert.setTitle("Input Success");
+//                        alert.setHeaderText(null);
+//                        alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
+//                        alert.showAndWait();
+//                        
+//                    } catch (SQLException ex) {
+//                        Alert alert = new Alert(Alert.AlertType.ERROR);
+//                        alert.setTitle("Error");
+//                        alert.setHeaderText(null);
+//                        alert.setContentText(String.valueOf(ex));
+//                        alert.showAndWait();
+//                    }
+//
+//                }
                    
  
             }
             setIdProject(idProject);
-            //handleCurrentTeam(event, idProject);
-            //handleCurrentScope(event, idProject);
+
+            listKaryawan.setDisable(false);
+            listScope.setDisable(false);
     }
 
 
@@ -889,7 +872,7 @@ public class NEWPROJECTController implements Initializable {
         modelDate2.loadTaskProject(idProject);
         dataDate1=FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(modelDate2.queryToLoad);
-        System.out.println(modelDate2.queryToLoad);
+        
         
         try {
             while (kon.res.next()) {                
@@ -940,11 +923,11 @@ public class NEWPROJECTController implements Initializable {
 
     @FXML
     void loadRefreshTeam(MouseEvent event) throws SQLException {
-        setKaryawan();
+        //setKaryawan();
     }
     
    @FXML
-    private void handleModTeam(MouseEvent event) {
+    private void handleModTeam(MouseEvent event) throws SQLException {
         
         List<String> list = currentTeam.getItems().stream().
                 map(MasKaryawan::getIdKaryawan).
@@ -952,47 +935,109 @@ public class NEWPROJECTController implements Initializable {
         for (String string : list) {
             System.out.println(string);
             modelKaryawan.setQueryProjectHasTeamSave(getIdProject(),string);
+            //kon.stat.execute(modelKaryawan.insertInto);
         }
     }
     
     @FXML
-    void handleCurrentTeam(MouseEvent event) {
-        String getIdKaryawan = currentTeam.getSelectionModel().getSelectedItem().getIdKaryawan();
-        System.out.println("get id karyawaan = "+ getIdKaryawan);
+    void handleListCurrentTeam(MouseEvent event) {
+        transferListMasKaryawan(currentTeam, listKaryawan);
     }
     
     @FXML
     void handleListTeam(MouseEvent event) {
-        
+        transferListMasKaryawan(listKaryawan, currentTeam);
     }
     
         
     @FXML
     void loadRefresScope(MouseEvent event) throws SQLException {
-        setScope();
+        //setScope();
     }
     
     @FXML
-    void handleModCurrentScope(MouseEvent event) {
-        String getIdScope = currentScope.getSelectionModel().getSelectedItem().getIdScope();
-        System.out.println("get id karyawaan = "+ getIdScope);
+    void handleListCurrentScope(MouseEvent event) throws SQLException {
+        // the way to delete scope from project has master scope
+        transferListMasScope(currentScope, listScope);
+//        String idScope = currentScope.getSelectionModel().getSelectedItem().getIdScope();
+//        try {
+//            modelScope.setOnDeleteProjectHasScope(getIdProject(), idScope);
+//            kon.stat.execute(modelScope.deleteProjectScope);
+//            
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setTitle("Error");
+//            alert.setHeaderText(null);
+//            alert.setContentText(String.valueOf(currentScope.getSelectionModel().getSelectedItem().getScopeCol()));
+//            alert.showAndWait();
+//            
+//        } catch (SQLException ex) {
+//                    Alert alert = new Alert(Alert.AlertType.ERROR);
+//                    alert.setTitle("Error");
+//                    alert.setHeaderText(null);
+//                    alert.setContentText(String.valueOf(ex));
+//                    alert.showAndWait();
+//        }
+        
+        
     }
     
-     @FXML
-    void handleCurrentScope(MouseEvent event) {
-        List<String> list = currentScope.getItems().stream().
-                map(MasScope::getIdScope).
-                collect(Collectors.toList());
-        for (String string : list) {
-            System.out.println(string);
-            modelScope.setQueryProjectHasScopeSave(getIdProject(),string);
-        }
+    @FXML
+    private void handleListScope(MouseEvent event) throws SQLException {
+        //the way to insert scope on project has master scope
+        transferListMasScope(listScope, currentScope);
+        modelScope.setQueryProjectHasScopeSave(getIdProject(),getIdScope());
+        System.out.println("getIdProject = "+getIdProject());
+        System.out.println("getIdScope = "+getIdScope());
+        //kon.stat.execute(modelScope.insertInto);
+//         List<String> list = listScope.getItems().stream().
+//                                map(MasScope::getIdScope).
+//                                collect(Collectors.toList());
+//         Set<String> set = listScope.getItems().stream().
+//                 map(MasScope::getIdScope).collect(Collectors.toCollection(TreeSet::new));
+//         System.out.println("ini set = "+set);
+//         
+//          String joined = listScope.getItems().stream()
+//                           .map(Object::toString)
+//                           .collect(Collectors.joining(", "));
+//          System.out.println("inijoined = "+ joined);
+////            for (String string : list) {
+////                System.out.println(string);
+////                modelScope.setQueryProjectHasScopeSave(getIdProject(),string);
+////                kon.stat.execute(modelScope.insertInto);
+////            }
+//            
+ 
     }
     
-     @FXML
-    void handleModListScope(MouseEvent event) {
+    @FXML
+    void handleCurrentScope(MouseEvent event) throws SQLException {
+//        try {
+//            List<String> list = currentScope.getItems().stream().
+//                                map(MasScope::getIdScope).
+//                                collect(Collectors.toList());
+//            for (String string : list) {
+//                System.out.println(string);
+//                modelScope.setQueryProjectHasScopeSave(getIdProject(),string);
+//                kon.stat.execute(modelScope.insertInto);
+//            }
+//            
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                    alert.setTitle("Success");
+//                    alert.setHeaderText(null);
+//                    alert.setContentText(String.valueOf("Add Scope \n Success "));
+//                    alert.showAndWait();
+//            
+//        } catch (SQLException ex) {
+//                    Alert alert = new Alert(Alert.AlertType.ERROR);
+//                    alert.setTitle("Error");
+//                    alert.setHeaderText(null);
+//                    alert.setContentText(String.valueOf(ex));
+//                    alert.showAndWait();
+//        }
+        
+    }
+    
 
-    }
 
 
     @FXML
@@ -1011,16 +1056,95 @@ public class NEWPROJECTController implements Initializable {
     void handleModTask(MouseEvent event) {
 
     }
+    
+    
+    private void transferListMasKaryawan(JFXListView<MasKaryawan> listRemover, JFXListView<MasKaryawan> listAddiver){
+        MasKaryawan maska= listRemover.getSelectionModel().getSelectedItem();
+        listRemover.getSelectionModel().clearSelection();
+        if(maska != null){
+            listRemover.getItems().remove(maska);
+            listAddiver.getItems().add(maska);
+            listAddiver.setCellFactory(maskaView -> new MasKaryawanDao());
+                        //currentTeam.setVerticalGap(30.0);
+                        currentTeam.setExpanded(true);
+                        currentTeam.depthProperty().set(1);
+                        currentTeam.getStyleClass().add("mylistview");
+        }
+        
+    }
 
+    private void transferListMasScope(JFXListView<MasScope> listRemover, JFXListView<MasScope> listAddiver){
+        MasScope masScope= listRemover.getSelectionModel().getSelectedItem();
+        idScope = listRemover.getSelectionModel().getSelectedItem().getIdScope();
+        
+        listRemover.getSelectionModel().clearSelection();
+//        if(masScope != null){
+//            listRemover.getItems().remove(masScope);
+//            listAddiver.getItems().add(masScope);
+//            listAddiver.setCellFactory(masScopeView -> new MasScopeDao());
+//                        //currentTeam.setVerticalGap(30.0);
 
+//        }
+        
+        if(masScope != null){
+            if(listAddiver != null){
+                List<String> list = listAddiver.getItems().stream().
+                                map(MasScope::getIdScope).
+                                collect(Collectors.toList());
+            for (String string : list) {
+                if(masScope.getIdScope().contains(string)){
+                    listRemover.getItems().remove(masScope);
+                    System.out.println("scope sudah ada");
+                } else{
+                    listRemover.getItems().remove(masScope);
+                    
+                    System.out.println("scope berhasil di add");
+                    //listAddiver.setCellFactory(masScopeView -> new MasScopeDao());
+                }
+            }
+            //listRemover.getItems().remove(masScope);
+            //listAddiver.getItems().add(masScope);
+//            listAddiver.getItems().add(masScope);
+//            listAddiver.setCellFactory(masScopeView -> new MasScopeDao());
+                
+            } 
+                listRemover.getItems().remove(masScope);
+                listAddiver.getItems().add(masScope);
+                listAddiver.setCellFactory(masScopeView -> new MasScopeDao());
+            
+            
+            
+        }
+        currentScope.setVerticalGap(30.0);
+        currentScope.setExpanded(true);
+        currentScope.depthProperty().set(1);
+        currentScope.getStyleClass().add("mylistview");
+        
+    }
     
     
     public String getIdProject() {
         return idProject;
     }
 
-    public void setIdProject(String idProject) {
-        this.idProject = idProject;
+    public void setIdProject(String value) {
+        this.idProject = value;
+    }
+    
+    public String getIdScope() {
+        return idScope;
+    }
+
+    public void setIdScope(String value) {
+        this.idScope = value;
+    }
+    
+    public String getIdKaryawan() {
+        return idKaryawan;
+    }
+
+    public void setIdKaryawan(String value) {
+        this.idKaryawan = value;
     }
 
 }

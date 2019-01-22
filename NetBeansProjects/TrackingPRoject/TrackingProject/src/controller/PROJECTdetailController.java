@@ -163,10 +163,9 @@ public class PROJECTdetailController implements Initializable {
         //model.loadDetail(idProject);
         model.loadProjectDetail(idProject);
         
-        
         data=FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(model.queryload);
-        
+
         while (kon.res.next()) {                
                 data.add(new ProjectDetail(kon.res.getString(1), kon.res.getString(2), kon.res.getString(3), 
                         kon.res.getString(5), kon.res.getString(4), 

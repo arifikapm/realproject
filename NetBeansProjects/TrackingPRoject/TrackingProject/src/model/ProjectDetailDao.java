@@ -78,6 +78,7 @@ public class ProjectDetailDao {
                     "and master_task_idtask = 15) as tgl_Actend,";
         where=  " WHERE pro.idproject="+IdProject+"  ";
         queryload=selected+tglCount+cases+textFrom+innerFrom+from+union+where+groupBy;
+        //System.out.println(queryload);
     }
     
     public void loadDetail(String IdProject){

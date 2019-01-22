@@ -94,6 +94,7 @@ public class PROJECTController implements Initializable {
 //        startMonth = rootViewList.getSelectionModel().getSelectedItem().getStartmonth();
 //        endMonth = rootViewList.getSelectionModel().getSelectedItem().getEndmonth();
         openDetail();
+        
     }
 
     private void openDetail() throws IOException, SQLException {
@@ -101,6 +102,7 @@ public class PROJECTController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PROJECTdetail.fxml"));
         BorderPane newScene = loader.load();
         PROJECTdetailController mct = loader.getController();
+        System.out.println("idPro = "+idPro);
         mct.setData(idPro);
         viewProject.setCenter(newScene);
     }
