@@ -943,6 +943,9 @@ public class NEWPROJECTController implements Initializable {
 //        }
     }
     
+    //add mouse event focus
+    //focus show karyawan as a detail 
+    
     @FXML
     void handleListCurrentTeam(MouseEvent event) {
         int hd = 1;
@@ -967,9 +970,6 @@ public class NEWPROJECTController implements Initializable {
         int hd = 1;
         transferListMasScope(currentScope, listScope, hd );
         try {
-            
-            
-            
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Dialog");
                 alert.setHeaderText("Look, a Confirmation Dialog");
@@ -990,11 +990,11 @@ public class NEWPROJECTController implements Initializable {
                 }
 
         } catch (Exception e) {
-                        System.out.println("idScope Contains on list");
+                        System.out.println("Scope Contains on list");
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error");
                         alert.setHeaderText(null);
-                        alert.setContentText(String.valueOf("Duplicate Scope "));
+                        alert.setContentText(String.valueOf(" Scope Contains on list \n Duplicate Scope "));
                         alert.showAndWait();
         }
 //       
@@ -1074,9 +1074,49 @@ public class NEWPROJECTController implements Initializable {
 
 
     @FXML
-    void handleDelete(MouseEvent event) {
+    public void handleDelete(MouseEvent event) throws SQLException {
         String idTask = tblTask.getSelectionModel().getSelectedItem().getIdTask();
-        modelDetail.setDeleteTask(getIdProject(),idTask);
+        int taskId = Integer.parseInt(idTask);
+        
+        if(checkIdTaks(taskId) == true){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText(String.valueOf("Mandatory Task \n Task Tidak Dapat dihapus"));
+            alert.showAndWait();
+        } else{
+            try {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Look, a Confirmation Dialog");
+                alert.setContentText("Are you ok with this?");
+                
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    
+                    modelDetail.setDeleteTask(getIdProject(),idTask);
+                    kon.stat.executeUpdate(modelDetail.delete);
+                    System.out.println(modelDetail.delete);
+                    // ... user chose OK
+                    
+                    System.out.println("Delete Scope ");
+                } else {
+                   alert.close();
+                    // ... user chose CANCEL or closed the dialog
+                }
+                
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText(String.valueOf(e));
+                alert.showAndWait();
+            }
+            
+        }
+        //model to set on query
+        
+        
     }
 
     @FXML
@@ -1245,5 +1285,16 @@ public class NEWPROJECTController implements Initializable {
             }
         }
         return false;
+    }
+    
+    private boolean checkIdTaks(int taskId) {
+        //bolean checking id selection list 
+        if(taskId == 1 || taskId == 3 || taskId == 7 || taskId == 12 || taskId == 13
+                || taskId == 15){
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 }

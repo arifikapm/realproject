@@ -93,4 +93,12 @@ public class ProjectDetailDao {
             "AND `project_has_master_task`.`master_task_idtask` = "+idTask+"";
     }
     
+    public void setOnModified(){
+        
+    }
+    
+    public void setOnInsert(){
+        
+    }
+    
 }
