@@ -654,6 +654,8 @@ public class NEWPROJECTController implements Initializable {
 
                 idProject = ""+startMonth+""+civitasValue+""+activityValue+""+auditindexValue+""+riskfactorValue;
                 
+                //to save Project on database
+                
 //                if (comboStatus.getValue() == null){
 //                    
 //                    statusValue = "1";
@@ -931,24 +933,26 @@ public class NEWPROJECTController implements Initializable {
    @FXML
     private void handleModTeam(MouseEvent event) throws SQLException {
         
-        List<String> list = currentTeam.getItems().stream().
-                map(MasKaryawan::getIdKaryawan).
-                collect(Collectors.toList());
-        for (String string : list) {
-            System.out.println(string);
-            modelKaryawan.setQueryProjectHasTeamSave(getIdProject(),string);
-            //kon.stat.execute(modelKaryawan.insertInto);
-        }
+//        List<String> list = currentTeam.getItems().stream().
+//                map(MasKaryawan::getIdKaryawan).
+//                collect(Collectors.toList());
+//        for (String string : list) {
+//            System.out.println(string);
+//            modelKaryawan.setQueryProjectHasTeamSave(getIdProject(),string);
+//            //kon.stat.execute(modelKaryawan.insertInto);
+//        }
     }
     
     @FXML
     void handleListCurrentTeam(MouseEvent event) {
-        transferListMasKaryawan(currentTeam, listKaryawan);
+        int hd = 1;
+        transferListMasKaryawan(currentTeam, listKaryawan, hd);
     }
     
     @FXML
     void handleListTeam(MouseEvent event) {
-        transferListMasKaryawan(listKaryawan, currentTeam);
+        int hd = 2;
+        transferListMasKaryawan(listKaryawan, currentTeam, hd);
     }
     
         
@@ -1087,18 +1091,57 @@ public class NEWPROJECTController implements Initializable {
     }
     
     
-    private void transferListMasKaryawan(JFXListView<MasKaryawan> listRemover, JFXListView<MasKaryawan> listAddiver){
+    private void transferListMasKaryawan(JFXListView<MasKaryawan> listRemover, JFXListView<MasKaryawan> listContainer, int hd){
         MasKaryawan maska= listRemover.getSelectionModel().getSelectedItem();
+        idKaryawan = listRemover.getSelectionModel().getSelectedItem().getInisialKaryawan();
+        
         listRemover.getSelectionModel().clearSelection();
+        
         if(maska != null){
-            listRemover.getItems().remove(maska);
-            listAddiver.getItems().add(maska);
-            listAddiver.setCellFactory(maskaView -> new MasKaryawanDao());
-                        //currentTeam.setVerticalGap(30.0);
-                        currentTeam.setExpanded(true);
-                        currentTeam.depthProperty().set(1);
-                        currentTeam.getStyleClass().add("mylistview");
+            if(listContainer == null){
+                System.out.println("go");
+                listRemover.getItems().remove(maska);
+                listContainer.getItems().add(maska);
+                
+            } else{
+                
+                if(checkIdExisKaryawan(listRemover, listContainer) == true){
+                    
+                    if (hd == 2) {
+
+                        listRemover.getItems().remove(maska);
+                        
+                    } else{
+                        if(checkIdExisKaryawan(listRemover, listContainer) == true){
+                            listRemover.getItems().remove(maska);
+                        } else{
+                            listRemover.getItems().remove(maska);
+                            listContainer.getItems().add(maska);
+                            System.out.println("hd current Karyawan");
+                        }
+                        
+                    }
+                    
+                } else{
+                    System.out.println("just go");
+                    listRemover.getItems().remove(maska);
+                    listContainer.getItems().add(maska);
+                    //listContainer.setCellFactory(masScopeView -> new MasScopeDao());
+                }                
+            }
+            listContainer.setCellFactory(maskaView -> new MasKaryawanDao());
         }
+        
+//        if(maska != null){
+//            listRemover.getItems().remove(maska);
+//            listAddiver.getItems().add(maska);
+//            listAddiver.setCellFactory(maskaView -> new MasKaryawanDao());
+//                        //currentTeam.setVerticalGap(30.0);
+//                        
+//        }
+        currentTeam.setExpanded(true);
+        currentTeam.depthProperty().set(1);
+        currentTeam.getStyleClass().add("mylistview");
         
     }
 
@@ -1107,14 +1150,8 @@ public class NEWPROJECTController implements Initializable {
         idScope = listRemover.getSelectionModel().getSelectedItem().getIdScope();
         
         listRemover.getSelectionModel().clearSelection();
-//        if(masScope != null){
-//            listRemover.getItems().remove(masScope);
-//            listAddiver.getItems().add(masScope);
-//            listAddiver.setCellFactory(masScopeView -> new MasScopeDao());
-//                        //currentTeam.setVerticalGap(30.0);
-//
-//        }
-       
+
+       //checking exis selection from list remover to listcontainer 
         if(masScope != null){
             if(listContainer == null){
                 System.out.println("go");
@@ -1130,9 +1167,14 @@ public class NEWPROJECTController implements Initializable {
                         listRemover.getItems().remove(masScope);
                         
                     } else{
-                        listRemover.getItems().remove(masScope);
-                        listContainer.getItems().add(masScope);
-                        System.out.println("hd current scope");
+                        if(checkIdExisScope(listRemover, listContainer) == true){
+                            listRemover.getItems().remove(masScope);
+                        } else{
+                            listRemover.getItems().remove(masScope);
+                            listContainer.getItems().add(masScope);
+                            System.out.println("hd current scope");
+                        }
+                        
                     }
                     
                 } else{
@@ -1140,26 +1182,7 @@ public class NEWPROJECTController implements Initializable {
                     listRemover.getItems().remove(masScope);
                     listContainer.getItems().add(masScope);
                     //listContainer.setCellFactory(masScopeView -> new MasScopeDao());
-                }
-//                System.out.println("check yout idscope on current list first");
-//                List<String> listChecker = listContainer.getItems().stream().
-//                        map(MasScope::getIdScope).
-//                        collect(Collectors.toList());
-//                for (String listAdapter : listChecker) {
-//                    System.out.println(listAdapter);
-//                    if (listAdapter.trim().contains(idScope)) {
-//                        System.out.println("idScope Contains on list");
-//                     break;
-//                    } 
-//                     
-//                    
-//                    
-//                        
-//                        //System.out.println("show it all "+idScope);
-//                    
-//                }
-                
-                
+                }                
             }
             listContainer.setCellFactory(masScopeView -> new MasScopeDao());
         }
@@ -1196,24 +1219,27 @@ public class NEWPROJECTController implements Initializable {
         this.idKaryawan = value;
     }
     
-    public boolean checkCurrentList(){
-        List<String> listChecker = currentScope.getItems().stream().
-                        map(MasScope::getIdScope).
-                        collect(Collectors.toList());
-        for (String listChecker1 : listChecker) {
-            if (listChecker1.trim().contains(idScope)) {
-                    return true;
-            }
-        }
-        return false;
-    }
-
     private boolean checkIdExisScope(JFXListView<MasScope> listRemover, JFXListView<MasScope> listContainer) {
+        //bolean checking id selection list remover to list array on list container
         List<String> listChecker = listContainer.getItems().stream().
                         map(MasScope::getIdScope).
                         collect(Collectors.toList());
         for (String listChecker1 : listChecker) {
             if (listChecker1.trim().contains(idScope)) {
+                
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean checkIdExisKaryawan(JFXListView<MasKaryawan> listRemover, JFXListView<MasKaryawan> listContainer) {
+        //bolean checking id selection list remover to list array on list container
+        List<String> listChecker = listContainer.getItems().stream().
+                        map(MasKaryawan::getIdKaryawan).
+                        collect(Collectors.toList());
+        for (String listChecker1 : listChecker) {
+            if (listChecker1.trim().contains(idKaryawan)) {
                 
                 return true;
             }
