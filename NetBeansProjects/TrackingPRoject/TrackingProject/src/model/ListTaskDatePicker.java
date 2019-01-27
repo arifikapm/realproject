@@ -41,12 +41,40 @@ public String selectTerm="SELECT mt.idtask, mt.taskcol, pmt.est_datestart, "
 "from project_has_master_task as pmt\n" +
 "LEFT join master_task as mt on pmt.master_task_idtask = mt.idtask ";
 
+public String selectDateNull=" SELECT mt.idtask, mt.taskcol, \n" +
+            "(CASE \n" +
+            " 	WHEN pmt.est_datestart = '0000-00-00' THEN NULL\n" +
+            "	ELSE pmt.est_datestart \n" +
+            "end ) as est_datestart, \n" +
+            "    (CASE \n" +
+            " 	WHEN pmt.est_dateend = '0000-00-00' THEN NULL\n" +
+            "	ELSE pmt.est_dateend  \n" +
+            "end ) as est_dateend, \n" +
+            "(CASE \n" +
+            " 	WHEN pmt.act_datestart = '0000-00-00' THEN NULL\n" +
+            "	ELSE pmt.act_datestart\n" +
+            "end ) as act_datestart, \n" +
+            "(CASE \n" +
+            " 	WHEN pmt.act_dateend = '0000-00-00' THEN NULL\n" +
+            "	ELSE pmt.act_dateend  \n" +
+            "end ) as act_dateend\n" +
+            "from project_has_master_task as pmt "
+        + " LEFT join master_task as mt on pmt.master_task_idtask = mt.idtask ";
+
+
+
 public String where;
 public String groupBy=" GROUP by pmt.project_idproject, mt.idtask";
 
 public void loadTaskProject(String idProject){
     where=" WHERE pmt.project_idproject = "+idProject+" ";
     queryToLoad= selectTerm+where+groupBy;
+    
+}
+
+public void loadNeWTaskProject(String idProject){
+    where=" WHERE pmt.project_idproject = "+idProject+" ";
+    queryToLoad= selectDateNull+where+groupBy;
     
 }
 
@@ -60,7 +88,7 @@ public void loadTaskProject(String idProject){
 
     @Override
     public void updateItem(Date item, boolean empty) {
-//        super.updateItem(item, empty);
+        super.updateItem(item, empty);
         
         if (empty) {
 //            System.out.println("item empty2");

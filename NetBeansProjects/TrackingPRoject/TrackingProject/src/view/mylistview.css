@@ -154,6 +154,7 @@ Scroll Style
 
 .table-view:focused .table-row-cell:filled:focused:selected {
     -fx-background-color: -fx-focus-color;
+    
 }
 
 .table-view .scroll-bar:horizontal .track,
@@ -197,6 +198,17 @@ Scroll Style
 .table-row-cell .text {
        -fx-fill: #9E9E9E ;
        -fx-font-size:10pt;
+}
+
+
+/*This works for me, though there may be easier ways*/
+
+.table-row-cell:selected {
+   -fx-background-color: -fx-focus-color; 
+}
+.table-row-cell:selected .text {
+       -fx-fill: #333645 ;
+
 }
 
 /*

@@ -10,6 +10,7 @@ import db.koneksi;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Year;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,6 +32,7 @@ public class PROJECTController implements Initializable {
     @FXML
     private JFXListView<Project> rootViewList;
     
+    int year = Year.now().getValue();
     private String idPro="", civitas="", startMonth="", endMonth="";
     private static final String RED_BAR    = "red-bar";
     private static final String YELLOW_BAR = "yellow-bar";
@@ -49,8 +51,10 @@ public class PROJECTController implements Initializable {
         try {
 //            String load = "1";
 //            modelProject.queryLoadAllListProject(load);
+            modelProject.loadProjectbyYear(year);
             data=FXCollections.observableArrayList();
-            kon.res=kon.stat.executeQuery(modelProject.queryListProject);
+            //kon.res=kon.stat.executeQuery(modelProject.queryListProject);
+            kon.res=kon.stat.executeQuery(modelProject.SelectNeeded);
             while (kon.res.next()) {                
                 data.add(new Project
                         (kon.res.getString(1), kon.res.getString(2), kon.res.getInt(3), kon.res.getString(4), 
@@ -89,12 +93,16 @@ public class PROJECTController implements Initializable {
 
     @FXML
     private void loadDetailProject(MouseEvent event) throws IOException, SQLException {
-        idPro = rootViewList.getSelectionModel().getSelectedItem().getIdProject();
-//        civitas = rootViewList.getSelectionModel().getSelectedItem().getCivitasCol();
-//        startMonth = rootViewList.getSelectionModel().getSelectedItem().getStartmonth();
-//        endMonth = rootViewList.getSelectionModel().getSelectedItem().getEndmonth();
-        openDetail();
-        
+        try {
+            idPro = rootViewList.getSelectionModel().getSelectedItem().getIdProject();
+//              civitas = rootViewList.getSelectionModel().getSelectedItem().getCivitasCol();
+//              startMonth = rootViewList.getSelectionModel().getSelectedItem().getStartmonth();
+//              endMonth = rootViewList.getSelectionModel().getSelectedItem().getEndmonth();
+            openDetail();
+            
+        } catch (Exception e) {
+            
+        }
     }
 
     private void openDetail() throws IOException, SQLException {

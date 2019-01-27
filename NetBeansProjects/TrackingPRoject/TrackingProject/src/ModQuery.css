@@ -86,3 +86,26 @@ DELETE FROM `project_has_master_task`
 WHERE `project_has_master_task`.`project_idproject` = 69 
 AND `project_has_master_task`.`master_task_idtask` = 15
 */
+
+/*
+========================
+UPDATE PROJECT HAS MASTER TASK
+========================
+UPDATE `project_has_master_task` SET 
+`project_idproject`=19264133,
+`master_task_idtask`=1,
+`est_datestart`= 2019-03-27 ,
+`est_dateend`= null,
+`act_datestart`= null,
+`act_dateend`=null,
+`create_date_task`= null,
+`mod_date_task`=now() 
+WHERE `project_idproject`=19264133 
+AND
+`master_task_idtask`=1
+*/
+
+
+
+
+

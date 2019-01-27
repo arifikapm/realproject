@@ -93,12 +93,27 @@ public class ProjectDetailDao {
             "AND `project_has_master_task`.`master_task_idtask` = "+idTask+"";
     }
     
-    public void setOnModified(){
-        
-    }
     
     public void setOnInsert(){
         
+    }
+
+    public void onSetModified(String idProject, String idTask, String estStart, 
+            String estEnd, String actStart, String actEnd, String nowValue) {
+        
+        update="UPDATE `project_has_master_task` SET \n" +
+            "`project_idproject`="+idProject+",\n" +
+            "`master_task_idtask`="+idTask+",\n" +
+            "`est_datestart`= '"+estStart+"',\n" +
+            "`est_dateend`= '"+estEnd+"',\n" +
+            "`act_datestart`= '"+actStart+"',\n" +
+            "`act_dateend`= '"+actEnd+"',\n" +
+            "`mod_date_task`=now() \n" +
+            "WHERE `project_idproject`="+idProject+" \n" +
+            "AND\n" +
+            "`master_task_idtask`= "+idTask+"";
+        
+        System.out.println(update);
     }
     
 }

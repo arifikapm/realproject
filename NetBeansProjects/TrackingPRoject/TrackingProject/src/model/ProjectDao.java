@@ -125,6 +125,8 @@ public class ProjectDao extends ListCell<Project>{
     public String orderBy;
     public String insert;
     
+    
+    
     public void loadProfilePerStatus(int idStatus){
         where = " where PRO.status_idstatus = "+idStatus+"";
         SelectNeeded = querySelect+where+groupBy;
@@ -137,7 +139,16 @@ public class ProjectDao extends ListCell<Project>{
         System.out.println(idProject);
     }
     
-  
+    public void loadProfilePerStatusbyYear(int idStatus, int year) {
+        where = " where PRO.status_idstatus = "+idStatus+""
+                + " and YEAR(PRO.startmonth) = "+year+"";
+        SelectNeeded = querySelect+where+groupBy;
+    }
+    
+    public void loadProjectbyYear(int year) {
+        where = " where YEAR(PRO.startmonth) = "+year+"";
+        SelectNeeded = querySelect+where+groupBy;
+    }
     
     
     @Override
@@ -223,4 +234,6 @@ public class ProjectDao extends ListCell<Project>{
         SelectNeeded = insert;
         
     }
+
+    
 }

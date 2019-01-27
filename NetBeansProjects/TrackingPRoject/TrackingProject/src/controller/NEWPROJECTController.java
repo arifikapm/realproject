@@ -9,17 +9,21 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXPopup;
 import com.jfoenix.controls.JFXTextField;
 import com.sun.glass.ui.PlatformFactory;
 import db.koneksi;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.MonthDay;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -33,15 +37,22 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
@@ -58,6 +69,8 @@ import model.MasAuditIndex;
 import model.MasAuditIndexDao;
 import model.MasKaryawan;
 import model.MasKaryawanDao;
+import model.MasResponsibility;
+import model.MasResponsibilityDao;
 import model.MasRiskFactor;
 import model.MasRiskFactorDao;
 import model.ProjectDetail;
@@ -82,8 +95,16 @@ public class NEWPROJECTController implements Initializable {
    // MasCivitas civitasData;
     
     public  String textProject, textActivity, textCivitas, textStartDate, textEndDate, textRiskFactore;
-    private String idProject, idScope, idKaryawan;
-
+    private String idProject, idScope, idKaryawan, idAsa, idTask, nowValue;
+    private int hd;
+    private String estStart = "0000-00-00";
+    private String actStart  = "0000-00-00";
+    private String actEnd = "0000-00-00";
+    private String estEnd = "0000-00-00" ;
+    private Format formatter;
+    
+    final ContextMenu contextMenu = new ContextMenu();
+    
     @FXML
     private BorderPane viewMaster;
     @FXML
@@ -146,10 +167,12 @@ public class NEWPROJECTController implements Initializable {
     MasKaryawanDao modelKaryawan= new MasKaryawanDao();
     MasScopeDao modelScope = new MasScopeDao();
     ProjectDetailDao modelDetail = new ProjectDetailDao();
-    ListTaskDatePicker modelDate2 = new ListTaskDatePicker();
+    ListTaskDatePicker modelDatePicker = new ListTaskDatePicker();
     MasRiskFactorDao modelRiskFactor = new MasRiskFactorDao();
     MasAuditIndexDao modelAuditIndex = new MasAuditIndexDao();
     MasStatusProjectDao modelStatusProject = new MasStatusProjectDao();
+    MasResponsibilityDao modelResponsibility = new MasResponsibilityDao();
+    TeamDao modelTeam = new TeamDao();
     
     //insert
     ProjectDao modelProject = new ProjectDao();
@@ -161,10 +184,11 @@ public class NEWPROJECTController implements Initializable {
     private ObservableList<MasKaryawan>dataKaryawan;
     private ObservableList<ProjectDetail>dataProjectDetail;
     private ObservableList<Project>dataProject;
-    private ObservableList<ListTaskProject>dataDate1;
+    private ObservableList<ListTaskProject>dataDatePicker;
     private ObservableList<MasRiskFactor>dataRiskFactor;
     private ObservableList<MasAuditIndex>dataAuditIndex;
     private ObservableList<MasStatusProject>dataStatusProject;
+    private ObservableList<MasResponsibility>dataResponsibility;
 
 
     
@@ -573,6 +597,9 @@ public class NEWPROJECTController implements Initializable {
             setKaryawan();
             setScope();
             
+            popupAsa();
+            
+            
             listKaryawan.setDisable(true);
             listScope.setDisable(true);
             
@@ -651,65 +678,68 @@ public class NEWPROJECTController implements Initializable {
                 String startMonth = Integer.toString(start.getMonthValue());
                 String endDate = Integer.toString(end.getDayOfMonth());
                 String endMonth = Integer.toString(end.getMonthValue());
+                String yearNow = Integer.toString(nowDate.getYear());
+                int lastTwoDigits = Calendar.getInstance().get(Calendar.YEAR) % 100;
 
-                idProject = ""+startMonth+""+civitasValue+""+activityValue+""+auditindexValue+""+riskfactorValue;
+                idProject = ""+lastTwoDigits+""+startDate+""+civitasValue+""
+                        + ""+activityValue+""+auditindexValue+""+riskfactorValue;
                 
                 //to save Project on database
                 
-//                if (comboStatus.getValue() == null){
-//                    
-//                    statusValue = "1";
-//                    //int status_idstatus = 1;
-//                    try {
-//                         //setquery save
-//                        modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
-//                            riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
-//                        kon.stat.executeUpdate(modelProject.SelectNeeded);
-//                        
-//                        setDataListTask(idProject);
-//                        
-//                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                        alert.setTitle("Input Success");
-//                        alert.setHeaderText(null);
-//                        alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
-//                        alert.showAndWait();
-//                        
-//                    } catch (SQLException ex) {
-//                        Alert alert = new Alert(Alert.AlertType.ERROR);
-//                        alert.setTitle("Error");
-//                        alert.setHeaderText(null);
-//                        alert.setContentText(String.valueOf(ex));
-//                        alert.showAndWait();
-//                    }
-//                    
-//                   
-//                    
-//                } else{
-//                    
-//                    statusValue = Integer.toString(comboStatus.getSelectionModel().getSelectedItem().getIdStatus());
-//                    //int status_idstatus = 1;
-//                    try {
-//                         //setquery save
-//                        modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
-//                            riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
-//                        kon.stat.executeUpdate(modelProject.SelectNeeded);
-//                        
-//                        setDataListTask(idProject);
-//                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                        alert.setTitle("Input Success");
-//                        alert.setHeaderText(null);
-//                        alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
-//                        alert.showAndWait();
-//                        
-//                    } catch (SQLException ex) {
-//                        Alert alert = new Alert(Alert.AlertType.ERROR);
-//                        alert.setTitle("Error");
-//                        alert.setHeaderText(null);
-//                        alert.setContentText(String.valueOf(ex));
-//                        alert.showAndWait();
-//                    }
-//
-//                }
+                if (comboStatus.getValue() == null){
+                    
+                    statusValue = "1";
+                    //int status_idstatus = 1;
+                    try {
+                         //setquery save
+                        modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
+                            riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
+                        kon.stat.executeUpdate(modelProject.SelectNeeded);
+                        
+                        setDataListTask(idProject);
+                        
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Input Success");
+                        alert.setHeaderText(null);
+                        alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
+                        alert.showAndWait();
+                        
+                    } catch (SQLException ex) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText(String.valueOf(ex));
+                        alert.showAndWait();
+                    }
+                    
+                   
+                    
+                } else{
+                    
+                    statusValue = Integer.toString(comboStatus.getSelectionModel().getSelectedItem().getIdStatus());
+                    //int status_idstatus = 1;
+                    try {
+                         //setquery save
+                        modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
+                            riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
+                        kon.stat.executeUpdate(modelProject.SelectNeeded);
+                        
+                        setDataListTask(idProject);
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Input Success");
+                        alert.setHeaderText(null);
+                        alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
+                        alert.showAndWait();
+                        
+                    } catch (SQLException ex) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText(String.valueOf(ex));
+                        alert.showAndWait();
+                    }
+
+                }
                    
  
             }
@@ -717,6 +747,17 @@ public class NEWPROJECTController implements Initializable {
 
             listKaryawan.setDisable(false);
             listScope.setDisable(false);
+    }
+    
+    
+    @FXML
+    void btnRefreshForm(MouseEvent event) {
+//        valueProject.clear();
+//        comboAcitivity.re
+//        comboCivitas.
+//        comboAuditIndex.
+//        comboRiskFactor.
+//        comboStatus.
     }
 
 
@@ -742,6 +783,8 @@ public class NEWPROJECTController implements Initializable {
         listKaryawan.setDisable(false);
         listScope.setDisable(false);
         
+
+        
     }
     
     public  void setDataProject(String idProject) throws SQLException{
@@ -766,6 +809,7 @@ public class NEWPROJECTController implements Initializable {
                 textActivity = kon.res.getString(5);
                 textStartDate = kon.res.getString(10);
                 textEndDate = kon.res.getString(11);
+                
                 //textRiskFactore = kon.res.getString(textEndDate)
                  System.out.println(textProject);
                  System.out.println(textActivity);
@@ -873,14 +917,14 @@ public class NEWPROJECTController implements Initializable {
     
     public void setDataListTask(String idProject) throws SQLException{
         int visi = 0;
-        modelDate2.loadTaskProject(idProject);
-        dataDate1=FXCollections.observableArrayList();
-        kon.res=kon.stat.executeQuery(modelDate2.queryToLoad);
+        modelDatePicker.loadNeWTaskProject(idProject);
+        dataDatePicker=FXCollections.observableArrayList();
+        kon.res=kon.stat.executeQuery(modelDatePicker.queryToLoad);
         
         
         try {
             while (kon.res.next()) {                
-                dataDate1.addAll(new ListTaskProject(kon.res.getString(1), kon.res.getString(2),
+                dataDatePicker.addAll(new ListTaskProject(kon.res.getString(1), kon.res.getString(2),
                         kon.res.getDate(3), kon.res.getDate(4), kon.res.getDate(5), kon.res.getDate(6)));
                 
                 String civi = kon.res.getString(1);
@@ -895,7 +939,7 @@ public class NEWPROJECTController implements Initializable {
             colStartPlan.setCellValueFactory(cell -> cell.getValue().dateEstStart());
             colStartPlan.setCellFactory(cell -> new ListTaskDatePicker());
             colStartPlan.setOnEditCommit(event -> event.getTableView().getItems()
-                    .get(event.getTablePosition().getRow()).setAct_Datestart(event.getNewValue()));
+                    .get(event.getTablePosition().getRow()).setEst_Datestart(event.getNewValue()));
             
             colEndPlan.setCellValueFactory(cell -> cell.getValue().dateEstEnd());
             colEndPlan.setCellFactory(cell -> new ListTaskDatePicker());
@@ -907,12 +951,12 @@ public class NEWPROJECTController implements Initializable {
             colActStart.setOnEditCommit(event -> event.getTableView().getItems()
                     .get(event.getTablePosition().getRow()).setAct_Datestart(event.getNewValue()));
             
-            colActEnd.setCellValueFactory(cell -> cell.getValue().dateEstEnd());
+            colActEnd.setCellValueFactory(cell -> cell.getValue().dateActEnd());
             colActEnd.setCellFactory(cell -> new ListTaskDatePicker());
             colActEnd.setOnEditCommit(event -> event.getTableView().getItems()
                     .get(event.getTablePosition().getRow()).setAct_Dateend(event.getNewValue()));
             
-            tblTask.setItems(dataDate1);
+            tblTask.setItems(dataDatePicker);
             
         } catch (SQLException ex) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -923,39 +967,65 @@ public class NEWPROJECTController implements Initializable {
         }
 //        
     }
-
-
-    @FXML
-    void loadRefreshTeam(MouseEvent event) throws SQLException {
-        //setKaryawan();
-    }
     
-   @FXML
-    private void handleModTeam(MouseEvent event) throws SQLException {
-        
-//        List<String> list = currentTeam.getItems().stream().
-//                map(MasKaryawan::getIdKaryawan).
-//                collect(Collectors.toList());
-//        for (String string : list) {
-//            System.out.println(string);
-//            modelKaryawan.setQueryProjectHasTeamSave(getIdProject(),string);
-//            //kon.stat.execute(modelKaryawan.insertInto);
-//        }
-    }
     
     //add mouse event focus
     //focus show karyawan as a detail 
     
     @FXML
+    void loadRefreshTeam(MouseEvent event) throws SQLException {
+        //it can clear and add again
+        listKaryawan.refresh();
+        
+        setKaryawan();
+    }
+    
+    @FXML
     void handleListCurrentTeam(MouseEvent event) {
-        int hd = 1;
-        transferListMasKaryawan(currentTeam, listKaryawan, hd);
+        hd = 1;
+        
+        try {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Look, a Confirmation Dialog");
+                alert.setContentText("Are you ok with this?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    transferListMasKaryawan(currentTeam, listKaryawan);
+                    modelTeam.setOnDeleteProjectHasTeam(getIdProject(),getIdKaryawan());
+                    kon.stat.executeUpdate(modelTeam.onDelete);
+
+                    // ... user chose OK
+                    
+                } else {
+                   alert.close();
+                    // ... user chose CANCEL or closed the dialog
+                }
+
+        } catch (Exception e) {
+
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText(String.valueOf(e));
+                        alert.showAndWait();
+        }
+            
+        
     }
     
     @FXML
     void handleListTeam(MouseEvent event) {
-        int hd = 2;
-        transferListMasKaryawan(listKaryawan, currentTeam, hd);
+        hd = 2;
+        //contextMenu.show(listKaryawan, Side.LEFT, 0, 0);
+        try {
+            listKaryawan.setContextMenu(contextMenu);
+        } catch (Exception e) {
+        }
+        
+        
+        //transferListMasKaryawan(listKaryawan, currentTeam);
     }
     
         
@@ -968,13 +1038,15 @@ public class NEWPROJECTController implements Initializable {
     void handleListCurrentScope(MouseEvent event) throws SQLException {
         // the way to delete scope from project has master scope
         int hd = 1;
-        transferListMasScope(currentScope, listScope, hd );
+        
         try {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirmation Dialog");
                 alert.setHeaderText("Look, a Confirmation Dialog");
                 alert.setContentText("Are you ok with this?");
-
+                
+                transferListMasScope(currentScope, listScope, hd );
+                
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
                     
@@ -983,14 +1055,13 @@ public class NEWPROJECTController implements Initializable {
                     System.out.println(modelScope.deleteProjectScope);
                     // ... user chose OK
                     
-                    System.out.println("Delete Scope ");
                 } else {
                    alert.close();
                     // ... user chose CANCEL or closed the dialog
                 }
 
         } catch (Exception e) {
-                        System.out.println("Scope Contains on list");
+
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error");
                         alert.setHeaderText(null);
@@ -1012,7 +1083,7 @@ public class NEWPROJECTController implements Initializable {
             modelScope.setQueryProjectHasScopeSave(getIdProject(),getIdScope());
             kon.stat.executeUpdate(modelScope.insertInto);
         } catch (Exception e) {
-                        System.out.println("idScope Contains on list");
+                        
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error");
                         alert.setHeaderText(null);
@@ -1042,37 +1113,6 @@ public class NEWPROJECTController implements Initializable {
  
     }
     
-    @FXML
-    void handleCurrentScope(MouseEvent event) throws SQLException {
-//        try {
-//            List<String> list = currentScope.getItems().stream().
-//                                map(MasScope::getIdScope).
-//                                collect(Collectors.toList());
-//            for (String string : list) {
-//                System.out.println(string);
-//                modelScope.setQueryProjectHasScopeSave(getIdProject(),string);
-//                kon.stat.execute(modelScope.insertInto);
-//            }
-//            
-//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                    alert.setTitle("Success");
-//                    alert.setHeaderText(null);
-//                    alert.setContentText(String.valueOf("Add Scope \n Success "));
-//                    alert.showAndWait();
-//            
-//        } catch (SQLException ex) {
-//                    Alert alert = new Alert(Alert.AlertType.ERROR);
-//                    alert.setTitle("Error");
-//                    alert.setHeaderText(null);
-//                    alert.setContentText(String.valueOf(ex));
-//                    alert.showAndWait();
-//        }
-        
-    }
-    
-
-
-
     @FXML
     public void handleDelete(MouseEvent event) throws SQLException {
         String idTask = tblTask.getSelectionModel().getSelectedItem().getIdTask();
@@ -1115,25 +1155,53 @@ public class NEWPROJECTController implements Initializable {
             
         }
         //model to set on query
+        tblTask.refresh();
         
         
     }
 
     @FXML
     void handleInput(MouseEvent event) {
-
+        
     }
 
   
     @FXML
-    void handleModTask(MouseEvent event) {
+    void handleModTask(MouseEvent event) throws SQLException {
+        onSelectionTable();
+        try {
+        modelDetail.onSetModified(idProject,idTask,estStart,estEnd,actStart,actStart,nowValue);
+        kon.stat.executeUpdate(modelDetail.update);
+        //System.out.println(modelDetail.update);
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Input Success");
+            alert.setHeaderText(null);
+            alert.setContentText(String.valueOf(" Project "+tblTask.getSelectionModel().getSelectedItem().getTaskCol()+" "
+                    + "\n" +" Mod Success on \n"));
+            alert.showAndWait();
+        } catch (Exception e) {
+            System.out.println(""+e);
+        }
 
     }
     
+    @FXML
+    void handleTaskChange(MouseEvent event) {
+        
+        //Date now = Date.UTC(hd, hd, hd, hd, hd, hd);
+        
+        
+    }
     
-    private void transferListMasKaryawan(JFXListView<MasKaryawan> listRemover, JFXListView<MasKaryawan> listContainer, int hd){
+    
+    private void transferListMasKaryawan(JFXListView<MasKaryawan> listRemover, JFXListView<MasKaryawan> listContainer){
         MasKaryawan maska= listRemover.getSelectionModel().getSelectedItem();
-        idKaryawan = listRemover.getSelectionModel().getSelectedItem().getInisialKaryawan();
+        idKaryawan = listRemover.getSelectionModel().getSelectedItem().getIdKaryawan();
+        
+        
+        System.out.println("List As a = "+getIdAsa());
+        System.out.println("HD = "+getIdHd());
         
         listRemover.getSelectionModel().clearSelection();
         
@@ -1145,14 +1213,19 @@ public class NEWPROJECTController implements Initializable {
                 
             } else{
                 
-                if(checkIdExisKaryawan(listRemover, listContainer) == true){
+                //check id karyawan exis
+                //if id karyawan exis
+                // do below
+                if(checkIdExisKaryawan( listRemover, listContainer) == true){
                     
+                    //check id list remover exis
+                    //when idkaryawan on listkaryawan (the origin source)
+                    //do method below and just remove the origin
                     if (hd == 2) {
-
                         listRemover.getItems().remove(maska);
                         
                     } else{
-                        if(checkIdExisKaryawan(listRemover, listContainer) == true){
+                        if(checkIdExisKaryawan(listRemover,listContainer) == true){
                             listRemover.getItems().remove(maska);
                         } else{
                             listRemover.getItems().remove(maska);
@@ -1162,23 +1235,22 @@ public class NEWPROJECTController implements Initializable {
                         
                     }
                     
+                    // when the id karyawan not exis in additioner list
+                    // do below
                 } else{
+                    //get the origin source and set to current list
+                    // and save to database
+                    if (hd == 2) {
+                        onInsertKaryawan();
+                    }
                     System.out.println("just go");
                     listRemover.getItems().remove(maska);
                     listContainer.getItems().add(maska);
-                    //listContainer.setCellFactory(masScopeView -> new MasScopeDao());
                 }                
             }
             listContainer.setCellFactory(maskaView -> new MasKaryawanDao());
         }
         
-//        if(maska != null){
-//            listRemover.getItems().remove(maska);
-//            listAddiver.getItems().add(maska);
-//            listAddiver.setCellFactory(maskaView -> new MasKaryawanDao());
-//                        //currentTeam.setVerticalGap(30.0);
-//                        
-//        }
         currentTeam.setExpanded(true);
         currentTeam.depthProperty().set(1);
         currentTeam.getStyleClass().add("mylistview");
@@ -1233,8 +1305,124 @@ public class NEWPROJECTController implements Initializable {
         currentScope.getStyleClass().add("mylistview");
         
     }
+
+    private boolean checkIdExisScope(JFXListView<MasScope> listRemover, JFXListView<MasScope> listContainer) {
+        //bolean checking id selection list remover to list array on list container
+        List<String> listChecker = listContainer.getItems().stream().
+                        map(MasScope::getIdScope).
+                        collect(Collectors.toList());
+        for (String listChecker1 : listChecker) {
+            if (listChecker1.trim().contains(idScope)) {
+                
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean checkIdExisKaryawan(JFXListView<MasKaryawan> listRemover, JFXListView<MasKaryawan> listContainer) {
+        //bolean checking id selection list remover to list array on list container
+        List<String> listChecker = listContainer.getItems().stream().
+                        map(MasKaryawan::getIdKaryawan).
+                        collect(Collectors.toList());
+        
+        for (String listChecker1 : listChecker) {
+            if (listChecker1.trim().contains(listRemover.getId())) {        
+                return true;
+            }
+        }     
+        System.out.println("false");
+        return false;
+    }
+    
+    private boolean checkIdTaks(int taskId) {
+        //bolean checking id selection list 
+        if(taskId == 1 || taskId == 3 || taskId == 7 || taskId == 12 || taskId == 13
+                || taskId == 15){
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
     
     
+    public void popupAsa(){
+        String idItem = null;
+        MenuItem quit = null;
+        MenuItem quit2 = null;
+        
+        try {
+            dataResponsibility=FXCollections.observableArrayList();
+            kon.res=kon.stat.executeQuery(modelResponsibility.selectAll); 
+
+            while (kon.res.next()) {
+                dataResponsibility.addAll(new MasResponsibility(kon.res.getInt(1), kon.res.getString(2), 
+                kon.res.getString(3)));
+                
+                //set text
+                //set id text
+                quit2 = new MenuItem(kon.res.getString(2));
+                idItem = Integer.toString(kon.res.getInt(1));
+                quit2.setId(idItem);
+                contextMenu.getItems().addAll(quit2);
+            }
+            //an action on mouse clicked
+            contextMenu.setOnAction(evt -> {
+                idAsa = ((MenuItem)evt.getTarget()).getId();
+                transferListMasKaryawan(listKaryawan, currentTeam);
+            });
+
+////            listKaryawan.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+// 
+////            @Override
+////            public void handle(ContextMenuEvent event) {
+//            contextMenu.setX(10.0);
+//            contextMenu.setY(10.0);
+//            contextMenu.show(listKaryawan, Side.LEFT, 10, 10);
+////            
+////            }
+////        });
+            
+        } catch (Exception e) {
+        }
+    }
+    
+    public void onInsertKaryawan(){
+        try {
+            modelTeam.setQueryProjectHasTeam(idProject, idKaryawan, idAsa);
+            kon.stat.executeUpdate(modelTeam.insertInto);
+        } catch (Exception e) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText(String.valueOf(e));
+                        alert.showAndWait();
+        }
+    }
+    
+    public void onSelectionTable(){
+        formatter = new SimpleDateFormat("yyyy-MM-dd");
+         try {
+                    idTask = tblTask.getSelectionModel().getSelectedItem().getIdTask();
+        Date dateEstStart = tblTask.getSelectionModel().getSelectedItem().getEst_Datestart();
+        Date dateEstEnd = tblTask.getSelectionModel().getSelectedItem().getEst_Dateend();
+        Date dateActStart = tblTask.getSelectionModel().getSelectedItem().getAct_Datestart();
+        Date dateActEnd = tblTask.getSelectionModel().getSelectedItem().getAct_Dateend();
+        
+        estStart = formatter.format(dateEstStart);
+        estEnd = formatter.format(dateEstEnd);
+        actStart = formatter.format(dateActStart);
+        actEnd = formatter.format(dateActEnd);
+        
+        Date dateNow = new Date();
+        nowValue = formatter.format(dateNow);
+        } catch (Exception e) {
+        }
+   
+
+    }
+
     public String getIdProject() {
         return idProject;
     }
@@ -1259,42 +1447,67 @@ public class NEWPROJECTController implements Initializable {
         this.idKaryawan = value;
     }
     
-    private boolean checkIdExisScope(JFXListView<MasScope> listRemover, JFXListView<MasScope> listContainer) {
-        //bolean checking id selection list remover to list array on list container
-        List<String> listChecker = listContainer.getItems().stream().
-                        map(MasScope::getIdScope).
-                        collect(Collectors.toList());
-        for (String listChecker1 : listChecker) {
-            if (listChecker1.trim().contains(idScope)) {
-                
-                return true;
-            }
-        }
-        return false;
+    public String getIdAsa() {
+        return idAsa;
+    }
+
+    public void setIdAsa(String value) {
+        this.idAsa = value;
     }
     
-    private boolean checkIdExisKaryawan(JFXListView<MasKaryawan> listRemover, JFXListView<MasKaryawan> listContainer) {
-        //bolean checking id selection list remover to list array on list container
-        List<String> listChecker = listContainer.getItems().stream().
-                        map(MasKaryawan::getIdKaryawan).
-                        collect(Collectors.toList());
-        for (String listChecker1 : listChecker) {
-            if (listChecker1.trim().contains(idKaryawan)) {
-                
-                return true;
-            }
-        }
-        return false;
+    public int getIdHd() {
+        return hd;
     }
-    
-    private boolean checkIdTaks(int taskId) {
-        //bolean checking id selection list 
-        if(taskId == 1 || taskId == 3 || taskId == 7 || taskId == 12 || taskId == 13
-                || taskId == 15){
-            return true;
-        } else {
-            return false;
-        }
-        
+
+    public void setIdHd(int value) {
+        this.hd = value;
+    }
+
+    public String getEstStart() {
+        return estStart;
+    }
+
+    public String getEstEnd() {
+        return estEnd;
+    }
+
+    public String getActStart() {
+        return actStart;
+    }
+
+    public String getActEnd() {
+        return actEnd;
+    }
+
+    public void setEstStart(String estStart) {
+        this.estStart = estStart;
+    }
+
+    public void setEstEnd(String estEnd) {
+        this.estEnd = estEnd;
+    }
+
+    public void setActStart(String actStart) {
+        this.actStart = actStart;
+    }
+
+    public void setActEnd(String actEnd) {
+        this.actEnd = actEnd;
+    }
+
+    public String getNowValue() {
+        return nowValue;
+    }
+
+    public void setNowValue(String nowValue) {
+        this.nowValue = nowValue;
+    }
+
+    public String getIdTask() {
+        return idTask;
+    }
+
+    public void setIdTask(String idTask) {
+        this.idTask = idTask;
     }
 }

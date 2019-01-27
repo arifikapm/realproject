@@ -44,6 +44,13 @@ public class ProfileChartBarDao {
         Groupby=" group by mas.idstatus, gac.idgroup_civitas";
         Select=Queryload+Where+Groupby;
     }
+
+    public void returnLoadProfilebyYear(String idActivity, int idStatus, int year) {
+        Where = " where mac.idactivity = " +idActivity+" and mas.idstatus = "+idStatus+ " "
+                + " and YEAR(`startmonth`) = "+year+" ";
+        Groupby=" group by mas.idstatus, gac.idgroup_civitas";
+        Select=Queryload+Where+Groupby;
+    }
     
     
 }

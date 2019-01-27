@@ -12,6 +12,13 @@ package model;
 public class CountDao {
     
     public String selectCount = "SELECT COUNT(*) AS countPROJECT FROM project";
+    public String loadCount;
+    public String where;
+
+    public void loadCountbyYear(int year) {
+       where = " where YEAR(startmonth) = "+year+"";
+       loadCount=selectCount+where;
+    }
     
     
 }

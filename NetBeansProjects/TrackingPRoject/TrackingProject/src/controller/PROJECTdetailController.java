@@ -207,6 +207,10 @@ public class PROJECTdetailController implements Initializable {
             }
             listScope.setItems(dataScope);
             listScope.setCellFactory(scopeListView -> new MasScopeDao());
+            listScope.setVerticalGap(30.0);
+            listScope.setExpanded(true);
+            listScope.depthProperty().set(1);
+            listScope.getStyleClass().add("mylistview");
     }
     
     public void setTeamMember(String idProject) throws SQLException{
@@ -218,6 +222,10 @@ public class PROJECTdetailController implements Initializable {
             }
             listTeam.setItems(dataTeam);
             listTeam.setCellFactory(teamListView -> new TeamDao());
+            listTeam.setVerticalGap(30.0);
+            listTeam.setExpanded(true);
+            listTeam.depthProperty().set(1);
+            listTeam.getStyleClass().add("mylistview");
     }
     
     public void setProfileProjectRoot(String idProject) throws SQLException{
@@ -233,7 +241,10 @@ public class PROJECTdetailController implements Initializable {
             }
             listProjectProfile.setItems(dataProfileProject);
             listProjectProfile.setCellFactory(profileListView -> new ProfileProjectRootDao());
-                
+            listProjectProfile.setVerticalGap(30.0);
+            listProjectProfile.setExpanded(true);
+            listProjectProfile.depthProperty().set(1);
+            listProjectProfile.getStyleClass().add("mylistview");
 //        } catch (Exception e) {
 //        }
         

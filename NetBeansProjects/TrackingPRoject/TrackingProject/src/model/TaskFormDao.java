@@ -47,6 +47,9 @@ public class TaskFormDao {
 "on pmt.master_task_idtask=mt.idtask";
     public String where;
     public String and;
+    public String update;
+    public String delete;
+    
     
     public void loadData(String idProject){
         where = " WHERE pr.idproject="+idProject+"";

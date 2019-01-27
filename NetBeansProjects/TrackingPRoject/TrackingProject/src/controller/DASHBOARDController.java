@@ -7,8 +7,10 @@ package controller;
 
 import com.jfoenix.controls.JFXListView;
 import db.koneksi;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.Year;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -22,9 +24,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point3D;
 import javafx.geometry.Side;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
@@ -37,7 +41,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.ProfileChartBar;
 import model.ProfileChartBarDao;
 import model.ProfileChartPie;
@@ -64,6 +71,8 @@ import model.ProjectDao;
 public class DASHBOARDController implements Initializable {
   
     public String textProject, testStringValue;
+    int year = Year.now().getValue();
+    private String idPro="";
 
 //    @FXML
 //    private BorderPane viewProject;
@@ -219,8 +228,10 @@ public class DASHBOARDController implements Initializable {
             String idActivity="2";
             int idStatus=1;
             
-            barProfileDao.returnLoadBarProfile(idActivity, idStatus);
+            barProfileDao.returnLoadProfilebyYear(idActivity, idStatus, year);
+            //barProfileDao.returnLoadBarProfile(idActivity, idStatus);
             kon.res=kon.stat.executeQuery(barProfileDao.Select);
+            System.out.println(barProfileDao.Select);
             
             while (kon.res.next()) {
                 
@@ -239,7 +250,8 @@ public class DASHBOARDController implements Initializable {
             String idActivity="2";
             int idStatus=2;
             
-            barProfileDao.returnLoadBarProfile(idActivity, idStatus);
+            barProfileDao.returnLoadProfilebyYear(idActivity, idStatus, year);
+            //barProfileDao.returnLoadBarProfile(idActivity, idStatus);
             kon.res=kon.stat.executeQuery(barProfileDao.Select);
             
             while (kon.res.next()) {
@@ -259,7 +271,8 @@ public class DASHBOARDController implements Initializable {
             String idActivity="2";
             int idStatus=3;
             
-            barProfileDao.returnLoadBarProfile(idActivity, idStatus);
+            barProfileDao.returnLoadProfilebyYear(idActivity, idStatus, year);
+            //barProfileDao.returnLoadBarProfile(idActivity, idStatus);
             kon.res=kon.stat.executeQuery(barProfileDao.Select);
             
             while (kon.res.next()) {
@@ -279,7 +292,8 @@ public class DASHBOARDController implements Initializable {
             String idActivity="2";
             int idStatus=4;
             
-            barProfileDao.returnLoadBarProfile(idActivity, idStatus);
+            barProfileDao.returnLoadProfilebyYear(idActivity, idStatus, year);
+            //barProfileDao.returnLoadBarProfile(idActivity, idStatus);
             kon.res=kon.stat.executeQuery(barProfileDao.Select);
             
             while (kon.res.next()) {
@@ -303,7 +317,8 @@ public class DASHBOARDController implements Initializable {
             String idActivity="1";
             int idStatus=1;
             
-            barProfileDao.returnLoadBarProfile(idActivity, idStatus);
+            barProfileDao.returnLoadProfilebyYear(idActivity, idStatus, year);
+            //barProfileDao.returnLoadBarProfile(idActivity, idStatus);
             kon.res=kon.stat.executeQuery(barProfileDao.Select);
             
             while (kon.res.next()) {
@@ -323,7 +338,8 @@ public class DASHBOARDController implements Initializable {
             String idActivity="1";
             int idStatus=2;
             
-            barProfileDao.returnLoadBarProfile(idActivity, idStatus);
+            barProfileDao.returnLoadProfilebyYear(idActivity, idStatus, year);
+            //barProfileDao.returnLoadBarProfile(idActivity, idStatus);
             kon.res=kon.stat.executeQuery(barProfileDao.Select);
             
             while (kon.res.next()) {
@@ -343,7 +359,8 @@ public class DASHBOARDController implements Initializable {
             String idActivity="1";
             int idStatus=3;
             
-            barProfileDao.returnLoadBarProfile(idActivity, idStatus);
+            barProfileDao.returnLoadProfilebyYear(idActivity, idStatus, year);
+            //barProfileDao.returnLoadBarProfile(idActivity, idStatus);
             kon.res=kon.stat.executeQuery(barProfileDao.Select);
             
             while (kon.res.next()) {
@@ -363,7 +380,8 @@ public class DASHBOARDController implements Initializable {
             String idActivity="1";
             int idStatus=4;
             
-            barProfileDao.returnLoadBarProfile(idActivity, idStatus);
+            barProfileDao.returnLoadProfilebyYear(idActivity, idStatus, year);
+            //barProfileDao.returnLoadBarProfile(idActivity, idStatus);
             kon.res=kon.stat.executeQuery(barProfileDao.Select);
             
             while (kon.res.next()) {
@@ -382,8 +400,10 @@ public class DASHBOARDController implements Initializable {
     
     private void loadListCountProject(){
         try {
-                dataCountProject=FXCollections.observableArrayList();
-                kon.res=kon.stat.executeQuery(model.queryLoadCountProject);
+            model.loadCountbyYear(year);    
+            dataCountProject=FXCollections.observableArrayList();
+            //kon.res=kon.stat.executeQuery(model.queryLoadCountProject);
+            kon.res=kon.stat.executeQuery(model.queryLoad);
 
                 while (kon.res.next()) {                
                     dataCountProject.add(new ListCountProject(kon.res.getString(1),kon.res.getString(2)));
@@ -398,6 +418,7 @@ public class DASHBOARDController implements Initializable {
         } catch (Exception e) {
         }
     }
+    
     private void loadListCarryProject(){
         try {
                 dataCarryProject=FXCollections.observableArrayList();
@@ -422,8 +443,10 @@ public class DASHBOARDController implements Initializable {
     
     private void loadAllCountProject(){
         try {
+            modelCount.loadCountbyYear(year);
             dataCount=FXCollections.observableArrayList();
-            kon.res = kon.stat.executeQuery(modelCount.selectCount);
+            //kon.res = kon.stat.executeQuery(modelCount.selectCount); 
+            kon.res = kon.stat.executeQuery(modelCount.loadCount);
             
             while (kon.res.next()) {                
                 dataCount.add(new Count(kon.res.getString(1)));
@@ -846,7 +869,7 @@ public class DASHBOARDController implements Initializable {
         }
     }
 //    
-       public void legendPieAdv() {
+    public void legendPieAdv() {
 
         try {
             String set_idacticvity = "3";
@@ -942,8 +965,11 @@ public class DASHBOARDController implements Initializable {
         try {
 //            String load = "1";
 //            modelProject.queryLoadAllListProject(load);
+            
+            System.out.println(year);
             double percent = 0;
-            modelProject.loadProfilePerStatus(idStatusLoad);
+            modelProject.loadProfilePerStatusbyYear(idStatusLoad, year);
+            //modelProject.loadProfilePerStatus(idStatusLoad);
             dataProject=FXCollections.observableArrayList();
             kon.res=kon.stat.executeQuery(modelProject.SelectNeeded);
             
@@ -1008,5 +1034,40 @@ public class DASHBOARDController implements Initializable {
         }
     }
     
-    
+    @FXML
+    private void loadDetailProject(MouseEvent event) throws IOException, SQLException {
+        try {
+            idPro = listCarryProject.getSelectionModel().getSelectedItem().getIdProject();
+            openDetail();
+            
+        } catch (Exception e) {
+            
+        }
     }
+
+    private void openDetail() throws IOException, SQLException {
+        final Stage primaryStage = null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PROJECTdetail.fxml"));
+        BorderPane newScene = loader.load();
+        PROJECTdetailController mct = loader.getController();
+        mct.setData(idPro);
+        
+            Scene scene = new Scene(newScene);
+           
+            //new Scene load new windows
+            Stage newWindow = new Stage();
+            newWindow.setScene(scene);
+ 
+            // Specifies the modality for new window.
+            newWindow.initModality(Modality.WINDOW_MODAL);
+ 
+            // Specifies the owner Window (parent) for new window
+            newWindow.initOwner(primaryStage);
+ 
+            // Set position of second window, related to primary window.
+            
+ 
+            newWindow.show();
+    }
+    
+}

@@ -210,7 +210,7 @@
                   </Label>
                </children>
             </HBox>
-            <JFXListView fx:id="listCarryProject" cacheShape="false" centerShape="false" focusTraversable="false" scaleShape="false" style="-fx-background-color: #E7E7E7;" stylesheets="@mylistview.css" verticalGap="80.0" GridPane.rowIndex="6" />
+            <JFXListView fx:id="listCarryProject" cacheShape="false" centerShape="false" focusTraversable="false" onMouseClicked="#loadDetailProject" scaleShape="false" style="-fx-background-color: #E7E7E7;" stylesheets="@mylistview.css" verticalGap="80.0" GridPane.rowIndex="6" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="6">
                <children>
                   <HBox maxWidth="5.0" minWidth="5.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #A02DB3;" />
