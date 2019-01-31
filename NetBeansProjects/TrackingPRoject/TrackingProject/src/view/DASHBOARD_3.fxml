@@ -109,7 +109,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
                <children>
                   <HBox maxWidth="5.0" minWidth="5.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #A02DB3;" />
-                  <Label text="Total Project" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
+                  <Label style="-fx-text-fill: #333645;" text="Total Project" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Ubuntu Bold" size="12.0" />
                      </font>
@@ -122,7 +122,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="4">
                <children>
                   <HBox maxWidth="5.0" minWidth="5.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #A02DB3;" />
-                  <Label text="Risk Assesment" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
+                  <Label style="-fx-text-fill: #333645;" text="Risk Assesment" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Ubuntu Bold" size="12.0" />
                      </font>
@@ -135,7 +135,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="2">
                <children>
                   <HBox maxWidth="5.0" minWidth="5.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #A02DB3;" />
-                  <Label text="Assurance" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
+                  <Label style="-fx-text-fill: #333645;" text="Assurance" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Ubuntu Bold" size="12.0" />
                      </font>
@@ -148,7 +148,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="2" GridPane.rowIndex="4">
                <children>
                   <HBox maxWidth="5.0" minWidth="5.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #A02DB3;" />
-                  <Label text="Others" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
+                  <Label style="-fx-text-fill: #333645;" text="Others" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Ubuntu Bold" size="12.0" />
                      </font>
@@ -161,7 +161,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <children>
                   <HBox maxWidth="5.0" minWidth="5.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #A02DB3;" />
-                  <Label text="Advisory" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
+                  <Label style="-fx-text-fill: #333645;" text="Advisory" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Ubuntu Bold" size="12.0" />
                      </font>
@@ -182,9 +182,9 @@
                   <RowConstraints maxHeight="205.0" minHeight="10.0" prefHeight="195.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <HBox alignment="CENTER" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.columnSpan="2">
+                  <HBox alignment="CENTER" onMouseClicked="#loadCountAllDetail" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.columnSpan="2">
                      <children>
-                        <Label fx:id="valueCountProject" text="200" textFill="#a8a8a8">
+                        <Label fx:id="valueCountProject" style="-fx-text-fill: #333645;" text="200" textFill="#a8a8a8">
                            <font>
                               <Font name="Ubuntu Bold" size="41.0" />
                            </font>
@@ -194,13 +194,13 @@
                         <Insets />
                      </GridPane.margin>
                   </HBox>
-                  <JFXListView fx:id="listCountProject" cacheShape="false" centerShape="false" focusTraversable="false" scaleShape="false" style="-fx-background-color: #E7E7E7;" stylesheets="@mylistview.css" verticalGap="80.0" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                  <JFXListView fx:id="listCountProject" cacheShape="false" centerShape="false" focusTraversable="false" onMouseClicked="#loadCountPerDetail" scaleShape="false" style="-fx-background-color: #E7E7E7;" stylesheets="@mylistview.css" verticalGap="80.0" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.rowIndex="4">
                <children>
                   <HBox maxWidth="5.0" minWidth="5.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #A02DB3;" />
-                  <Label text="Carry Project" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
+                  <Label style="-fx-text-fill: #333645;" text="Carry Project" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Ubuntu Bold" size="12.0" />
                      </font>
@@ -214,7 +214,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="6">
                <children>
                   <HBox maxWidth="5.0" minWidth="5.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #A02DB3;" />
-                  <Label text="Assurance Project Profile" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
+                  <Label style="-fx-text-fill: #333645;" text="Assurance Project Profile" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Ubuntu Bold" size="12.0" />
                      </font>
@@ -227,7 +227,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="8">
                <children>
                   <HBox maxWidth="5.0" minWidth="5.0" prefHeight="30.0" prefWidth="5.0" style="-fx-background-color: #A02DB3;" />
-                  <Label text="Risk Assesment Project Profile" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
+                  <Label style="-fx-text-fill: #333645;" text="Risk Assesment Project Profile" textFill="#a8a8a8" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="Ubuntu Bold" size="12.0" />
                      </font>
@@ -266,7 +266,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #E7E7E7;">
                      <children>
-                        <JFXButton onMouseClicked="#loadInProgress" prefHeight="35.0" prefWidth="300.0" ripplerFill="#b5b5b5" styleClass="jfx-button" stylesheets="@stylesheet.css" text="In Progress" textFill="#9e9e9e">
+                        <JFXButton fx:id="btnInPogress" onMouseClicked="#loadInProgress" prefHeight="35.0" prefWidth="300.0" ripplerFill="#b5b5b5" styleClass="jfx-button" stylesheets="@stylesheet.css" text="In Progress" textFill="#393939">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
@@ -274,7 +274,7 @@
                               <Font name="Ubuntu Bold" size="13.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton onMouseClicked="#loadComplete" prefHeight="35.0" prefWidth="300.0" ripplerFill="#b5b5b5" styleClass="jfx-button" stylesheets="@stylesheet.css" text="Complete" textFill="#9e9e9e">
+                        <JFXButton fx:id="btnComplete" onMouseClicked="#loadComplete" prefHeight="35.0" prefWidth="300.0" ripplerFill="#b5b5b5" styleClass="jfx-button" stylesheets="@stylesheet.css" text="Complete" textFill="#393939">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
@@ -282,7 +282,7 @@
                               <Font name="Ubuntu Bold" size="13.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton onMouseClicked="#loadNotYet" prefHeight="35.0" prefWidth="300.0" ripplerFill="#b5b5b5" styleClass="jfx-button" stylesheets="@stylesheet.css" text="Not Yet Due" textFill="#9e9e9e">
+                        <JFXButton fx:id="btnNotYetDue" onMouseClicked="#loadNotYet" prefHeight="35.0" prefWidth="300.0" ripplerFill="#b5b5b5" styleClass="jfx-button" stylesheets="@stylesheet.css" text="Not Yet Due" textFill="#393939">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
@@ -294,13 +294,14 @@
                   </HBox>
                   <TableView fx:id="listProject" cacheShape="false" focusTraversable="false" prefHeight="212.0" prefWidth="323.0" scaleShape="false" styleClass="scroll-bar" stylesheets="@mylistview.css" GridPane.columnSpan="2" GridPane.rowIndex="2">
                     <columns>
-                      <TableColumn fx:id="colBisnisUnit" prefWidth="243.0" text="Bisnis Unit" />
-                      <TableColumn fx:id="colCategory" prefWidth="70.0" text="Category" />
-                        <TableColumn fx:id="colStart" prefWidth="48.0" text="Start" />
-                        <TableColumn fx:id="colFinisih" prefWidth="54.0" text="Finish" />
-                        <TableColumn fx:id="colProgress" prefWidth="70.0" text="Progress" />
-                        <TableColumn fx:id="colRFactor" prefWidth="87.0" text="Risk Factor" />
-                        <TableColumn fx:id="colIndex" prefWidth="63.0" text="Index" />
+                        <TableColumn fx:id="colNo" prefWidth="33.0" text="No" />
+                      <TableColumn fx:id="colBisnisUnit" prefWidth="145.0" text="Project" />
+                      <TableColumn fx:id="colCategory" prefWidth="66.0" text="Category" />
+                        <TableColumn fx:id="colStart" prefWidth="93.0" text="Start" />
+                        <TableColumn fx:id="colFinisih" minWidth="0.0" prefWidth="70.0" text="Finish" />
+                        <TableColumn fx:id="colProgress" prefWidth="63.0" text="Progress" />
+                        <TableColumn fx:id="colRFactor" prefWidth="86.0" text="Risk Factor" />
+                        <TableColumn fx:id="colIndex" prefWidth="72.0" text="Index" />
                     </columns>
                   </TableView>
                </children>

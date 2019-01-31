@@ -30,4 +30,10 @@ public class TimetableDao {
         where = " where master_activity_idactivity = " +idAcitivity+ " ";
         loadData = queryloadString+where;
     }
+
+    public void loadActivityTimeTablebyYear(int idActivity, int year) {
+        where = " where master_activity_idactivity = " +idActivity+ " \n "
+                + " and YEAR(startmonth) = "+year+"";
+        loadData = queryloadString+where;
+    }
 }

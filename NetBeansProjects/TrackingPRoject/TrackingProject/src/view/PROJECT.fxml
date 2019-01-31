@@ -61,7 +61,7 @@
                <children>
                   <HBox prefHeight="30.0" prefWidth="273.0" style="-fx-background-color: #ffffff;">
                      <children>
-                        <JFXTextField cacheShape="false" centerShape="false" focusColor="WHITE" prefHeight="25.0" prefWidth="274.0" unFocusColor="WHITE">
+                        <JFXTextField fx:id="textSearch" cacheShape="false" centerShape="false" focusColor="WHITE" onInputMethodTextChanged="#loadSearchOnInput" onKeyPressed="#loadSearchOnPress" onKeyReleased="#loadSearchOnRelease" onKeyTyped="#loadSearchOnType" prefHeight="25.0" prefWidth="274.0" unFocusColor="WHITE">
                            <HBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </HBox.margin>
@@ -73,7 +73,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: #3498db;">
                      <children>
-                        <FontAwesomeIconView fill="WHITE" glyphName="SEARCH" size="14" />
+                        <FontAwesomeIconView fill="WHITE" glyphName="SEARCH" onMouseClicked="#loadSearchProject" size="14" />
                      </children>
                      <HBox.margin>
                         <Insets />

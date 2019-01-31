@@ -26,7 +26,7 @@
             </VBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="textActivity" alignment="TOP_LEFT" text="Risk Assesment" textFill="#868686" wrapText="true">
+                  <Label fx:id="textActivity" alignment="TOP_LEFT" style="-fx-text-fill: #333645;" text="Risk Assesment" textFill="#868686" wrapText="true">
                      <font>
                         <Font name="Ubuntu" size="13.0" />
                      </font>

@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
@@ -62,6 +63,7 @@ public class TIMEtableController implements Initializable {
     public int idActivity;
     int dateStart, dateEnd, yearStart, monthStart, monthEnd, yearEnd;
     int dateActStart, dateActEnd, monthActStart, monthActEnd,yearActStart,yearActEnd;
+    int year = Year.now().getValue();
     
     koneksi kon = new koneksi();
     TimetableDao dao =new TimetableDao();
@@ -148,6 +150,8 @@ public class TIMEtableController implements Initializable {
         chart.getPlot().setOutlineVisible(false);
         chart.getPlot().setForegroundAlpha(0.6f);
         chart.getPlot().setNoDataMessage("No Data");
+        chart.getPlot().getLegendItems();
+        
         
 
         //style chart
@@ -200,7 +204,8 @@ public class TIMEtableController implements Initializable {
     }
     
     private IntervalCategoryDataset getCategoryDataset(int idActivity) throws SQLException{
-        dao.loadActivityTimeTable(idActivity);
+        //dao.loadActivityTimeTable(idActivity);
+        dao.loadActivityTimeTablebyYear(idActivity, year);
         dataTimeTable=FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(dao.loadData);
         
@@ -255,8 +260,13 @@ public class TIMEtableController implements Initializable {
 
     @FXML
     private void loadTimeTableTask(MouseEvent event) throws SQLException {
-        idActivity = listActivityView.getSelectionModel().getSelectedItem().getIdAcitivity();
-        loadData(idActivity);
+        try{
+            idActivity = listActivityView.getSelectionModel().getSelectedItem().getIdAcitivity();
+            loadData(idActivity);
+        }catch (Exception e) {
+                
+        }
+
     }
     
 }

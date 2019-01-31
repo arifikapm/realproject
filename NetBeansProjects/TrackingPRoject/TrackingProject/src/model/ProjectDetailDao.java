@@ -87,18 +87,21 @@ public class ProjectDetailDao {
         queryload=select+where+and;
     }
 
-    public void setDeleteTask(String idProject, String idTask) {
+    public void setOnDeleteTask(String idProject, String idTask) {
         delete ="DELETE FROM `project_has_master_task` \n" +
             "WHERE `project_has_master_task`.`project_idproject` = "+idProject+" \n" +
             "AND `project_has_master_task`.`master_task_idtask` = "+idTask+"";
     }
     
     
-    public void setOnInsert(){
-        
+    public void setOnInsertTask(String idProject, String idTask){
+        insertInto="INSERT INTO `project_has_master_task` (`project_idproject`, `master_task_idtask`, \n" +
+                    "`est_datestart`, `est_dateend`, `act_datestart`, `act_dateend`, `create_date_task`, `"
+                + "mod_date_task`) \n" +
+                    "VALUES ('"+idProject+"', '"+idTask+"', NULL, NULL, NULL, NULL, NULL, NULL);";
     }
 
-    public void onSetModified(String idProject, String idTask, String estStart, 
+    public void setOnModifiedTask(String idProject, String idTask, String estStart, 
             String estEnd, String actStart, String actEnd, String nowValue) {
         
         update="UPDATE `project_has_master_task` SET \n" +

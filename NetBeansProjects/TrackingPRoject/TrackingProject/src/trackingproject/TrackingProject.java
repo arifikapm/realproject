@@ -19,6 +19,7 @@ public class TrackingProject extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+//        Parent root = FXMLLoader.load(getClass().getResource("/loginForm/LoginController_1.fxml"));
         Parent root = FXMLLoader.load(getClass().getResource("/view/ROOT.fxml"));
         
         Scene scene = new Scene(root);

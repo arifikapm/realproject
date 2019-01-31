@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="98.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
@@ -23,7 +24,12 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="67.0">
                <children>
-                  <Label fx:id="textProject" prefHeight="46.0" prefWidth="59.0" text="S&amp;D Samanhudi" textFill="#868686" wrapText="true">
+                  <VBox prefHeight="42.0" prefWidth="4.0">
+                     <children>
+                        <VBox prefHeight="4.0" prefWidth="4.0" style="-fx-background-color: #3D9AD7;" />
+                     </children>
+                  </VBox>
+                  <Label fx:id="textProject" prefHeight="46.0" prefWidth="59.0" style="-fx-text-fill: #333645;" text="S&amp;D Samanhudi" textFill="#868686" wrapText="true">
                      <font>
                         <Font name="Ubuntu" size="10.0" />
                      </font>
@@ -38,7 +44,7 @@
             </HBox>
          </children>
       </HBox>
-      <Label fx:id="valueCount" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="64.0" prefWidth="27.0" style="-fx-background-color: #C8C8C8;" text="Co" textFill="#868686" GridPane.columnIndex="1">
+      <Label fx:id="valueCount" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="64.0" prefWidth="27.0" style="-fx-background-color: #C8C8C8;" text="Co" textFill="WHITE" GridPane.columnIndex="1">
          <font>
             <Font name="Ubuntu" size="13.0" />
          </font>
@@ -58,12 +64,12 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="textPercentage" text="100%" textFill="#8a8a8a">
+            <Label fx:id="textPercentage" style="-fx-text-fill: #333645;" text="100%" textFill="#8a8a8a">
                <font>
                   <Font size="9.0" />
                </font>
             </Label>
-            <Label fx:id="textInisial" text="ASS" textFill="#868484" GridPane.columnIndex="1">
+            <Label fx:id="textInisial" style="-fx-text-fill: #333645;" text="ASS" textFill="#868484" GridPane.columnIndex="1">
                <font>
                   <Font size="10.0" />
                </font>

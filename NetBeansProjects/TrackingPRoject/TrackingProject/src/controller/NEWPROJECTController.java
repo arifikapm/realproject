@@ -79,6 +79,8 @@ import model.MasScope;
 import model.MasScopeDao;
 import model.MasStatusProject;
 import model.MasStatusProjectDao;
+import model.MasTask;
+import model.MasTaskDao;
 import model.Project;
 import model.ProjectDao;
 import model.Team;
@@ -104,6 +106,7 @@ public class NEWPROJECTController implements Initializable {
     private Format formatter;
     
     final ContextMenu contextMenu = new ContextMenu();
+    final ContextMenu contextTask = new ContextMenu();
     
     @FXML
     private BorderPane viewMaster;
@@ -143,6 +146,9 @@ public class NEWPROJECTController implements Initializable {
     private JFXButton btnSave;
     
     @FXML
+    private JFXButton btnInput;
+    
+    @FXML
     private TableView<ListTaskProject> tblTask;
 
     @FXML
@@ -172,6 +178,7 @@ public class NEWPROJECTController implements Initializable {
     MasAuditIndexDao modelAuditIndex = new MasAuditIndexDao();
     MasStatusProjectDao modelStatusProject = new MasStatusProjectDao();
     MasResponsibilityDao modelResponsibility = new MasResponsibilityDao();
+    MasTaskDao modelMasTask = new MasTaskDao();
     TeamDao modelTeam = new TeamDao();
     
     //insert
@@ -189,6 +196,7 @@ public class NEWPROJECTController implements Initializable {
     private ObservableList<MasAuditIndex>dataAuditIndex;
     private ObservableList<MasStatusProject>dataStatusProject;
     private ObservableList<MasResponsibility>dataResponsibility;
+    private ObservableList<MasTask>dataTask;
 
 
     
@@ -598,6 +606,7 @@ public class NEWPROJECTController implements Initializable {
             setScope();
             
             popupAsa();
+            popupTask();
             
             
             listKaryawan.setDisable(true);
@@ -1134,7 +1143,7 @@ public class NEWPROJECTController implements Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
                     
-                    modelDetail.setDeleteTask(getIdProject(),idTask);
+                    modelDetail.setOnDeleteTask(getIdProject(),idTask);
                     kon.stat.executeUpdate(modelDetail.delete);
                     System.out.println(modelDetail.delete);
                     // ... user chose OK
@@ -1144,6 +1153,9 @@ public class NEWPROJECTController implements Initializable {
                    alert.close();
                     // ... user chose CANCEL or closed the dialog
                 }
+                
+                tblTask.refresh();
+                setDataListTask(idProject);
                 
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -1155,13 +1167,17 @@ public class NEWPROJECTController implements Initializable {
             
         }
         //model to set on query
-        tblTask.refresh();
+        
         
         
     }
 
     @FXML
-    void handleInput(MouseEvent event) {
+    void handleInput(MouseEvent event) throws SQLException {
+        try {
+            btnInput.setContextMenu(contextTask);
+        } catch (Exception e) {
+        }
         
     }
 
@@ -1170,7 +1186,7 @@ public class NEWPROJECTController implements Initializable {
     void handleModTask(MouseEvent event) throws SQLException {
         onSelectionTable();
         try {
-        modelDetail.onSetModified(idProject,idTask,estStart,estEnd,actStart,actStart,nowValue);
+        modelDetail.setOnModifiedTask(idProject,idTask,estStart,estEnd,actStart,actStart,nowValue);
         kon.stat.executeUpdate(modelDetail.update);
         //System.out.println(modelDetail.update);
             
@@ -1180,9 +1196,13 @@ public class NEWPROJECTController implements Initializable {
             alert.setContentText(String.valueOf(" Project "+tblTask.getSelectionModel().getSelectedItem().getTaskCol()+" "
                     + "\n" +" Mod Success on \n"));
             alert.showAndWait();
+            
+            tblTask.refresh();
+            setDataListTask(idProject);
         } catch (Exception e) {
             System.out.println(""+e);
         }
+        
 
     }
     
@@ -1371,18 +1391,8 @@ public class NEWPROJECTController implements Initializable {
             contextMenu.setOnAction(evt -> {
                 idAsa = ((MenuItem)evt.getTarget()).getId();
                 transferListMasKaryawan(listKaryawan, currentTeam);
+                
             });
-
-////            listKaryawan.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-// 
-////            @Override
-////            public void handle(ContextMenuEvent event) {
-//            contextMenu.setX(10.0);
-//            contextMenu.setY(10.0);
-//            contextMenu.show(listKaryawan, Side.LEFT, 10, 10);
-////            
-////            }
-////        });
             
         } catch (Exception e) {
         }
@@ -1421,6 +1431,87 @@ public class NEWPROJECTController implements Initializable {
         }
    
 
+    }
+    
+    private boolean checkIdExisTask(TableView<ListTaskProject> tblContainer) {
+        //bolean checking id selection list remover to list array on list container
+        List<String> listChecker = tblContainer.getItems().stream().
+                        map(ListTaskProject::getIdTask).
+                        collect(Collectors.toList());
+        
+        for (String listChecker1 : listChecker) {
+            if (idTask.trim().contains(listChecker1)) {        
+                return true;
+            }
+        }     
+        return false;
+    }
+    
+    public void popupTask(){
+        String idItemTask = null;
+        //MenuItem task = null;
+        MenuItem menuTaskItem= null;
+        
+        try {
+            dataTask=FXCollections.observableArrayList();
+            kon.res=kon.stat.executeQuery(modelMasTask.selectAll); 
+
+            while (kon.res.next()) {
+                dataTask.addAll(new MasTask(kon.res.getString(1), kon.res.getString(2),
+                        kon.res.getString(3),kon.res.getString(4) ));
+                
+                //set text
+                //set id text
+                menuTaskItem = new MenuItem(kon.res.getString(2));
+                idItemTask = Integer.toString(kon.res.getInt(1));
+                menuTaskItem.setId(idItemTask);
+                contextTask.getItems().addAll(menuTaskItem);
+            }
+            //an action on mouse clicked
+            contextTask.setOnAction(evt -> {
+                idTask = ((MenuItem)evt.getTarget()).getId();
+                onInputHandle();
+                
+                
+            });
+
+            tblTask.refresh();
+            setDataListTask(idProject);
+            
+        } catch (Exception e) {
+        }
+    }
+    
+    private void onInputHandle() {
+        if(checkIdExisTask(tblTask)==true){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText(String.valueOf("Duplicate Entry"));
+            alert.showAndWait();
+        }else{
+            try {
+                modelDetail.setOnInsertTask(idProject, idTask);
+                kon.stat.executeUpdate(modelDetail.insertInto);
+                System.out.println(modelDetail.insertInto);
+                tblTask.refresh();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setHeaderText(null);
+                alert.setContentText(String.valueOf("Success add Task"));
+                alert.showAndWait();
+                tblTask.refresh();
+                setDataListTask(idProject);
+                
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText(String.valueOf(e));
+                alert.showAndWait();
+                System.out.println(""+e);
+            }
+        }
     }
 
     public String getIdProject() {
@@ -1510,4 +1601,6 @@ public class NEWPROJECTController implements Initializable {
     public void setIdTask(String idTask) {
         this.idTask = idTask;
     }
+
+    
 }

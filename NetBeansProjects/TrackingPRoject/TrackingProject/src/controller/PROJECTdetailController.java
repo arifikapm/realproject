@@ -386,7 +386,7 @@ public class PROJECTdetailController implements Initializable {
             newWindow.setScene(scene);
  
             // Specifies the modality for new window.
-            newWindow.initModality(Modality.WINDOW_MODAL);
+            newWindow.initModality(Modality.APPLICATION_MODAL);
  
             // Specifies the owner Window (parent) for new window
             newWindow.initOwner(primaryStage);

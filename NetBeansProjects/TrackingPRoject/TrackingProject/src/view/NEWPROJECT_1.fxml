@@ -457,7 +457,7 @@
                         <FontAwesomeIconView fill="#fc0e0e" glyphName="MINUS" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton onMouseClicked="#handleInput" prefHeight="25.0" prefWidth="75.0" ripplerFill="#30a0d0" text="Input" textFill="#134f0e" GridPane.columnIndex="4">
+                  <JFXButton fx:id="btnInput" onMouseClicked="#handleInput" prefHeight="25.0" prefWidth="75.0" ripplerFill="#30a0d0" text="Input" textFill="#134f0e" GridPane.columnIndex="4">
                      <graphic>
                         <FontAwesomeIconView fill="#42d342" glyphName="PENCIL" />
                      </graphic>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="854.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllersLogin.LoginController">
+    <children>
+        <AnchorPane fx:id="paneViewSetting" prefHeight="503.0" prefWidth="382.0" style="-fx-background-color: #0C39FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label alignment="CENTER" layoutX="105.0" layoutY="262.0" prefHeight="23.0" prefWidth="173.0" text="Easy Project Control" textFill="WHITE">
+                    <font>
+                        <Font name="Segoe UI" size="18.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" layoutX="89.0" layoutY="295.0" prefHeight="23.0" prefWidth="205.0" text="Create manage your PROJECT easily" textFill="WHITE">
+                    <font>
+                        <Font name="Segoe UI" size="12.0" />
+                    </font>
+                </Label>
+            <ImageView fitHeight="100.0" fitWidth="248.0" layoutX="64.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/Untitled%20putih.png" />
+               </image>
+            </ImageView>
+            <HBox layoutX="142.0" layoutY="232.0" prefHeight="23.0" prefWidth="200.0" style="-fx-background-color: #0C39FF;" />
+            </children>
+        </AnchorPane>
+        <Pane layoutX="488.0" layoutY="100.0" AnchorPane.bottomAnchor="73.0" AnchorPane.topAnchor="100.0">
+            <children>
+                <TextField fx:id="txtUsername" layoutX="7.0" prefHeight="34.0" prefWidth="275.0" promptText="username or email" />
+                <PasswordField fx:id="txtPassword" layoutX="7.0" layoutY="61.0" prefHeight="34.0" prefWidth="275.0" promptText="password" stylesheets="@../styling/fullpackstyling.css" />
+                <Button fx:id="btnSignin" layoutX="5.0" layoutY="170.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="34.0" prefWidth="275.0" stylesheets="@../styling/fullpackstyling.css" text="Sign in" />
+                <Button fx:id="btnFB" layoutX="7.0" layoutY="232.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="275.0" style="-fx-background-color: #0C39FF;" text="Sign Up" textFill="WHITE" />
+                <Separator layoutX="8.0" layoutY="151.0" prefHeight="7.0" prefWidth="275.0" />
+                <Label alignment="CENTER" layoutX="110.0" layoutY="140.0" prefHeight="23.0" prefWidth="65.0" style="-fx-background-color: #fff;" text="Please" textFill="#5b5a5a">
+                    <font>
+                        <Font name="Segoe UI" size="12.0" />
+                    </font>
+                </Label>
+                <Label fx:id="lblErrors" alignment="CENTER" layoutX="4.0" layoutY="103.0" prefHeight="34.0" prefWidth="275.0" textFill="#ff6354">
+                    <font>
+                        <Font name="Segoe UI" size="10.0" />
+                    </font>
+                </Label>
+            <Separator layoutX="8.0" layoutY="215.0" prefHeight="7.0" prefWidth="275.0" />
+            <Label alignment="CENTER" layoutX="126.0" layoutY="204.0" prefHeight="23.0" prefWidth="31.0" style="-fx-background-color: #fff;" text="Or" textFill="#5b5a5a">
+               <font>
+                  <Font name="Segoe UI" size="12.0" />
+               </font>
+            </Label>
+            <HBox layoutY="206.0" prefHeight="100.0" prefWidth="283.0" style="-fx-background-color: #fff;" />
+            </children>
+        </Pane>
+        <Label alignment="CENTER" layoutX="394.0" layoutY="466.0" prefHeight="23.0" prefWidth="113.0" text="Design by Keepto" textFill="#5b5a5a" AnchorPane.bottomAnchor="14.0">
+            <font>
+                <Font name="Segoe UI" size="12.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="52.0" fitWidth="113.0" layoutX="714.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../image/Untitled%201.png" />
+            </image>
+        </ImageView>
+      <Button fx:id="btnSetting" layoutX="723.0" layoutY="449.0" mnemonicParsing="false" onMouseClicked="#handleConnectionSetting" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #fff;" text="Setting" textFill="#a4a0a0">
+         <graphic>
+            <FontAwesomeIconView fill="#aeaeae" glyphName="GEAR" />
+         </graphic>
+      </Button>
+    </children>
+</AnchorPane>

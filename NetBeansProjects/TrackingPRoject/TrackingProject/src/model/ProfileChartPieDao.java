@@ -25,4 +25,11 @@ public class ProfileChartPieDao {
         Groupby=" group by mac.idactivity,mas.idstatus";
         Select=Queryload+Where+Groupby;
     }
+
+    public void returnLoadProfilebyYear(String set_idacticvity, int year) {
+        Where =" WHERE mac.idactivity = "+set_idacticvity +" \n"
+                + " and YEAR(pro.startmonth) = "+year+" ";
+        Groupby=" group by mac.idactivity,mas.idstatus";
+        Select=Queryload+Where+Groupby;
+    }
 }

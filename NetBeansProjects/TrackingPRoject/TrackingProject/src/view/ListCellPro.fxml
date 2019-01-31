@@ -27,7 +27,7 @@
             <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="titleCivitas" prefHeight="25.0" prefWidth="317.0" text="PT Bangun Pertiwi Perkasa Kusuma Putra" textFill="#a8a8a8" GridPane.columnSpan="3">
+            <Label fx:id="titleCivitas" prefHeight="25.0" prefWidth="317.0" style="-fx-text-fill: #333645;" text="PT Bangun Pertiwi Perkasa Kusuma Putra" textFill="#a8a8a8" GridPane.columnSpan="3">
                <font>
                   <Font name="Ubuntu Bold" size="13.0" />
                </font>
@@ -42,14 +42,14 @@
                <children>
                   <VBox prefHeight="39.0" prefWidth="241.0">
                      <children>
-                        <Label fx:id="titleActivity" text="Activity" textFill="#aeaeae">
+                        <Label fx:id="titleActivity" style="-fx-text-fill: #333645;" text="Activity" textFill="#aeaeae">
                            <font>
                               <Font name="Ubuntu Bold" size="11.0" />
                            </font>
                         </Label>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label text="Plan Due Date" textFill="#8d8d8d">
+                              <Label style="-fx-text-fill: #333645;" text="Plan Due Date" textFill="#8d8d8d">
                                  <font>
                                     <Font name="Ubuntu" size="9.0" />
                                  </font>
@@ -57,7 +57,7 @@
                                     <Insets right="10.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="titleStratMonth" text="Jan" textFill="#8d8d8d">
+                              <Label fx:id="titleStratMonth" style="-fx-text-fill: #333645;" text="Jan" textFill="#8d8d8d">
                                  <font>
                                     <Font name="Ubuntu" size="9.0" />
                                  </font>
@@ -70,7 +70,7 @@
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </Label>
-                              <Label fx:id="titleEndMonth" text="Mar" textFill="#8d8d8d">
+                              <Label fx:id="titleEndMonth" style="-fx-text-fill: #333645;" text="Mar" textFill="#8d8d8d">
                                  <font>
                                     <Font name="Ubuntu" size="9.0" />
                                  </font>
@@ -103,7 +103,7 @@
                         <Insets />
                      </HBox.margin>
                   </ProgressBar>
-                  <Label fx:id="titleProsentase" text="25" textFill="#ababab">
+                  <Label fx:id="titleProsentase" style="-fx-text-fill: #333645;" text="25" textFill="#ababab">
                      <HBox.margin>
                         <Insets left="12.0" />
                      </HBox.margin>

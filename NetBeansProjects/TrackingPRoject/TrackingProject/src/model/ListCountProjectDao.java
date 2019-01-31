@@ -32,7 +32,10 @@ public class ListCountProjectDao extends ListCell<ListCountProject>{
     private FXMLLoader mLLoader;
     
     public String queryLoad;
-    public String selectQuery =  "SELECT mac.activitycol, count(pro.idproject) as countProject\n" +
+//    public String selectQuery =  "SELECT mac.activitycol, count(pro.idproject) as countProject\n" +
+//            "FROM project as pro\n" +
+//            "INNER join master_activity as mac on pro.master_activity_idactivity = mac.idactivity\n" ;
+    public String selectQueryId =  "SELECT mac.idactivity, mac.activitycol, count(pro.idproject) as countProject\n" +
             "FROM project as pro\n" +
             "INNER join master_activity as mac on pro.master_activity_idactivity = mac.idactivity\n" ;
     public String where;
@@ -83,7 +86,7 @@ public class ListCountProjectDao extends ListCell<ListCountProject>{
 
     public void loadCountbyYear(int year) {
         where =" where YEAR(pro.startmonth) = "+year+"";
-        queryLoad = selectQuery+where+groupBy;
+        queryLoad = selectQueryId+where+groupBy;
     }
     
 }

@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane fx:id="rootLoad" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ROOTController">
    <left>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="38.0" style="-fx-background-color: #000000;" styleClass="sidebar" stylesheets="@stylesheet.css" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" onMouseClicked="#loadHome" prefHeight="40.0" prefWidth="82.0" style="-fx-background-color: #FFFFFF;">
+            <StackPane prefHeight="38.0" prefWidth="38.0" style="-fx-background-color: #fff;">
                <children>
-                  <ImageView fitHeight="40.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="btnImageDash" fitHeight="40.0" fitWidth="32.0" onMouseClicked="#loadImgDash" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../image/ARMAProjecttracking.png" />
                      </image>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
                   </ImageView>
+                  <JFXButton fx:id="btnDashboard" buttonType="RAISED" minWidth="38.0" onMouseClicked="#loadHome" opacity="0.0" prefHeight="39.0" prefWidth="38.0" style="-fx-background-color: #fff;" text="." />
                </children>
-            </VBox>
+            </StackPane>
             <VBox alignment="CENTER" onMouseClicked="#loadAllTask" prefHeight="40.0" prefWidth="200.0">
                <children>
                   <FontAwesomeIconView fill="#e4e1e1" glyphName="CALENDAR" size="23" />

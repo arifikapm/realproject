@@ -21,7 +21,7 @@
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label fx:id="labelRoot" text="Preliminary" textFill="#979696">
+            <Label fx:id="labelRoot" style="-fx-text-fill: #333645;" text="Preliminary" textFill="#979696">
                <font>
                   <Font name="Ubuntu" size="12.0" />
                </font>
@@ -34,7 +34,7 @@
       <ProgressBar fx:id="barRoot" maxHeight="11.0" minHeight="10.0" prefHeight="11.0" prefWidth="167.0" progress="0.0" GridPane.columnIndex="1" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
          <children>
-            <Label fx:id="valueRoot" text="20" textFill="#979696">
+            <Label fx:id="valueRoot" style="-fx-text-fill: #333645;" text="20" textFill="#979696">
                <font>
                   <Font name="Cousine" size="12.0" />
                </font>

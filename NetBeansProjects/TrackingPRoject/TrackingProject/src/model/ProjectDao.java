@@ -136,7 +136,6 @@ public class ProjectDao extends ListCell<Project>{
     public void loadPerProject(String idProject){
         where = " where PMK.project_idproject = "+idProject+"";
         SelectNeeded = querySelect+where+groupBy;
-        System.out.println(idProject);
     }
     
     public void loadProfilePerStatusbyYear(int idStatus, int year) {
@@ -147,6 +146,21 @@ public class ProjectDao extends ListCell<Project>{
     
     public void loadProjectbyYear(int year) {
         where = " where YEAR(PRO.startmonth) = "+year+"";
+        SelectNeeded = querySelect+where+groupBy;
+    }
+    
+    public void loadProjectSearch(int year, String SearchKey) {
+        where = " where YEAR(PRO.startmonth) = "+year+""
+                + " and PRO.projectcol like '%"+SearchKey+"%' "
+                + " or MIC.civitascol like '%"+SearchKey+"%' "
+                + " or MAC.activitycol like '%"+SearchKey+"%' ";
+        SelectNeeded = querySelect+where+groupBy;
+    }
+    
+    public void loadProfilebyYearActivity(int idStatusLoad, String idAct, int year) {
+        where = " where MAC.idactivity= "+idAct+" \n"
+                + "and PRO.status_idstatus = "+idStatusLoad+""
+                + " and YEAR(PRO.startmonth) = "+year+"";
         SelectNeeded = querySelect+where+groupBy;
     }
     
@@ -234,6 +248,10 @@ public class ProjectDao extends ListCell<Project>{
         SelectNeeded = insert;
         
     }
+
+
+
+    
 
     
 }

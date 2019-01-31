@@ -14,16 +14,22 @@ import javafx.beans.property.StringProperty;
  */
 public class ListCountProject {
 
+    private final StringProperty idactivity;
     private final StringProperty civitascol;
     private final StringProperty valueCount;
     
-    public ListCountProject(String civitasCol,String countProject){
+    public ListCountProject(String idActivity, String civitasCol,String countProject){
+        this.idactivity = new SimpleStringProperty(idActivity);
         this.civitascol = new SimpleStringProperty(civitasCol);
         this.valueCount = new SimpleStringProperty(countProject);
         
         
     }
 
+    public String getIdActivity() {
+        return idactivity.get();
+    }
+    
     public String getCivitascol() {
         return civitascol.get();
     }
@@ -33,6 +39,10 @@ public class ListCountProject {
     }
 
 
+    public void setIdActivity(String value) {
+        idactivity.setValue(value);
+    }
+    
     public void setCivitascol(String value) {
         civitascol.setValue(value);
     }

@@ -43,18 +43,26 @@ public class ListCarryProjectDao extends ListCell<ListCarryProject>{
 "                    monthname(pro.startmonth) as startproject,monthname(pro.endmonth) as endproject,\n" +
 "                    concat(round((COUNT(pmt.act_dateend)/ COUNT(pmt.master_task_idtask) *100)),\"%\") as percentage\n" +
 "                    \n" +
-"FROM\n" +
-"project_has_master_task as pmt\n" +
-"\n" +
-"LEFT join project as pro on pmt.project_idproject = pro.idproject \n" +
-"                    INNER join master_civitas as mci on pro.civitas_idcivitas = mci.idcivitas \n" +
-"                    INNER join master_activity as mac on pro.master_activity_idactivity = mac.idactivity\n" +
-"                    INNER join master_status as mas on pro.status_idstatus = mas.idstatus\n" +
-"WHERE\n" +
-"mas.idstatus <4\n" +
-"AND\n" +
-"year(pro.endmonth) < year(now())\n" +
-"GROUP by pmt.project_idproject";
+                "FROM\n" +
+                "project_has_master_task as pmt\n" +
+                "\n" +
+                "LEFT join project as pro on pmt.project_idproject = pro.idproject \n" +
+                "                    INNER join master_civitas as mci on pro.civitas_idcivitas = mci.idcivitas \n" +
+                "                    INNER join master_activity as mac on pro.master_activity_idactivity = mac.idactivity\n" +
+                "                    INNER join master_status as mas on pro.status_idstatus = mas.idstatus\n" ;
+    
+    public String loadQuery;
+    public String select;
+    public String where;
+    public String groupBy = " GROUP by pmt.project_idproject ";
+    
+    public void loadCarryProject(int year){
+        where = " WHERE\n" +
+                "mas.idstatus <4\n" +
+                "AND\n" +
+                "year(pro.endmonth) < "+year+"" ;
+        loadQuery = queryLoadCarryProject+where+groupBy;
+    }
     
 //    public String queryListDasboard="SELECT mac.civitascol, p.riskfactor, p.auditvalue\n" +
 //"FROM project as p, master_civitas as mac\n" +

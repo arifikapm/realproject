@@ -21,12 +21,12 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="51.0" GridPane.columnIndex="2">
          <children>
-            <Label fx:id="valueCount" text="80" textFill="#868686" wrapText="true">
+            <Label fx:id="valueCount" style="-fx-text-fill: #333645;" text="80" textFill="#868686" wrapText="true">
                <font>
                   <Font name="Ubuntu" size="19.0" />
                </font>
             </Label>
-            <Label alignment="TOP_LEFT" prefHeight="28.0" prefWidth="20.0" text="Days" textFill="#868686" wrapText="true">
+            <Label alignment="TOP_LEFT" prefHeight="28.0" prefWidth="20.0" style="-fx-text-fill: #333645;" text="Days" textFill="#868686" wrapText="true">
                <font>
                   <Font name="Ubuntu" size="9.0" />
                </font>
@@ -45,7 +45,7 @@
             </VBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="textCivitas" text="Risk Assesment" textFill="#868686" wrapText="true">
+                  <Label fx:id="textCivitas" style="-fx-text-fill: #333645;" text="Risk Assesment" textFill="#868686" wrapText="true">
                      <font>
                         <Font name="Ubuntu" size="13.0" />
                      </font>

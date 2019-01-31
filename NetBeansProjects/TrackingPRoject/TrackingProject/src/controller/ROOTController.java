@@ -5,18 +5,26 @@
  */
 package controller;
 
+import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Year;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import model.MasResponsibility;
 
 /**
  * FXML Controller class
@@ -33,6 +41,14 @@ public class ROOTController implements Initializable {
     private VBox btnSetting;
     
     
+    int year = Year.now().getValue();
+    final ContextMenu contextMenu = new ContextMenu();
+    public String ChoseYear = null;
+    
+    @FXML
+    private ImageView btnImageDash;
+    @FXML
+    private JFXButton btnDashboard;
 
     /**
      * Initializes the controller class.
@@ -43,6 +59,7 @@ public class ROOTController implements Initializable {
         try {
             // TODO
             loadDasboard();
+            popupYear();
         } catch (IOException ex) {
             Logger.getLogger(ROOTController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,20 +113,82 @@ public class ROOTController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DASHBOARD_3.fxml"));
         BorderPane newScene = loader.load();
         DASHBOARDController mct = loader.getController();
+        
+        if (ChoseYear != null ) {
+            int thisYear = Integer.valueOf(ChoseYear);
+            //mct.setYear(thisYear);
+            mct.setChoseYear(thisYear);
+            //System.out.println(""+ChoseYear);
+            //loadDasboard();
+        }else{
+            mct.setChoseYear(year);
+        }
+        
         rootLoad.setCenter(newScene);
         rootLoad.maxHeight(0);
     }
     
-    public void loadDasboardView() throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DashboardView.fxml"));
-        BorderPane newScene = loader.load();
-        DashboardViewController mct = loader.getController();
-        rootLoad.setCenter(newScene);
-    }
+//    public void loadDasboardView() throws IOException{
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DashboardView.fxml"));
+//        BorderPane newScene = loader.load();
+//        DashboardViewController mct = loader.getController();
+//
+//            
+//        rootLoad.setCenter(newScene);
+//    }
+    
+//    public void loadDasboardView() throws IOException{
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DashboardView.fxml"));
+//        BorderPane newScene = loader.load();
+//        DashboardViewController mct = loader.getController();
+//
+//            
+//        rootLoad.setCenter(newScene);
+//    }
 
     @FXML
     private void loadHome(MouseEvent event) throws IOException {
-        loadDasboard();
+        if (event.getButton()==MouseButton.SECONDARY) {
+            btnDashboard.setContextMenu(contextMenu);
+        }else if(event.getButton() == MouseButton.PRIMARY){
+            int year = Year.now().getValue();
+            System.out.println("");
+            loadDasboard();
+        }
+        
+    }
+    
+    public void popupYear(){
+        String idItem = null;
+        MenuItem quit = null;
+        MenuItem quit2 = null;
+        
+        try {
+            int i = 0;
+            for (i = 0; i < 3; i++) {
+                String choseyear = Integer.toString(year-i); 
+                quit2 = new MenuItem(choseyear);
+
+                contextMenu.getItems().addAll(quit2);
+            }
+            
+            contextMenu.setOnAction(evt -> {
+                ChoseYear = ((MenuItem)evt.getTarget()).getText();
+                
+                try {
+                    loadDasboard();
+                } catch (IOException ex) {
+                    Logger.getLogger(ROOTController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
+        
+            
+        } catch (Exception e) {
+        }
+    }
+
+    @FXML
+    private void loadImgDash(MouseEvent event) {
     }
         
     
