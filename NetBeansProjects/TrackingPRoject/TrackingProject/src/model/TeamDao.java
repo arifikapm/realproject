@@ -82,16 +82,16 @@ public class TeamDao extends ListCell<Team> {
                 "(`project_idproject`, `master_karyawan_idkaryawan`, \n" +
                 "`responsibility_idresponsibility`) \n" +
                 "VALUES ('"+idProject+"', '"+idKaryawan+"', '"+idAsa+"') ";
-        System.out.println(insertInto);
-        System.out.println("VALUES ('"+idProject+"', '"+idKaryawan+"', "+idAsa+");");    
+//        System.out.println(insertInto);
+//        System.out.println("VALUES ('"+idProject+"', '"+idKaryawan+"', "+idAsa+");");    
     }
 
     public void setOnDeleteProjectHasTeam(String idProject, String idKaryawan) {
         onDelete="DELETE FROM `project_has_master_karyawan` \n" +
                 "WHERE `project_has_master_karyawan`.`project_idproject` = "+idProject+" \n" +
                 "AND `project_has_master_karyawan`.`master_karyawan_idkaryawan` = "+idKaryawan+"";
-        System.out.println(onDelete);
-        System.out.println("`project_idproject` ="+idProject +"\n  idKaryawan = "+idKaryawan );
+//        System.out.println(onDelete);
+//        System.out.println("`project_idproject` ="+idProject +"\n  idKaryawan = "+idKaryawan );
     }
     
     

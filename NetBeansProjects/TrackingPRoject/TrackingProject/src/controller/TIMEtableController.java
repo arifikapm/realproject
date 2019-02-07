@@ -24,14 +24,19 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.BorderPane;
 import model.MasActivity;
 import model.MasActivityDao;
+import model.MasGroupCivitas;
+import model.MasGroupCivitasDao;
 import model.MasScope;
 import model.MasScopeDao;
+import model.MasTask;
 
 import model.Timetable;
 import model.TimetableDao;
@@ -57,9 +62,11 @@ public class TIMEtableController implements Initializable {
     private ScrollPane chartView;
     @FXML
     private JFXListView<MasActivity> listActivityView;
+     
+    final ContextMenu contextMenu = new ContextMenu();
     
     //
-    public String idPorject, taskPlann;
+    public String idPorject, taskPlann, idGroup;
     public int idActivity;
     int dateStart, dateEnd, yearStart, monthStart, monthEnd, yearEnd;
     int dateActStart, dateActEnd, monthActStart, monthActEnd,yearActStart,yearActEnd;
@@ -69,9 +76,11 @@ public class TIMEtableController implements Initializable {
     TimetableDao dao =new TimetableDao();
     Timetable model;
     MasActivityDao modelActivity = new MasActivityDao();
+    MasGroupCivitasDao modelGroupCivitas = new MasGroupCivitasDao();
     
     private ObservableList<Timetable> dataTimeTable;
     private ObservableList<MasActivity> dataAcitivity;
+    private ObservableList<MasGroupCivitas> dataGroupCivitas;
 
     private static Date date(final int day, final int month, final int year) {
 
@@ -175,14 +184,19 @@ public class TIMEtableController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * run all method and show it all 
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         kon.db();
         try {
+            popupGroup();
+            
             setListActivity();
-            idActivity = 1;
-            loadData(idActivity);
+            handleLoadGroup();
+
+            //loadData(idActivity);
+            
         } catch (SQLException ex) {
             Logger.getLogger(TIMEtableController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -205,7 +219,8 @@ public class TIMEtableController implements Initializable {
     
     private IntervalCategoryDataset getCategoryDataset(int idActivity) throws SQLException{
         //dao.loadActivityTimeTable(idActivity);
-        dao.loadActivityTimeTablebyYear(idActivity, year);
+//        dao.loadActivityTimeTablebyYear(idActivity, year);
+        dao.loadActivityTimeTableGroup(idActivity, year, idGroup);
         dataTimeTable=FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(dao.loadData);
         
@@ -261,11 +276,60 @@ public class TIMEtableController implements Initializable {
     @FXML
     private void loadTimeTableTask(MouseEvent event) throws SQLException {
         try{
-            idActivity = listActivityView.getSelectionModel().getSelectedItem().getIdAcitivity();
-            loadData(idActivity);
+            listActivityView.setContextMenu(contextMenu);       
         }catch (Exception e) {
                 
         }
+
+    }
+    
+    public void popupGroup(){
+        String idItemGroup = null;
+        //MenuItem task = null;
+        MenuItem menuGroupCivitas= null;
+        
+        try {
+            dataGroupCivitas=FXCollections.observableArrayList();
+            kon.res=kon.stat.executeQuery(modelGroupCivitas.selectAll); 
+
+            while (kon.res.next()) {
+                dataGroupCivitas.addAll(new MasGroupCivitas(kon.res.getInt(1), kon.res.getString(2)));
+                
+                //set text
+                //set id text
+                menuGroupCivitas = new MenuItem(kon.res.getString(2));
+                idItemGroup = Integer.toString(kon.res.getInt(1));
+                menuGroupCivitas.setId(idItemGroup);
+                contextMenu.getItems().addAll(menuGroupCivitas);
+            }
+            //an action on mouse clicked
+            contextMenu.setOnAction(evt -> {
+                idGroup = ((MenuItem)evt.getTarget()).getId();
+                try {
+                    handleLoadGroup();
+                } catch (SQLException ex) {
+                    Logger.getLogger(TIMEtableController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                
+            });
+   
+        } catch (Exception e) {
+        }
+    }
+
+    private void handleLoadGroup() throws SQLException {
+        
+        
+        if(idActivity  == 0 || idGroup == null ){
+            idActivity = 1;
+            idGroup = "1";
+            loadData(idActivity);
+        } else {
+            idActivity = listActivityView.getSelectionModel().getSelectedItem().getIdAcitivity();
+            loadData(idActivity);
+        }
+        
 
     }
     

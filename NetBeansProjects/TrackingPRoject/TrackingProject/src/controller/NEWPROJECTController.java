@@ -35,6 +35,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -99,10 +100,10 @@ public class NEWPROJECTController implements Initializable {
     public  String textProject, textActivity, textCivitas, textStartDate, textEndDate, textRiskFactore;
     private String idProject, idScope, idKaryawan, idAsa, idTask, nowValue;
     private int hd;
-    private String estStart = "0000-00-00";
-    private String actStart  = "0000-00-00";
-    private String actEnd = "0000-00-00";
-    private String estEnd = "0000-00-00" ;
+    private String estStart = null;
+    private String actStart  = null;
+    private String actEnd = null;
+    private String estEnd = null;
     private Format formatter;
     
     final ContextMenu contextMenu = new ContextMenu();
@@ -150,6 +151,9 @@ public class NEWPROJECTController implements Initializable {
     
     @FXML
     private TableView<ListTaskProject> tblTask;
+    
+    @FXML
+    private TableColumn<Project, Number> colNo;
 
     @FXML
     private TableColumn<ListTaskProject, String> colTask;
@@ -943,6 +947,7 @@ public class NEWPROJECTController implements Initializable {
             
             tblTask.setItems(null);
             tblTask.setEditable(true);
+            colNo.setCellValueFactory(column-> new ReadOnlyObjectWrapper<>(tblTask.getItems().indexOf(column.getValue())+1));
             colTask.setCellValueFactory(new PropertyValueFactory<>("TaskCol"));
             
             colStartPlan.setCellValueFactory(cell -> cell.getValue().dateEstStart());
@@ -1157,7 +1162,7 @@ public class NEWPROJECTController implements Initializable {
                 tblTask.refresh();
                 setDataListTask(idProject);
                 
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText(null);
@@ -1186,7 +1191,7 @@ public class NEWPROJECTController implements Initializable {
     void handleModTask(MouseEvent event) throws SQLException {
         onSelectionTable();
         try {
-        modelDetail.setOnModifiedTask(idProject,idTask,estStart,estEnd,actStart,actStart,nowValue);
+        modelDetail.setOnModifiedTask(idProject,idTask,getEstStart(),getEstEnd(),getActStart(),getActEnd(),nowValue);
         kon.stat.executeUpdate(modelDetail.update);
         //System.out.println(modelDetail.update);
             
@@ -1214,7 +1219,13 @@ public class NEWPROJECTController implements Initializable {
         
     }
     
-    
+    /* 
+    * this method is container listview selection
+    * to move cell listview between
+    * list to current
+    * or current to list
+    *
+    */
     private void transferListMasKaryawan(JFXListView<MasKaryawan> listRemover, JFXListView<MasKaryawan> listContainer){
         MasKaryawan maska= listRemover.getSelectionModel().getSelectedItem();
         idKaryawan = listRemover.getSelectionModel().getSelectedItem().getIdKaryawan();
@@ -1325,21 +1336,11 @@ public class NEWPROJECTController implements Initializable {
         currentScope.getStyleClass().add("mylistview");
         
     }
-
-    private boolean checkIdExisScope(JFXListView<MasScope> listRemover, JFXListView<MasScope> listContainer) {
-        //bolean checking id selection list remover to list array on list container
-        List<String> listChecker = listContainer.getItems().stream().
-                        map(MasScope::getIdScope).
-                        collect(Collectors.toList());
-        for (String listChecker1 : listChecker) {
-            if (listChecker1.trim().contains(idScope)) {
-                
-                return true;
-            }
-        }
-        return false;
-    }
     
+    /*
+    this method below
+    to check the destination list view have same data  
+    */
     private boolean checkIdExisKaryawan(JFXListView<MasKaryawan> listRemover, JFXListView<MasKaryawan> listContainer) {
         //bolean checking id selection list remover to list array on list container
         List<String> listChecker = listContainer.getItems().stream().
@@ -1355,6 +1356,26 @@ public class NEWPROJECTController implements Initializable {
         return false;
     }
     
+    private boolean checkIdExisScope(JFXListView<MasScope> listRemover, JFXListView<MasScope> listContainer) {
+        //bolean checking id selection list remover to list array on list container
+        List<String> listChecker = listContainer.getItems().stream().
+                        map(MasScope::getIdScope).
+                        collect(Collectors.toList());
+        for (String listChecker1 : listChecker) {
+            if (listChecker1.trim().contains(idScope)) {
+                
+                return true;
+            }
+        }
+        return false;
+    }
+    
+
+    /*
+    checking 
+    when user remove mandatory task
+    mandatory task blocked to removed 
+    */
     private boolean checkIdTaks(int taskId) {
         //bolean checking id selection list 
         if(taskId == 1 || taskId == 3 || taskId == 7 || taskId == 12 || taskId == 13
@@ -1365,6 +1386,7 @@ public class NEWPROJECTController implements Initializable {
         }
         
     }
+    
     
     
     public void popupAsa(){
@@ -1414,7 +1436,7 @@ public class NEWPROJECTController implements Initializable {
     public void onSelectionTable(){
         formatter = new SimpleDateFormat("yyyy-MM-dd");
          try {
-                    idTask = tblTask.getSelectionModel().getSelectedItem().getIdTask();
+        idTask = tblTask.getSelectionModel().getSelectedItem().getIdTask();
         Date dateEstStart = tblTask.getSelectionModel().getSelectedItem().getEst_Datestart();
         Date dateEstEnd = tblTask.getSelectionModel().getSelectedItem().getEst_Dateend();
         Date dateActStart = tblTask.getSelectionModel().getSelectedItem().getAct_Datestart();
@@ -1555,19 +1577,43 @@ public class NEWPROJECTController implements Initializable {
     }
 
     public String getEstStart() {
-        return estStart;
+        String saString;
+        if (estStart == null) {
+            saString = null;
+        } else {
+            saString = "'"+estStart+"'";
+        }
+        return saString;
     }
 
     public String getEstEnd() {
-        return estEnd;
+        String saString;
+        if (estEnd == null) {
+            saString = null;
+        } else {
+            saString = "'"+estEnd+"'";
+        }
+        return saString;
     }
 
     public String getActStart() {
-        return actStart;
+        String saString;
+        if (actStart == null) {
+            saString = null;
+        } else {
+            saString = "'"+actStart+"'";
+        }
+        return saString;
     }
 
     public String getActEnd() {
-        return actEnd;
+        String saString;
+        if (actEnd == null) {
+            saString = null;
+        } else {
+            saString = "'"+actEnd+"'";
+        }
+        return saString;
     }
 
     public void setEstStart(String estStart) {

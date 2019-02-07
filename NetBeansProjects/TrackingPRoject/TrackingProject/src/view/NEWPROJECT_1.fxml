@@ -27,9 +27,9 @@
          <children>
             <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="71.0" prefWidth="520.0">
                <children>
-                  <HBox prefHeight="71.0" prefWidth="220.0" style="-fx-background-color: #47A3E0;">
+                  <HBox prefHeight="71.0" prefWidth="220.0" style="-fx-background-color: #0C39FF;">
                      <children>
-                        <Label style="-fx-text-fill: #fcfcfc;" text="New Project" textFill="#ebe9e9" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-text-fill: #fff;" text="New Project" textFill="#ebe9e9" HBox.hgrow="ALWAYS">
                            <font>
                               <Font name="Ubuntu" size="28.0" />
                            </font>
@@ -37,7 +37,7 @@
                               <Insets left="22.0" top="15.0" />
                            </HBox.margin>
                         </Label>
-                        <FontAwesomeIconView glyphName="NEWSPAPER_ALT" size="18" style="-fx-fill: #ddd9d9;">
+                        <FontAwesomeIconView glyphName="NEWSPAPER_ALT" size="18" style="-fx-fill: #fff;">
                            <HBox.margin>
                               <Insets left="10.0" top="18.0" />
                            </HBox.margin>
@@ -74,11 +74,12 @@
          <children>
             <TableView fx:id="tblTask" onMouseClicked="#handleTaskChange" prefHeight="200.0" prefWidth="200.0" stylesheets="@mylistview.css" GridPane.columnSpan="6" GridPane.rowIndex="3">
                <columns>
-                  <TableColumn fx:id="colTask" prefWidth="250.0" text="Task" />
-                  <TableColumn fx:id="colStartPlan" prefWidth="200.0" text="Start Plan" />
-                  <TableColumn fx:id="colEndPlan" prefWidth="200.0" text="End Plan" />
-                  <TableColumn fx:id="colActStart" prefWidth="200.0" text="Actual Start" />
-                  <TableColumn fx:id="colActEnd" prefWidth="200.0" text="Actual End" />
+                  <TableColumn fx:id="colNo" prefWidth="33.0" text="No" />
+                  <TableColumn fx:id="colTask" prefWidth="239.0" text="Task" />
+                  <TableColumn fx:id="colStartPlan" prefWidth="193.0" text="Start Plan" />
+                  <TableColumn fx:id="colEndPlan" prefWidth="193.0" text="End Plan" />
+                  <TableColumn fx:id="colActStart" prefWidth="193.0" text="Actual Start" />
+                  <TableColumn fx:id="colActEnd" prefWidth="193.0" text="Actual End" />
                </columns>
             </TableView>
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="76.0" prefWidth="210.0">
@@ -98,7 +99,7 @@
                         <Insets />
                      </GridPane.margin>
                   </VBox>
-                  <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#btnRefreshForm" style="-fx-background-color: #C8C8C8;" GridPane.columnIndex="1" GridPane.rowSpan="2">
+                  <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#btnRefreshForm" style="-fx-background-color: #505050;" GridPane.columnIndex="1" GridPane.rowSpan="2">
                      <children>
                         <FontAwesomeIconView fill="WHITE" glyphName="GEARS" opacity="0.63" size="14" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE">
                            <HBox.margin>
@@ -117,7 +118,7 @@
                               <HBox prefHeight="12.0" prefWidth="12.0" style="-fx-background-color: #3498db;" />
                            </children>
                         </VBox>
-                        <Label text="Planning Project" textFill="#a8a8a8">
+                        <Label style="-fx-text-fill: #333645;" text="Planning Project" textFill="#a8a8a8">
                            <font>
                               <Font name="Ubuntu Bold" size="14.0" />
                            </font>
@@ -205,7 +206,7 @@
                                           <Insets left="10.0" right="10.0" />
                                        </GridPane.margin>
                                     </JFXButton>
-                                    <JFXButton fx:id="btnSave" onMouseClicked="#btnSave" prefHeight="25.0" prefWidth="150.0" ripplerFill="#e9ff03" style="-fx-background-color: #47A3E0;" text="Save" textFill="WHITE">
+                                    <JFXButton fx:id="btnSave" onMouseClicked="#btnSave" prefHeight="25.0" prefWidth="150.0" ripplerFill="#e9ff03" style="-fx-background-color: #0C39FF;" text="Save" textFill="WHITE">
                                        <GridPane.margin>
                                           <Insets left="10.0" right="10.0" />
                                        </GridPane.margin>
@@ -241,7 +242,7 @@
                         <Insets />
                      </GridPane.margin>
                   </VBox>
-                  <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #C8C8C8;" GridPane.columnIndex="1" GridPane.rowSpan="2">
+                  <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #505050;" GridPane.columnIndex="1" GridPane.rowSpan="2">
                      <children>
                         <FontAwesomeIconView fill="WHITE" glyphName="STEAM" opacity="0.63" size="14" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE">
                            <HBox.margin>
@@ -260,7 +261,7 @@
                               <HBox prefHeight="12.0" prefWidth="12.0" style="-fx-background-color: #3498db;" />
                            </children>
                         </VBox>
-                        <Label text="Scope" textFill="#a8a8a8">
+                        <Label style="-fx-text-fill: #333645;" text="Scope" textFill="#a8a8a8">
                            <font>
                               <Font name="Ubuntu Bold" size="14.0" />
                            </font>
@@ -357,7 +358,7 @@
                         <Insets />
                      </GridPane.margin>
                   </VBox>
-                  <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #C8C8C8;" GridPane.columnIndex="1" GridPane.rowSpan="2">
+                  <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #505050;" GridPane.columnIndex="1" GridPane.rowSpan="2">
                      <children>
                         <FontAwesomeIconView fill="WHITE" glyphName="USERS" opacity="0.63" size="14" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="INSIDE">
                            <HBox.margin>
@@ -376,7 +377,7 @@
                               <HBox prefHeight="12.0" prefWidth="12.0" style="-fx-background-color: #3498db;" />
                            </children>
                         </VBox>
-                        <Label text="Team" textFill="#a8a8a8">
+                        <Label style="-fx-text-fill: #333645;" text="Team" textFill="#a8a8a8">
                            <font>
                               <Font name="Ubuntu Bold" size="14.0" />
                            </font>

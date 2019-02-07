@@ -26,7 +26,7 @@ public class TrackingProject extends Application {
         
         stage.setScene(scene);
         //stage.setFullScreen(true);
-        stage.setMaximized(true);
+//        stage.setMaximized(true);
         stage.show();
     }
 

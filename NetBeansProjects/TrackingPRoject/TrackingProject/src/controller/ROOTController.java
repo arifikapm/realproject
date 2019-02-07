@@ -41,7 +41,8 @@ public class ROOTController implements Initializable {
     private VBox btnSetting;
     
     
-    int year = Year.now().getValue();
+    public  int year = Year.now().getValue();
+    
     final ContextMenu contextMenu = new ContextMenu();
     public String ChoseYear = null;
     
@@ -55,15 +56,12 @@ public class ROOTController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
         try {
-            // TODO
             loadDasboard();
             popupYear();
         } catch (IOException ex) {
             Logger.getLogger(ROOTController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }     
     }    
 
     @FXML
@@ -113,14 +111,9 @@ public class ROOTController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DASHBOARD_3.fxml"));
         BorderPane newScene = loader.load();
         DASHBOARDController mct = loader.getController();
-        
-        if (ChoseYear != null ) {
-            int thisYear = Integer.valueOf(ChoseYear);
-            //mct.setYear(thisYear);
-            mct.setChoseYear(thisYear);
-            //System.out.println(""+ChoseYear);
-            //loadDasboard();
-        }else{
+        if(year == Year.now().getValue()){
+            mct.setChoseYear(year);
+        } else{
             mct.setChoseYear(year);
         }
         
@@ -128,23 +121,6 @@ public class ROOTController implements Initializable {
         rootLoad.maxHeight(0);
     }
     
-//    public void loadDasboardView() throws IOException{
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DashboardView.fxml"));
-//        BorderPane newScene = loader.load();
-//        DashboardViewController mct = loader.getController();
-//
-//            
-//        rootLoad.setCenter(newScene);
-//    }
-    
-//    public void loadDasboardView() throws IOException{
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DashboardView.fxml"));
-//        BorderPane newScene = loader.load();
-//        DashboardViewController mct = loader.getController();
-//
-//            
-//        rootLoad.setCenter(newScene);
-//    }
 
     @FXML
     private void loadHome(MouseEvent event) throws IOException {
@@ -174,7 +150,7 @@ public class ROOTController implements Initializable {
             
             contextMenu.setOnAction(evt -> {
                 ChoseYear = ((MenuItem)evt.getTarget()).getText();
-                
+                year =  Integer.valueOf(ChoseYear);
                 try {
                     loadDasboard();
                 } catch (IOException ex) {
@@ -189,6 +165,14 @@ public class ROOTController implements Initializable {
 
     @FXML
     private void loadImgDash(MouseEvent event) {
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
         
     

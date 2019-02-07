@@ -5,6 +5,18 @@
  */
 package controller;
 
+import javafx.application.Application;
+import javafx.beans.value.*;
+import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
+import javafx.scene.*;
+import javafx.scene.chart.*;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.*;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import db.koneksi;
@@ -28,6 +40,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
 import javafx.geometry.Point3D;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
@@ -73,7 +86,7 @@ import model.ProjectDao;
 public class DASHBOARDController implements Initializable {
   
     public String textProject, testStringValue;
-    private int year = Year.now().getValue();
+    public int year;
     private String idActivity;
     
 //    @FXML
@@ -162,6 +175,8 @@ public class DASHBOARDController implements Initializable {
     ProfileOverdueDao modelProfileOverdue = new ProfileOverdueDao();
     ProfileAverageDao modelProfileAverage = new ProfileAverageDao();
     ProfileLineDao modelProfileLine = new ProfileLineDao();
+    ROOTController rOOTController = new ROOTController();
+    
     
     private ObservableList<ProfileChartBar> datachartBarProfiles;
     private ObservableList<ListCountProject> dataCountProject;
@@ -176,67 +191,68 @@ public class DASHBOARDController implements Initializable {
     private ObservableList<PieChart.Data> Advisory;
     private ObservableList<PieChart.Data> Others;
 
+    /**
+     * Initializes the controller class.
+     */
+     
+     
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+        kon.db();
+    }
+ 
+    public void setChoseYear(int ChoseYear){
 
-    
-//    private void loadListProject() throws SQLException{
-//        try {
-////            String load = "1";
-////            modelProject.queryLoadAllListProject(load);
-//            double percent = 0;
-//            dataProject=FXCollections.observableArrayList();
-//            kon.res=kon.stat.executeQuery(modelProject.queryListProject);
-//            
-//            while (kon.res.next()) {                
-//                dataProject.add(new Project
-//                        (kon.res.getString(1), kon.res.getInt(2), kon.res.getString(3), kon.res.getString(4), 
-//                        kon.res.getString(5), kon.res.getString(6), kon.res.getString(7), kon.res.getString(8), 
-//                        kon.res.getString(9), kon.res.getString(10),kon.res.getString(11), kon.res.getString(12), 
-//                        kon.res.getDouble(13),kon.res.getString(14), kon.res.getString(15), kon.res.getInt(16), 
-//                        kon.res.getInt(17), kon.res.getInt(18), kon.res.getInt(19), kon.res.getInt(20), kon.res.getInt(21),
-//                        kon.res.getInt(22), kon.res.getInt(23), kon.res.getInt(24), kon.res.getInt(25), kon.res.getInt(26),
-//                        kon.res.getInt(27),kon.res.getString(28),kon.res.getString(29),kon.res.getString(30)));
-//                
-//                colBisnisUnit.setCellValueFactory(new PropertyValueFactory<>("CivitasCol"));
-//                colCategory.setCellValueFactory(new PropertyValueFactory<>("InisialActivity"));
-//                colStart.setCellValueFactory(new PropertyValueFactory<>("NameStartMonth"));
-//                colFinisih.setCellValueFactory(new PropertyValueFactory<>("NameEndMonth"));
-//                percent = kon.res.getDouble(13) * 100 ;
-//                colProgress.setCellValueFactory(new PropertyValueFactory<>("ShowPercent"));
-//                colRFactor.setCellValueFactory(new PropertyValueFactory<>("ValueRisk"));
-//                colIndex.setCellValueFactory(new PropertyValueFactory<>("IndexAudit"));
-//                listProject.setItems(null);
-//                listProject.setItems(dataProject);
-//
-//            }
-//        }catch (Exception e) {
-//        }
-//    }
-
-
-
-
-//    private void loadBarProfileRisk(){
-//  
-//        try {
-//            XYChart.Series<String, Number> series = new XYChart.Series<>();
-//            kon.res=kon.stat.executeQuery(barProfileDao.testLoad);
-//
-//            while (kon.res.next()) {
-//                
-//                series.getData().add(new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4)));
-//                series.setName(kon.res.getString(2)); 
-//                
-//            }
-//            barProfileRisk.getData().addAll(series);
-//        } catch (Exception e) {
-//        }
-//       
-//      
-//    }
-    
-    private void loadProfileRisk(){
+        if(ChoseYear == Year.now().getValue()){
+            year = ChoseYear;
+            loadDashboardData();
+        } else {
+            year = ChoseYear;
+            loadDashboardData();
+        }
         
+    }
+    
+    
+    public void loadDashboardData(){
+        loadListCountProject();
+        loadListCarryProject();
+        loadAllCountProject();
+        
+        loadPieAss();
+        labelPieAss();
+        legendPieAss();
+//        
+        loadPieRisk();
+        labelPieRisk();
+        legendPieRisk(); 
+//        
+        loadPieOth();
+        labelPieOth();
+        legendPieOth();
+        
+        loadPieAdv();
+        labelPieAdv();
+        legendPieAdv();
+        
+        
+        loadProfileRisk();        
+        loadProfileAssurance();
+
+        try {
+            btnInPogress.setFocusTraversable(true);
+            int idStatusLoad = 2;
+            loadListProject(idStatusLoad);
+        } catch (SQLException ex) {
+            Logger.getLogger(DASHBOARDController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void loadProfileRisk(){
+
         barProfileRisk.getData().clear();
+        
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();  
         series1.setName("Not Yet Due"); 
         try {
@@ -249,13 +265,24 @@ public class DASHBOARDController implements Initializable {
               kon.res=kon.stat.executeQuery(barProfileDao.Select);
 
               while (kon.res.next()) {
+                  
+                  final XYChart.Data<String, Number> data  = new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4));
+                  
+                  
+                  data.nodeProperty().addListener(new ChangeListener<Node>() {
+                      @Override public void changed(ObservableValue<? extends Node> ov, Node oldNode, final Node node){
+                          if (node != null){
+                              displayLabelForData(data);
+                          }
+                      }
+                  });
 
-                  series1.getData().add(new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4)));
-                  series1.setName(kon.res.getString(2)); 
+                  series1.getData().add(data);
+                  series1.setName(kon.res.getString(2));
 
               }
 
-          } catch (Exception e) {
+          } catch (SQLException e) {
           }
 
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();  
@@ -270,13 +297,22 @@ public class DASHBOARDController implements Initializable {
               kon.res=kon.stat.executeQuery(barProfileDao.Select);
 
               while (kon.res.next()) {
+                  final XYChart.Data<String, Number> data  = new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4));
+                  
+                  data.nodeProperty().addListener(new ChangeListener<Node>() {
+                      @Override public void changed(ObservableValue<? extends Node> ov, Node oldNode, final Node node){
+                          if (node != null){
+                              displayLabelForData(data);
+                          }
+                      }
+                  });
 
-                  series2.getData().add(new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4)));
+                  series2.getData().add(data);
                   series2.setName(kon.res.getString(2)); 
 
               }
 
-          } catch (Exception e) {
+          } catch (SQLException e) {
           }
 
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();  
@@ -291,13 +327,22 @@ public class DASHBOARDController implements Initializable {
               kon.res=kon.stat.executeQuery(barProfileDao.Select);
 
               while (kon.res.next()) {
+                  final XYChart.Data<String, Number> data  = new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4));
+                  
+                  data.nodeProperty().addListener(new ChangeListener<Node>() {
+                      @Override public void changed(ObservableValue<? extends Node> ov, Node oldNode, final Node node){
+                          if (node != null){
+                              displayLabelForData(data);
+                          }
+                      }
+                  });
 
-                  series3.getData().add(new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4)));
+                  series3.getData().add(data);
                   series3.setName(kon.res.getString(2)); 
 
               }
 
-          } catch (Exception e) {
+          } catch (SQLException e) {
           }
 
         XYChart.Series<String, Number> series4 = new XYChart.Series<>();  
@@ -312,21 +357,31 @@ public class DASHBOARDController implements Initializable {
               kon.res=kon.stat.executeQuery(barProfileDao.Select);
 
               while (kon.res.next()) {
+                  final XYChart.Data<String, Number> data  = new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4));
+                  
+                  data.nodeProperty().addListener(new ChangeListener<Node>() {
+                      @Override public void changed(ObservableValue<? extends Node> ov, Node oldNode, final Node node){
+                          if (node != null){
+                              displayLabelForData(data);
+                          }
+                      }
+                  });
 
-                  series4.getData().add(new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4)));
+                  series4.getData().add(data);
                   series4.setName(kon.res.getString(2)); 
 
               }
 
-          } catch (Exception e) {
+          } catch (SQLException e) {
           }
-
+        
         barProfileRisk.getData().addAll(series1,series2,series3,series4);
     }
     
     private void loadProfileAssurance(){
         
         barProfileAssurance.getData().clear();
+        
         XYChart.Series<String, Number> series1 = new XYChart.Series<>();  
         series1.setName("Not Yet Due"); 
         try {
@@ -339,13 +394,22 @@ public class DASHBOARDController implements Initializable {
               kon.res=kon.stat.executeQuery(barProfileDao.Select);
 
               while (kon.res.next()) {
+                  final XYChart.Data<String, Number> data  = new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4));
+                  
+                  data.nodeProperty().addListener(new ChangeListener<Node>() {
+                      @Override public void changed(ObservableValue<? extends Node> ov, Node oldNode, final Node node){
+                          if (node != null){
+                              displayLabelForData(data);
+                          }
+                      }
+                  });
 
-                  series1.getData().add(new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4)));
+                  series1.getData().add(data);
                   series1.setName(kon.res.getString(2)); 
 
               }
 
-          } catch (Exception e) {
+          } catch (SQLException e) {
           }
 
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();  
@@ -360,13 +424,22 @@ public class DASHBOARDController implements Initializable {
               kon.res=kon.stat.executeQuery(barProfileDao.Select);
 
               while (kon.res.next()) {
+                  final XYChart.Data<String, Number> data  = new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4));
+                  
+                  data.nodeProperty().addListener(new ChangeListener<Node>() {
+                      @Override public void changed(ObservableValue<? extends Node> ov, Node oldNode, final Node node){
+                          if (node != null){
+                              displayLabelForData(data);
+                          }
+                      }
+                  });
 
-                  series2.getData().add(new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4)));
+                  series2.getData().add(data);
                   series2.setName(kon.res.getString(2)); 
 
               }
 
-          } catch (Exception e) {
+          } catch (SQLException e) {
           }
 
         XYChart.Series<String, Number> series3 = new XYChart.Series<>();  
@@ -381,13 +454,22 @@ public class DASHBOARDController implements Initializable {
               kon.res=kon.stat.executeQuery(barProfileDao.Select);
 
               while (kon.res.next()) {
+                  final XYChart.Data<String, Number> data  = new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4));
+                  
+                  data.nodeProperty().addListener(new ChangeListener<Node>() {
+                      @Override public void changed(ObservableValue<? extends Node> ov, Node oldNode, final Node node){
+                          if (node != null){
+                              displayLabelForData(data);
+                          }
+                      }
+                  });
 
-                  series3.getData().add(new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4)));
+                  series3.getData().add(data);
                   series3.setName(kon.res.getString(2)); 
 
               }
 
-          } catch (Exception e) {
+          } catch (SQLException e) {
           }
 
         XYChart.Series<String, Number> series4 = new XYChart.Series<>();  
@@ -402,13 +484,22 @@ public class DASHBOARDController implements Initializable {
               kon.res=kon.stat.executeQuery(barProfileDao.Select);
 
               while (kon.res.next()) {
+                  final XYChart.Data<String, Number> data  = new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4));
+                  
+                  data.nodeProperty().addListener(new ChangeListener<Node>() {
+                      @Override public void changed(ObservableValue<? extends Node> ov, Node oldNode, final Node node){
+                          if (node != null){
+                              displayLabelForData(data);
+                          }
+                      }
+                  });
 
-                  series4.getData().add(new XYChart.Data<>(kon.res.getString(3),kon.res.getInt(4)));
+                  series4.getData().add(data);
                   series4.setName(kon.res.getString(2)); 
 
               }
 
-          } catch (Exception e) {
+          } catch (SQLException e) {
           }
 
         barProfileAssurance.getData().addAll(series1,series2,series3,series4);
@@ -434,7 +525,7 @@ public class DASHBOARDController implements Initializable {
                 listCountProject.depthProperty().set(1);
                 listCountProject.getStyleClass().add("mylistview");
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
     }
     
@@ -457,7 +548,7 @@ public class DASHBOARDController implements Initializable {
                 listCarryProject.depthProperty().set(1);
                 listCarryProject.getStyleClass().add("mylistview");
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
     }
     
@@ -474,184 +565,10 @@ public class DASHBOARDController implements Initializable {
             }
             valueCountProject.setText(textProject);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
     }
     
-//    private void loadListOverdueProject(){
-//        try {
-//                dataProfileOverdue=FXCollections.observableArrayList();
-//                kon.res=kon.stat.executeQuery(modelProfileOverdue.queryLoadOverdue);
-//
-//                while (kon.res.next()) {                
-//                    dataProfileOverdue.add(new ProfileOverdue(kon.res.getString(1), kon.res.getDouble(2), 
-//                            kon.res.getDouble(3)));
-//                    
-//            }
-//                listOverdue.setItems(dataProfileOverdue);
-//                listOverdue.setCellFactory(list -> new ProfileOverdueDao());
-//
-//        } catch (Exception e) {
-//            
-//        }
-//    }
-        
-//    private void loadListAverageProject(){
-//        try {
-//                dataProfileOverdue=FXCollections.observableArrayList();
-//                kon.res=kon.stat.executeQuery(modelProfileAverage.queryLoadOverdue);
-//
-//                while (kon.res.next()) {                
-//                    dataProfileOverdue.add(new ProfileOverdue(kon.res.getString(1), kon.res.getDouble(2), 
-//                            kon.res.getDouble(3)));
-//            }
-//                listAverage.setItems(dataProfileOverdue);
-//                listAverage.setCellFactory(list -> new ProfileAverageDao());
-//
-//        } catch (Exception e) {
-//        }
-//    }
-    
-//    private void loadProfileLine(){
-//      XYChart.Series series1 = new XYChart.Series<>();  
-//      series1.setName("Plan"); 
-//      try {
-//            kon.res=kon.stat.executeQuery(modelProfileLine.selectPlanLine);
-//            
-//            while (kon.res.next()) {
-//                
-//                series1.getData().add(new XYChart.Data<>(kon.res.getString(1),kon.res.getInt(2)));
-//                //series1.setName(kon.res.getString(2)); 
-//                
-//            }
-//            
-//        } catch (Exception e) {
-//            System.out.println("plan error ===! "+e);
-//        }
-//      
-//      XYChart.Series series2 = new XYChart.Series<>();  
-//      series2.setName("In Progres"); 
-//      try {
-//            kon.res=kon.stat.executeQuery(modelProfileLine.selectInprogress);
-//            
-//            while (kon.res.next()) {
-//                
-//                series2.getData().add(new XYChart.Data<>(kon.res.getString(1),kon.res.getInt(2)));
-//                //series1.setName(kon.res.getString(2)); 
-//                
-//            }
-//            
-//        } catch (Exception e) {
-//            System.out.println("plan error ===! "+e);
-//        }
-//      
-//      XYChart.Series series3 = new XYChart.Series<>();  
-//      series3.setName("Complete"); 
-//      try {
-//            kon.res=kon.stat.executeQuery(modelProfileLine.selectCompleteLine);
-//            
-//            while (kon.res.next()) {
-//                
-//                series3.getData().add(new XYChart.Data<>(kon.res.getString(1),kon.res.getInt(2)));
-//                //series1.setName(kon.res.getString(2)); 
-//                
-//            }
-//            
-//        } catch (Exception e) {
-//            System.out.println("plan error ===! "+e);
-//        }
-//      lineChart.getData().addAll(series1,series2,series3);
-//      lineChart.setLegendVisible(true);
-//    }
-
-    /**
-     * Initializes the controller class.
-     */
-     
-     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        kon.db();
-        loadListCountProject();
-        loadListCarryProject();
-        loadAllCountProject();
-//        loadListOverdueProject();
-//        loadListAverageProject();
-        
-        loadPieAss();
-        labelPieAss();
-        legendPieAss();
-//        
-        loadPieRisk();
-        labelPieRisk();
-        legendPieRisk(); 
-//        
-        loadPieOth();
-        labelPieOth();
-        legendPieOth();
-        
-        loadPieAdv();
-        labelPieAdv();
-        legendPieAdv();
-        
-        //loadBarProfileRisk();
-        
-        loadProfileRisk();
-        loadProfileAssurance();
-//        loadProfileLine();
-        try {
-            btnInPogress.setFocusTraversable(true);
-            int idStatusLoad = 2;
-            loadListProject(idStatusLoad);
- 
-//        loadListCountProject();
-//        loadProfileQuarter();
-        } catch (SQLException ex) {
-            Logger.getLogger(DASHBOARDController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    } 
-    
-    public void setChoseYear(int ChoseYear){
-        year = ChoseYear;
-        //System.out.println("setChoseYear"+year);
-        System.out.println("setYear"+getYear());
-        loadListCountProject();
-        loadListCarryProject();
-        loadAllCountProject();
-//        loadListOverdueProject();
-//        loadListAverageProject();
-        
-        loadPieAss();
-        labelPieAss();
-        legendPieAss();
-//        
-        loadPieRisk();
-        labelPieRisk();
-        legendPieRisk(); 
-//        
-        loadPieOth();
-        labelPieOth();
-        legendPieOth();
-        
-        loadPieAdv();
-        labelPieAdv();
-        legendPieAdv();
-        
-
-        loadProfileRisk();
-        loadProfileAssurance();
-
-        try {
-            btnInPogress.setFocusTraversable(true);
-            int idStatusLoad = 2;
-            loadListProject(idStatusLoad);
-            
-
-        } catch (SQLException ex) {
-            Logger.getLogger(DASHBOARDController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
     
     public void legendPieAss() {
 
@@ -667,16 +584,18 @@ public class DASHBOARDController implements Initializable {
             }
             valueCountProject.setText(textProject);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         
         legendAss.setLegendSide(Side.TOP);
         legendAss.setData(AssuranceData);
         
-        for (PieChart.Data data : AssuranceData) {
+        AssuranceData.stream().map((data) -> {
             int idx = AssuranceData.indexOf(data);
+            return data;
+        }).forEachOrdered((data) -> {
             data.getNode().setStyle("-fx-pie-color: transparent");
-        }
+        });
 
         
     }
@@ -719,7 +638,7 @@ public class DASHBOARDController implements Initializable {
             }
             valueCountProject.setText(textProject);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         
         pieChart.setClockwise(true);
@@ -738,12 +657,12 @@ public class DASHBOARDController implements Initializable {
         data.nameProperty().bind(Bindings.concat(
         String.format("%.1f%%", 100*data.getPieValue()/total.get()))));
         // #a9a9a9
-        
-        for (PieChart.Data data : AssuranceData) {
+        AssuranceData.stream().map((data) -> {
             int idx = AssuranceData.indexOf(data);
+            return data;
+        }).forEachOrdered((data) -> {
             data.getNode().setStyle("-fx-pie-color: #ffffff");
-            
-        }
+        });
     }
 //    
     public void legendPieRisk() {
@@ -759,16 +678,18 @@ public class DASHBOARDController implements Initializable {
             }
             valueCountProject.setText(textProject);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         
         legendRisk.setLegendSide(Side.TOP);
         legendRisk.setData(RiskAssesment);
         
-        for (PieChart.Data data : RiskAssesment) {
+        RiskAssesment.stream().map((data) -> {
             int idx = RiskAssesment.indexOf(data);
+            return data;
+        }).forEachOrdered((data) -> {
             data.getNode().setStyle("-fx-pie-color: transparent");
-        }
+        });
 
         
     }
@@ -785,7 +706,7 @@ public class DASHBOARDController implements Initializable {
             }
             valueCountProject.setText(textProject);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         
         labelPieChart2.setClockwise(true);
@@ -811,7 +732,7 @@ public class DASHBOARDController implements Initializable {
             }
             valueCountProject.setText(textProject);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         pieChart2.setClockwise(true);
         pieChart2.setLabelLineLength(10);
@@ -829,12 +750,12 @@ public class DASHBOARDController implements Initializable {
         data.nameProperty().bind(Bindings.concat(
         String.format("%.1f%%", 100*data.getPieValue()/total.get()))));
         // #a9a9a9
-        
-        for (PieChart.Data data : RiskAssesment) {
+        RiskAssesment.stream().map((data) -> {
             int idx = RiskAssesment.indexOf(data);
+            return data;
+        }).forEachOrdered((data) -> {
             data.getNode().setStyle("-fx-pie-color: #ffffff");
-            
-        }
+        });
     }
 //    
     public void legendPieOth() {
@@ -850,16 +771,18 @@ public class DASHBOARDController implements Initializable {
             }
             valueCountProject.setText(textProject);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         
         legendOthers.setLegendSide(Side.TOP);
         legendOthers.setData(Others);
         
-        for (PieChart.Data data : Others) {
+        Others.stream().map((data) -> {
             int idx = RiskAssesment.indexOf(data);
+            return data;
+        }).forEachOrdered((data) -> {
             data.getNode().setStyle("-fx-pie-color: transparent");
-        }
+        });
 
         
     }
@@ -876,7 +799,7 @@ public class DASHBOARDController implements Initializable {
             }
             valueCountProject.setText(textProject);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         
         labelPieChart1.setClockwise(true);
@@ -902,7 +825,7 @@ public class DASHBOARDController implements Initializable {
             }
             valueCountProject.setText(textProject);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         
         pieChart1.setClockwise(true);
@@ -921,12 +844,12 @@ public class DASHBOARDController implements Initializable {
         data.nameProperty().bind(Bindings.concat(
         String.format("%.1f%%", 100*data.getPieValue()/total.get()))));
         // #a9a9a9
-        
-        for (PieChart.Data data : Others) {
+        Others.stream().map((data) -> {
             int idx = Others.indexOf(data);
+            return data;
+        }).forEachOrdered((data) -> {
             data.getNode().setStyle("-fx-pie-color: #ffffff");
-            
-        }
+        });
     }
 //    
     public void legendPieAdv() {
@@ -942,16 +865,18 @@ public class DASHBOARDController implements Initializable {
             }
             valueCountProject.setText(textProject);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         
         legendAdv.setLegendSide(Side.TOP);
         legendAdv.setData(Advisory);
         
-        for (PieChart.Data data : Advisory) {
+        Advisory.stream().map((data) -> {
             int idx = Advisory.indexOf(data);
+            return data;
+        }).forEachOrdered((data) -> {
             data.getNode().setStyle("-fx-pie-color: transparent");
-        }
+        });
 
         
     }
@@ -968,7 +893,7 @@ public class DASHBOARDController implements Initializable {
             }
             valueCountProject.setText(textProject);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         
         labelPieChart3.setClockwise(true);
@@ -994,7 +919,7 @@ public class DASHBOARDController implements Initializable {
             }
             valueCountProject.setText(textProject);
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
         }
         
         pieChart3.setClockwise(true);
@@ -1013,12 +938,12 @@ public class DASHBOARDController implements Initializable {
         data.nameProperty().bind(Bindings.concat(
         String.format("%.1f%%", 100*data.getPieValue()/total.get()))));
         // #a9a9a9
-        
-        for (PieChart.Data data : Advisory) {
+        Advisory.stream().map((data) -> {
             int idx = Advisory.indexOf(data);
+            return data;
+        }).forEachOrdered((data) -> {
             data.getNode().setStyle("-fx-pie-color: #ffffff");
-            
-        }
+        });
     }
     
     private void loadListProject(int idStatusLoad) throws SQLException{
@@ -1042,7 +967,7 @@ public class DASHBOARDController implements Initializable {
                         kon.res.getInt(27), kon.res.getInt(28), kon.res.getString(29), kon.res.getString(30),
                         kon.res.getString(31)));
             
-                colNo.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(listProject.getItems().indexOf(column.getValue())+1));
+                colNo.setCellValueFactory(column-> new ReadOnlyObjectWrapper<>(listProject.getItems().indexOf(column.getValue())+1));
                 colBisnisUnit.setCellValueFactory(new PropertyValueFactory<>("ProjectCol"));
                 colCategory.setCellValueFactory(new PropertyValueFactory<>("InisialActivity"));
                 colStart.setCellValueFactory(new PropertyValueFactory<>("NameStartMonth"));
@@ -1055,7 +980,7 @@ public class DASHBOARDController implements Initializable {
                 listProject.setItems(dataProject);
 
             }
-        }catch (Exception e) {
+        }catch (SQLException e) {
         }
     }
 
@@ -1098,8 +1023,8 @@ public class DASHBOARDController implements Initializable {
         try {
             idActivity = listCarryProject.getSelectionModel().getSelectedItem().getIdProject();
             openDetail();
-            System.out.println(""+idActivity);
-        } catch (Exception e) {
+
+        } catch (IOException | SQLException e) {
             
         }
     }
@@ -1132,7 +1057,7 @@ public class DASHBOARDController implements Initializable {
     void loadCountAllDetail(MouseEvent event) {
         try {
             openCountDetail();
-        } catch (Exception e) {
+        } catch (IOException | SQLException e) {
         }
     }
 
@@ -1141,7 +1066,7 @@ public class DASHBOARDController implements Initializable {
         try {
             idActivity = listCountProject.getSelectionModel().getSelectedItem().getIdActivity();
             openCountDetail();
-        } catch (Exception e) {
+        } catch (IOException | SQLException e) {
         }
     }
     
@@ -1172,12 +1097,39 @@ public class DASHBOARDController implements Initializable {
             // Set position of second window, related to primary window.
         newWindow.show();
     }
+    
+    /** places a text label with a bar's value above a bar node for a given XYChart.Data */
+    private void displayLabelForData(XYChart.Data<String, Number> data) {
+      final Node node = data.getNode();
+      final Text dataText = new Text(data.getYValue() + "");
+ 
+        node.parentProperty().addListener((ObservableValue<? extends Parent> ov, Parent oldParent, Parent parent) -> {
+            Group parentGroup = (Group) parent;
+            parentGroup.getChildren().add(dataText);
+      });
+
+
+      node.boundsInParentProperty().addListener(new ChangeListener<Bounds>() {
+        @Override public void changed(ObservableValue<? extends Bounds> ov, Bounds oldBounds, Bounds bounds) {
+          dataText.setLayoutX(
+            Math.round(
+              bounds.getMinX() + bounds.getWidth() / 2 - dataText.prefWidth(-1) / 2
+            )
+          );
+          dataText.setLayoutY(
+            Math.round(
+              bounds.getMinY() - dataText.prefHeight(-1) * 0.5
+            )
+          );
+        }
+      });
+    }
 
     public int getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(int value) {
         this.year = year;
     }
     

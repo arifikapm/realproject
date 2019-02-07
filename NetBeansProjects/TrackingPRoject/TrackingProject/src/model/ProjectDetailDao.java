@@ -107,16 +107,16 @@ public class ProjectDetailDao {
         update="UPDATE `project_has_master_task` SET \n" +
             "`project_idproject`="+idProject+",\n" +
             "`master_task_idtask`="+idTask+",\n" +
-            "`est_datestart`= '"+estStart+"',\n" +
-            "`est_dateend`= '"+estEnd+"',\n" +
-            "`act_datestart`= '"+actStart+"',\n" +
-            "`act_dateend`= '"+actEnd+"',\n" +
+            "`est_datestart`= "+estStart+",\n" +
+            "`est_dateend`= "+estEnd+",\n" +
+            "`act_datestart`= "+actStart+",\n" +
+            "`act_dateend`= "+actEnd+",\n" +
             "`mod_date_task`=now() \n" +
             "WHERE `project_idproject`="+idProject+" \n" +
             "AND\n" +
             "`master_task_idtask`= "+idTask+"";
         
-        System.out.println(update);
+//        System.out.println(update);
     }
     
 }

@@ -115,6 +115,7 @@ public class LoginController implements Initializable {
 
         //query
         String sql = "SELECT * FROM userlogin Where username = ? and password = ?";
+        
 
         try {
             preparedStatement = kon.con.prepareStatement(sql);

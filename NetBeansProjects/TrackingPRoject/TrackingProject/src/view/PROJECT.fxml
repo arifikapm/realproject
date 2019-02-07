@@ -22,9 +22,9 @@
          <children>
             <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="71.0" prefWidth="520.0">
                <children>
-                  <HBox prefHeight="71.0" prefWidth="220.0" style="-fx-background-color: #3498db;">
+                  <HBox prefHeight="71.0" prefWidth="220.0" style="-fx-background-color: #0C39FF;">
                      <children>
-                        <Label style="-fx-text-fill: #fcfcfc;" text="Project" textFill="#ebe9e9" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-text-fill: #fff;" text="Project" textFill="#ebe9e9" HBox.hgrow="ALWAYS">
                            <font>
                               <Font name="Ubuntu" size="28.0" />
                            </font>
@@ -32,7 +32,7 @@
                               <Insets left="22.0" top="15.0" />
                            </HBox.margin>
                         </Label>
-                        <FontAwesomeIconView glyphName="LIST" size="18" style="-fx-fill: #ddd9d9;">
+                        <FontAwesomeIconView glyphName="LIST" size="18" style="-fx-fill: #fff;">
                            <HBox.margin>
                               <Insets left="10.0" top="18.0" />
                            </HBox.margin>
@@ -71,9 +71,9 @@
                         <Insets right="5.0" />
                      </HBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: #3498db;">
+                  <HBox alignment="CENTER" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: #0C39FF;">
                      <children>
-                        <FontAwesomeIconView fill="WHITE" glyphName="SEARCH" onMouseClicked="#loadSearchProject" size="14" />
+                        <FontAwesomeIconView fill="WHITE" glyphName="SEARCH" onMouseClicked="#loadSearchProject" size="14" style="-fx-fill: #fff;" />
                      </children>
                      <HBox.margin>
                         <Insets />
