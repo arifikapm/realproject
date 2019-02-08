@@ -228,4 +228,8 @@ color to red when activated
     -fx-background-color: #A30029;
 }
 
+.table-view .column-header.mandatoryCell {
+    -fx-base: palegreen;
+}
+
 /*689 801 002 113 533*/

@@ -50,12 +50,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateStringConverter;
@@ -153,7 +155,7 @@ public class NEWPROJECTController implements Initializable {
     private TableView<ListTaskProject> tblTask;
     
     @FXML
-    private TableColumn<Project, Number> colNo;
+    private TableColumn<ListTaskProject, Number> colNo;
 
     @FXML
     private TableColumn<ListTaskProject, String> colTask;
@@ -942,6 +944,11 @@ public class NEWPROJECTController implements Initializable {
                 
                 String civi = kon.res.getString(1);
                 visi = Integer.parseInt(civi);
+                
+                if(checkIdTaks(visi)==true){
+                    //setColorColoumn();
+                    
+                }
             
             }
             
@@ -1535,6 +1542,40 @@ public class NEWPROJECTController implements Initializable {
             }
         }
     }
+    
+//    public void setColorColoumn(){
+//        colNo.setCellFactory(column -> {
+//          return new TableCell<ListTaskProject, Number>(){
+//              @Override
+//              protected void updateItem(Number item, boolean empty) {
+//                  super.updateItem(item, empty); //This is mandatory
+//
+//                    if (item == null || empty) { //If the cell is empty
+//                        setText(null);
+//                        setStyle("");
+//                    } else { //If the cell is not empty
+//                        String vaLue = String.valueOf(item);
+//                        setText(vaLue); //Put the String data in the cell
+//
+//                        //We get here all the info of the Person of this row
+//                        ListTaskProject auxPerson = getTableView().getItems().get(getIndex());
+//
+//                        // Style all persons wich name is "Edgard"
+//                        if (checkIdTaks(item)==true) {
+//                            setTextFill(Color.RED); //The text in red
+//                            setStyle("-fx-background-color: yellow"); //The background of the cell in yellow
+//                        } else {
+//                            //Here I see if the row of this cell is selected or not
+//                            if(getTableView().getSelectionModel().getSelectedItems().contains(auxPerson))
+//                                setTextFill(Color.WHITE);
+//                            else
+//                                setTextFill(Color.BLACK);
+//                        }
+//                    }
+//              }
+//          };
+//        });
+//    }
 
     public String getIdProject() {
         return idProject;
