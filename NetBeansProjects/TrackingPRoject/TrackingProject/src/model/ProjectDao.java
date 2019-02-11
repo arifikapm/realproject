@@ -47,6 +47,7 @@ public class ProjectDao extends ListCell<Project>{
     private FXMLLoader mLLoader;
     
     public String SelectNeeded; 
+    public String update; 
     
     public String queryListProject= "SELECT PRO.idproject,PRO.projectcol, \n" +
         "COUNT(PMK.master_task_idtask) AS line, MIC.civitascol,MAC.activitycol,\n" +
@@ -248,8 +249,10 @@ public class ProjectDao extends ListCell<Project>{
         SelectNeeded = insert;
         
     }
-
-
+    
+    public void updateActStart(String idProject, String actDateStart){
+        update = "UPDATE `project` SET `act_month_start` = "+actDateStart+" and WHERE `project`.`idproject` = "+idProject+" ";
+    }
 
     
 

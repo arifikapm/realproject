@@ -50,12 +50,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateStringConverter;
@@ -98,8 +101,9 @@ public class NEWPROJECTController implements Initializable {
    // MasCivitas civitasData;
     
     public  String textProject, textActivity, textCivitas, textStartDate, textEndDate, textRiskFactore;
-    private String idProject, idScope, idKaryawan, idAsa, idTask, nowValue;
+    private String idProject, idScope, idKaryawan, idAsa, idTask, nowValue, civi;
     private int hd;
+    public int visi = 0;
     private String estStart = null;
     private String actStart  = null;
     private String actEnd = null;
@@ -153,7 +157,8 @@ public class NEWPROJECTController implements Initializable {
     private TableView<ListTaskProject> tblTask;
     
     @FXML
-    private TableColumn<Project, Number> colNo;
+    private TableColumn<ListTaskProject, Integer> colNo;
+//    private TableColumn<ListTaskProject, Number> colNo;
 
     @FXML
     private TableColumn<ListTaskProject, String> colTask;
@@ -616,6 +621,8 @@ public class NEWPROJECTController implements Initializable {
             listKaryawan.setDisable(true);
             listScope.setDisable(true);
             
+            tblTask.getStyleClass().add("mylistview.css");
+            
         } catch (SQLException ex) {
             Logger.getLogger(NEWPROJECTController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -929,7 +936,7 @@ public class NEWPROJECTController implements Initializable {
     }
     
     public void setDataListTask(String idProject) throws SQLException{
-        int visi = 0;
+     
         modelDatePicker.loadNeWTaskProject(idProject);
         dataDatePicker=FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(modelDatePicker.queryToLoad);
@@ -940,14 +947,43 @@ public class NEWPROJECTController implements Initializable {
                 dataDatePicker.addAll(new ListTaskProject(kon.res.getString(1), kon.res.getString(2),
                         kon.res.getDate(3), kon.res.getDate(4), kon.res.getDate(5), kon.res.getDate(6)));
                 
-                String civi = kon.res.getString(1);
+                civi = kon.res.getString(1);
                 visi = Integer.parseInt(civi);
             
             }
             
             tblTask.setItems(null);
             tblTask.setEditable(true);
+            
             colNo.setCellValueFactory(column-> new ReadOnlyObjectWrapper<>(tblTask.getItems().indexOf(column.getValue())+1));
+            
+            //set style when mandatory task
+            colNo.setCellFactory(column -> {
+                return new TableCell<ListTaskProject, Integer>() {
+                    @Override
+                    protected void updateItem(Integer item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (item == null || empty) {
+                            setText(null);
+                            setStyle("");
+                        } else {
+                            // set Text on Column.
+                            setText(Integer.toString(item));
+
+                            // Style when it's mandatory task with a different color.
+                            if (checkMandatoryTask(item) == true) {
+                                setTextFill(Color.CHOCOLATE);
+                                setStyle("-fx-background-color: yellow");
+                            } else {
+                                setTextFill(Color.BLACK);
+                                setStyle("");
+                            }
+                        }
+                    }
+                };
+            });
+            
             colTask.setCellValueFactory(new PropertyValueFactory<>("TaskCol"));
             
             colStartPlan.setCellValueFactory(cell -> cell.getValue().dateEstStart());
@@ -1132,7 +1168,7 @@ public class NEWPROJECTController implements Initializable {
         String idTask = tblTask.getSelectionModel().getSelectedItem().getIdTask();
         int taskId = Integer.parseInt(idTask);
         
-        if(checkIdTaks(taskId) == true){
+        if(checkMandatoryTask(taskId) == true){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
@@ -1193,6 +1229,11 @@ public class NEWPROJECTController implements Initializable {
         try {
         modelDetail.setOnModifiedTask(idProject,idTask,getEstStart(),getEstEnd(),getActStart(),getActEnd(),nowValue);
         kon.stat.executeUpdate(modelDetail.update);
+        
+//        if(idTask == "1"){
+//            modelProject.updateActStart(idProject, getActStart());
+//            kon.stat.executeUpdate(modelProject.insert);
+//        }
         //System.out.println(modelDetail.update);
             
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -1373,10 +1414,10 @@ public class NEWPROJECTController implements Initializable {
 
     /*
     checking 
-    when user remove mandatory task
+    when user remove mandatory task,
     mandatory task blocked to removed 
     */
-    private boolean checkIdTaks(int taskId) {
+    private boolean checkMandatoryTask(int taskId) {
         //bolean checking id selection list 
         if(taskId == 1 || taskId == 3 || taskId == 7 || taskId == 12 || taskId == 13
                 || taskId == 15){

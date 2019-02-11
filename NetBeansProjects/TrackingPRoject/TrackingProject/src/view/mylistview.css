@@ -228,4 +228,8 @@ color to red when activated
     -fx-background-color: #A30029;
 }
 
+.table-view.column-header.mandatory{
+     -fx-background-color: violet;
+}
+
 /*689 801 002 113 533*/
