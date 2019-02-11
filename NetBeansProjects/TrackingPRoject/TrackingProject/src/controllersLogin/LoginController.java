@@ -82,12 +82,6 @@ public class LoginController implements Initializable {
                     System.err.println(ex.getMessage());
                 }
 
-            } else{
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Server Error : Check");
-                        alert.showAndWait();
             }
         }
     }
