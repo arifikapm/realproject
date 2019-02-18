@@ -1,17 +1,19 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and open the template in the editor.sudo
  */
 package controllersLogin;
 
 import db.koneksi;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -78,10 +80,16 @@ public class LoginController implements Initializable {
                     stage.setMaximized(true);
                     stage.show();
 
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     System.err.println(ex.getMessage());
                 }
 
+            } else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText(" Check your connection ! \n or changes your connection into public ");
+                alert.showAndWait();
             }
         }
     }
@@ -93,10 +101,13 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         // TODO
+        Properties properties = new Properties();
+        
         if (kon == null) {
             lblErrors.setTextFill(Color.TOMATO);
             lblErrors.setText("Server Error : Check");
         } else {
+            testDB();
             lblErrors.setTextFill(Color.GREEN);
             lblErrors.setText("Server is up : Good to go");
         }
@@ -136,12 +147,32 @@ public class LoginController implements Initializable {
                 return "Success";
             }
 
-        } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
             return "Exception";
         }
 
     }    
+    
+    public void testDB(){
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileInputStream("setting.properties"));
+            String username_prop = properties.getProperty("user");
+            String password_prop = properties.getProperty("password");
+            String server_prop = properties.getProperty("serverName");
+            String database_prop = properties.getProperty("databaseName");
+            String port_prop = properties.getProperty("port");
+            kon.testKoneksi(server_prop, port_prop, database_prop, username_prop, password_prop);
+            
+        } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText(" Check your setting ! \n or changes your connection into public ");
+                alert.showAndWait();
+        }
+    }
 
 
     @FXML

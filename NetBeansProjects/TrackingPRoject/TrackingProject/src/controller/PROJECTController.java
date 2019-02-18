@@ -112,7 +112,7 @@ public class PROJECTController implements Initializable {
             filteredData = FXCollections.observableArrayList();
             //kon.res=kon.stat.executeQuery(modelProject.queryListProject);
             kon.res=kon.stat.executeQuery(modelProject.SelectNeeded);
-            System.out.println(modelProject.SelectNeeded);
+//            System.out.println(modelProject.SelectNeeded);
             while (kon.res.next()) {                
                 data.add(new Project
                         (kon.res.getString(1), kon.res.getString(2), kon.res.getInt(3), kon.res.getString(4), 
@@ -176,7 +176,6 @@ public class PROJECTController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PROJECTdetail.fxml"));
         BorderPane newScene = loader.load();
         PROJECTdetailController mct = loader.getController();
-        System.out.println("idPro = "+idPro);
         mct.setData(idPro);
         viewProject.setCenter(newScene);
     }

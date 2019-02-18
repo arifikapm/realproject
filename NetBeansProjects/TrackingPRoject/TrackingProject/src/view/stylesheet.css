@@ -77,9 +77,9 @@
     -fx-text-fill :#ffffff
 }
 
-.jfx-button:unfocussed{
+.jfx-button{
     -fx-focus-traversable:true;
-    -fx-background-color : slategrey;;
+    -fx-background-color : slategrey;
     -fx-text-fill :#ffffff
 }
 
