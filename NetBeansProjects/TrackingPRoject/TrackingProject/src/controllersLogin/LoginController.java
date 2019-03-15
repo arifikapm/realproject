@@ -177,8 +177,32 @@ public class LoginController implements Initializable {
 
     @FXML
     private void handleConnectionSetting(MouseEvent event) throws IOException {
-    AnchorPane temp = FXMLLoader.load(getClass().getResource("/viewLogin/ConnectionSetting.fxml"));
-    paneViewSetting.getChildren().setAll(temp);
+        
+         // New window (Stage)
+            final Stage primaryStage = null;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewLogin/ConnectionSetting.fxml"));
+            AnchorPane newScene = loader.load();
+            //NEWPROJECTController mct = loader.getController();
+            //mct.setData(idPorject);
+            Scene scene = new Scene(newScene);
+           
+            //new Scene load new windows
+            Stage newWindow = new Stage();
+            newWindow.setScene(scene);
+ 
+            // Specifies the modality for new window.
+            newWindow.initModality(Modality.APPLICATION_MODAL);
+ 
+            // Specifies the owner Window (parent) for new window
+            newWindow.initOwner(primaryStage);
+ 
+            // Set position of second window, related to primary window.
+            
+ 
+            newWindow.show();
+        
+   // AnchorPane temp = FXMLLoader.load(getClass().getResource("/viewLogin/ConnectionSetting.fxml"));
+    //paneViewSetting.getChildren().setAll(temp);
     
     }
     

@@ -70,9 +70,9 @@ public class koneksi {
                 alert.setHeaderText(null);
                 alert.setContentText(String.valueOf(e.getMessage()));
                 alert.showAndWait();
-//                System.out.println(String.valueOf(e.getMessage()));
+                System.out.println(String.valueOf(e.getMessage()));
 //                System.out.println("jdbc:mysql://"+server+":"+port+"/"+database+"?zeroDateTimeBehavior=convertToNull"+username+password);
-//                System.out.println("jdbc:mysql://"+server+":"+port+"/"+database+username+password);
+                System.out.println("jdbc:mysql://"+server+":"+port+"/"+database+username+password);
             }
                 
             }
