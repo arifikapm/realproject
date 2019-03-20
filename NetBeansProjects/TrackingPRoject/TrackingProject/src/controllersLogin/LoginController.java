@@ -107,7 +107,7 @@ public class LoginController implements Initializable {
             lblErrors.setTextFill(Color.TOMATO);
             lblErrors.setText("Server Error : Check");
         } else {
-            testDB();
+            //testDB();
             lblErrors.setTextFill(Color.GREEN);
             lblErrors.setText("Server is up : Good to go");
         }
@@ -178,7 +178,13 @@ public class LoginController implements Initializable {
     @FXML
     private void handleConnectionSetting(MouseEvent event) throws IOException {
         
+        //add you loading or delays - ;-)
+                    Node node = (Node) event.getSource();
+                    Stage stage = (Stage) node.getScene().getWindow();
+                    //stage.setMaximized(true);
+                    stage.close();
          // New window (Stage)
+        
             final Stage primaryStage = null;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewLogin/ConnectionSetting.fxml"));
             AnchorPane newScene = loader.load();

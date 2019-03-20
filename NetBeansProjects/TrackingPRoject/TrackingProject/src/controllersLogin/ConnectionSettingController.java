@@ -16,12 +16,17 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -76,8 +81,35 @@ public class ConnectionSettingController implements Initializable {
     
     @FXML
     private void handleCloseConnection(MouseEvent event) throws IOException {
-        AnchorPane temp = FXMLLoader.load(getClass().getResource("/viewLogin/SidebarLogin.fxml"));
-        viewConnection.getChildren().setAll(temp);
+         //add you loading or delays - ;-)
+                    Node node = (Node) event.getSource();
+                    Stage stage = (Stage) node.getScene().getWindow();
+                    //stage.setMaximized(true);
+                    stage.close();
+         // New window (Stage)
+        
+            final Stage primaryStage = null;
+            Parent root = FXMLLoader.load(getClass().getResource("/loginForm/LoginController_1.fxml"));
+            //NEWPROJECTController mct = loader.getController();
+            //mct.setData(idPorject);
+            Scene scene = new Scene(root);
+           
+            //new Scene load new windows
+            Stage newWindow = new Stage();
+            newWindow.setScene(scene);
+ 
+            // Specifies the modality for new window.
+            newWindow.initModality(Modality.APPLICATION_MODAL);
+ 
+            // Specifies the owner Window (parent) for new window
+            newWindow.initOwner(primaryStage);
+ 
+            // Set position of second window, related to primary window.
+            
+ 
+            newWindow.show();
+//        AnchorPane temp = FXMLLoader.load(getClass().getResource("/viewLogin/SidebarLogin.fxml"));
+//        viewConnection.getChildren().setAll(temp);
     }
     
     

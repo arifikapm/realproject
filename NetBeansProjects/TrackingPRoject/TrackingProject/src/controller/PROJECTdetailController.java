@@ -150,7 +150,7 @@ public class PROJECTdetailController implements Initializable {
     public void setData (String idProject) throws SQLException{
         kon.db();
         idPorject = idProject;
-        
+        System.out.println(idPorject);
         //System.out.println(idPorject);
         
         setScope(idProject);

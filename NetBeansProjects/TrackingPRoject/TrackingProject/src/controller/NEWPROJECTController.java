@@ -157,7 +157,7 @@ public class NEWPROJECTController implements Initializable {
     private TableView<ListTaskProject> tblTask;
     
     @FXML
-    private TableColumn<ListTaskProject, Integer> colNo;
+    private TableColumn<ListTaskProject, String> colNo;
 //    private TableColumn<ListTaskProject, Number> colNo;
 
     @FXML
@@ -948,20 +948,21 @@ public class NEWPROJECTController implements Initializable {
                         kon.res.getDate(3), kon.res.getDate(4), kon.res.getDate(5), kon.res.getDate(6)));
                 
                 civi = kon.res.getString(1);
-                visi = Integer.parseInt(civi);
+                //visi = Integer.parseInt(civi);
             
             }
             
             tblTask.setItems(null);
             tblTask.setEditable(true);
             
-            colNo.setCellValueFactory(column-> new ReadOnlyObjectWrapper<>(tblTask.getItems().indexOf(column.getValue())+1));
+            //colNo.setCellValueFactory(column-> new ReadOnlyObjectWrapper<>(tblTask.getItems().indexOf(column.getValue())+1));
+            colNo.setCellValueFactory(new PropertyValueFactory<>("IdTask"));
             
             //set style when mandatory task
             colNo.setCellFactory(column -> {
-                return new TableCell<ListTaskProject, Integer>() {
+                return new TableCell<ListTaskProject, String>() {
                     @Override
-                    protected void updateItem(Integer item, boolean empty) {
+                    protected void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
 
                         if (item == null || empty) {
@@ -969,10 +970,12 @@ public class NEWPROJECTController implements Initializable {
                             setStyle("");
                         } else {
                             // set Text on Column.
-                            setText(Integer.toString(item));
-
+                            //setText(Integer.toString(item));
+                            setText(this.getTableRow().getIndex()+ 1 + "");
+                            
                             // Style when it's mandatory task with a different color.
-                            if (checkMandatoryTask(item) == true) {
+                            int x = Integer.parseInt(item);
+                            if (checkMandatoryTask(x) == true) {
                                 setTextFill(Color.CHOCOLATE);
                                 setStyle("-fx-background-color: yellow");
                             } else {
@@ -1229,6 +1232,7 @@ public class NEWPROJECTController implements Initializable {
         try {
         modelDetail.setOnModifiedTask(idProject,idTask,getEstStart(),getEstEnd(),getActStart(),getActEnd(),nowValue);
         kon.stat.executeUpdate(modelDetail.update);
+            System.out.println(getActStart() +"  "+getActEnd());
         
 //        if(idTask == "1"){
 //            modelProject.updateActStart(idProject, getActStart());
