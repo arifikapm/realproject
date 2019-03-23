@@ -165,6 +165,7 @@ public class PROJECTdetailController implements Initializable {
         
         data=FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(model.queryload);
+        System.out.println(model.queryload);
 
         while (kon.res.next()) {                
                 data.add(new ProjectDetail(kon.res.getString(1), kon.res.getString(2), kon.res.getString(3), 
@@ -172,7 +173,7 @@ public class PROJECTdetailController implements Initializable {
                         kon.res.getString(6), kon.res.getString(7), kon.res.getString(8), kon.res.getString(9), 
                         kon.res.getString(10), kon.res.getString(11), kon.res.getString(12), kon.res.getString(13), 
                         kon.res.getString(14), kon.res.getString(15)));
-                textCivitas = kon.res.getString(3);
+                textCivitas = kon.res.getString(2);
                 textActivity = kon.res.getString(4);
                 textStratMonth = kon.res.getString(6);
                 textEndMonth = kon.res.getString(7);
@@ -199,6 +200,7 @@ public class PROJECTdetailController implements Initializable {
     }
     
     public void setScope(String idProject) throws SQLException{
+        listScope.refresh();
         modelScope.loadScope(idProject);
         dataScope =FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(modelScope.scopequery);
@@ -214,6 +216,7 @@ public class PROJECTdetailController implements Initializable {
     }
     
     public void setTeamMember(String idProject) throws SQLException{
+        listTeam.refresh();
         modelTeam.teamLoad(idProject);
         dataTeam =FXCollections.observableArrayList();
         kon.res=kon.stat.executeQuery(modelTeam.queryteam);
@@ -230,6 +233,7 @@ public class PROJECTdetailController implements Initializable {
     
     public void setProfileProjectRoot(String idProject) throws SQLException{
 //        try {
+            listProjectProfile.refresh();
             modelProfileProjectRoot.loadProfileRoot(idProject);
             dataProfileProject=FXCollections.observableArrayList();
             kon.res=kon.stat.executeQuery(modelProfileProjectRoot.loadProfile);

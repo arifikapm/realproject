@@ -701,8 +701,8 @@ public class NEWPROJECTController implements Initializable {
                 String yearNow = Integer.toString(nowDate.getYear());
                 int lastTwoDigits = Calendar.getInstance().get(Calendar.YEAR) % 100;
 
-                idProject = ""+lastTwoDigits+""+startDate+""+civitasValue+""
-                        + ""+activityValue+""+auditindexValue+""+riskfactorValue;
+                idProject = ""+lastTwoDigits+""+civitasValue+""
+                        + ""+activityValue;
                 
                 //to save Project on database
                 
