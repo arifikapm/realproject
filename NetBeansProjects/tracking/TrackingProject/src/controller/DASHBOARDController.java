@@ -20,13 +20,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
-import javafx.scene.Node;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
 import model.ListDasboard;
 import model.ListDashboardDao;
 import model.Project;
@@ -40,16 +39,6 @@ import org.jfree.data.general.Series;
  */
 public class DASHBOARDController implements Initializable {
 
-    @FXML
-    private Label txtTglStart;
-    @FXML
-    private Label txtTglStart1;
-    @FXML
-    private Label txtTglStart11;
-    @FXML
-    private Label txtTglStart111;
-    @FXML
-    private Label txtTglStart112;
     private JFXListView<ListDasboard> rootViewList;
     
     koneksi kon = new koneksi();
@@ -75,6 +64,12 @@ public class DASHBOARDController implements Initializable {
     private PieChart labelPieChart3;
     @FXML
     private PieChart pieChart3;
+    @FXML
+    private StackedBarChart<String, Number> stackedAssurance;
+    @FXML
+    private StackedBarChart<?, ?> stackedRisk;
+    @FXML
+    private LineChart<?, ?> lineChart;
     
     private void loadListProject(){
         try {
@@ -86,6 +81,7 @@ public class DASHBOARDController implements Initializable {
             }
             rootViewList.setItems(data);
             rootViewList.setCellFactory(list -> new ListDashboardDao());
+            
         } catch (Exception e) {
         }
     }
@@ -113,6 +109,10 @@ public class DASHBOARDController implements Initializable {
         labelPieAdv();
 
         loadListProject();
+        
+        loadStackedBarAssurance();
+        
+        loadProfileQuarter();
     }    
 
 //    private void showPercentage(MouseEvent event) {
@@ -337,4 +337,80 @@ public class DASHBOARDController implements Initializable {
         }
     }
     
+    public void loadStackedBarAssurance(){
+        //defining the axes
+//      CategoryAxis yAxis = new CategoryAxis();    
+//      yAxis.setCategories(FXCollections.<String>observableArrayList(Arrays.asList
+//         ("Manufacture", "Trading", "Corporate")));
+//      
+//      yAxis.setLabel("Status");
+//      NumberAxis xAxis = new NumberAxis(); 
+//      xAxis.setLabel("Population");
+      
+      //Creating the Bar chart 
+      //stackedAssurance = new StackedBarChart(xAxis, yAxis);
+      //stackedAssurance.setTitle("haloooo percobaan");
+      
+       //Prepare XYChart.Series objects by setting data 
+      XYChart.Series<String, Number> series1 = new XYChart.Series<>();  
+      series1.setName("Not Yet Due"); 
+      series1.getData().add(new XYChart.Data<>("Manufactured",10));
+      series1.getData().add(new XYChart.Data<>("Trading",3));
+      series1.getData().add(new XYChart.Data<>("Corporate",1));
+
+         
+      XYChart.Series<String, Number> series2 = new XYChart.Series<>(); 
+      series2.setName("In Progress"); 
+      series2.getData().add(new XYChart.Data<>("Manufactured",3));
+      series2.getData().add(new XYChart.Data<>("Trading",2));
+      series2.getData().add(new XYChart.Data<>("Corporate",0));
+     
+      XYChart.Series<String, Number> series3 = new XYChart.Series<>(); 
+      series3.setName("Closed"); 
+      series3.getData().add(new XYChart.Data<>("Manufactured",2));
+      series3.getData().add(new XYChart.Data<>("Trading",1));
+      series3.getData().add(new XYChart.Data<>("Corporate",0));
+      
+      XYChart.Series<String, Number> series4 = new XYChart.Series<>(); 
+      series4.setName("Complete"); 
+      series4.getData().add(new XYChart.Data<>("Manufactured",4));
+      series4.getData().add(new XYChart.Data<>("Trading",5));
+      series4.getData().add(new XYChart.Data<>("Corporate",2));
+      
+      //Setting the data to bar chart
+      
+      stackedAssurance.getData().addAll(series1); 
+      stackedAssurance.setVisible(true);
+      
+      
+        System.out.println(stackedAssurance);
+        
+    }
+    public void loadProfileQuarter(){
+        
+            XYChart.Series series1 = new XYChart.Series();
+        series1.setName("Plan");
+        series1.getData().addAll(new XYChart.Data<>("Q1", 10));
+        series1.getData().addAll(new XYChart.Data<>("Q3", 20));
+        series1.getData().addAll(new XYChart.Data<>("Q4", 30));
+        series1.getData().addAll(new XYChart.Data<>("Q5", 50));
+        
+        XYChart.Series series2 = new XYChart.Series();
+        series2.setName("In Progress");
+        series2.getData().addAll(new XYChart.Data<>("Q1", 0));
+        series2.getData().addAll(new XYChart.Data<>("Q3", 10));
+        series2.getData().addAll(new XYChart.Data<>("Q4", 20));
+        series2.getData().addAll(new XYChart.Data<>("Q5", 30));
+        
+        XYChart.Series series3 = new XYChart.Series();
+        series3.setName("Complete");
+        series3.getData().addAll(new XYChart.Data<>("Q1", 5));
+        series3.getData().addAll(new XYChart.Data<>("Q3", 0));
+        series3.getData().addAll(new XYChart.Data<>("Q4", 10));
+        series3.getData().addAll(new XYChart.Data<>("Q5", 4));
+        
+        lineChart.getData().addAll(series1,series2,series3);
+        lineChart.setLegendVisible(true);
+        
+    }
 }

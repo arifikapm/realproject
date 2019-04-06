@@ -956,6 +956,7 @@ public class DASHBOARDController implements Initializable {
             dataProject=FXCollections.observableArrayList();
             kon.res=kon.stat.executeQuery(modelProject.SelectNeeded);
             
+            
             while (kon.res.next()) {                
                 dataProject.add(new Project
                         (kon.res.getString(1), kon.res.getString(2), kon.res.getInt(3), kon.res.getString(4), 

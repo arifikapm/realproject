@@ -39,7 +39,7 @@ public class ROOTController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+       
         try {
             // TODO
             loadDasboard();
@@ -92,7 +92,7 @@ public class ROOTController implements Initializable {
     }
     
     public void loadDasboard() throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DASHBOARD.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DASHBOARD_2.fxml"));
         BorderPane newScene = loader.load();
         DASHBOARDController mct = loader.getController();
         rootLoad.setCenter(newScene);
