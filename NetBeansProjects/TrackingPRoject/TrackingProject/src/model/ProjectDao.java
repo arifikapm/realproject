@@ -143,6 +143,7 @@ public class ProjectDao extends ListCell<Project>{
         where = " where PRO.status_idstatus = "+idStatus+""
                 + " and YEAR(PRO.startmonth) = "+year+"";
         SelectNeeded = querySelect+where+groupBy;
+        System.out.println(SelectNeeded);
     }
     
     public void loadProjectbyYear(int year) {
