@@ -73,11 +73,11 @@ public class LoginController implements Initializable {
                     //add you loading or delays - ;-)
                     Node node = (Node) event.getSource();
                     Stage stage = (Stage) node.getScene().getWindow();
-                    //stage.setMaximized(true);
+                    stage.setMaximized(true);
                     stage.close();
                     Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/view/ROOT.fxml")));
                     stage.setScene(scene);
-                    stage.setMaximized(true);
+                    //stage.setMaximized(true);
                     stage.show();
 
                 } catch (Exception ex) {

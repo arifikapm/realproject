@@ -28,12 +28,12 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="110.0">
                <children>
-                  <Label style="-fx-text-fill: #ddd9d9;" text="Connection" textFill="#4d4b4b">
+                  <Label style="-fx-text-fill: #9e9e9e;" text="Connection" textFill="#4d4b4b">
                      <font>
                         <Font name="Ubuntu" size="13.0" />
                      </font>
                   </Label>
-                  <FontAwesomeIconView fill="#ddd9d9" glyphName="LINK" size="18">
+                  <FontAwesomeIconView fill="#9e9e9e" glyphName="LINK" size="18">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
@@ -61,7 +61,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
                <children>
                   <Button fx:id="btnTest" mnemonicParsing="false" onMouseClicked="#handleTestConn" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #00da15;" text="Test" textFill="WHITE" />
-                  <Button fx:id="btnSave" mnemonicParsing="false" onMouseClicked="#handleSaveConn" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #C8C8C8;" text="Save" textFill="WHITE">
+                  <Button fx:id="btnSave" mnemonicParsing="false" onMouseClicked="#handleSaveConn" prefHeight="34.0" prefWidth="86.0" style="-fx-background-color: #03A9F4;" text="Save" textFill="WHITE">
                      <HBox.margin>
                         <Insets left="35.0" />
                      </HBox.margin>
@@ -70,12 +70,12 @@
             </HBox>
             <HBox fx:id="btnBack" alignment="BOTTOM_RIGHT" onMouseClicked="#handleCloseConnection" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                <children>
-                  <Label style="-fx-text-fill: #ffffff;" text="Back" textFill="#4d4b4b">
+                  <Label style="-fx-text-fill: #a8a8a8;" text="Back" textFill="#4d4b4b">
                      <font>
-                        <Font name="Ubuntu" size="13.0" />
+                        <Font name="Ubuntu Bold" size="13.0" />
                      </font>
                   </Label>
-                  <FontAwesomeIconView fill="#bfbfbf" glyphName="CHEVRON_RIGHT" size="14" style="-fx-fill: #ffffff;">
+                  <FontAwesomeIconView fill="#a8a8a8" glyphName="CHEVRON_RIGHT" size="14">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
