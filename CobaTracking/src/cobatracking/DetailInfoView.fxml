@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedBarChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="700.0" prefWidth="841.0" style="-fx-background-color: #E9F1F7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="700.0" prefWidth="841.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="868.0" styleClass="sidebar" stylesheets="@stylesheet.css">
+               <children>
+                  <VBox prefHeight="118.0" prefWidth="1126.0">
+                     <children>
+                        <Label text="PT. Senantiasa Makmur Sejahtera Bersama" textFill="WHITE">
+                           <font>
+                              <Font name="Lucida Sans Regular" size="22.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="20.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <HBox prefHeight="16.0" prefWidth="644.0">
+                           <children>
+                              <Label prefHeight="14.0" prefWidth="78.0" text="Plan due date" textFill="#d7d7d7">
+                                 <font>
+                                    <Font name="Lucida Sans Regular" size="11.0" />
+                                 </font>
+                              </Label>
+                              <HBox alignment="TOP_CENTER" prefHeight="16.0" prefWidth="57.0">
+                                 <children>
+                                    <Label text="Januari" textFill="#ff9292">
+                                       <font>
+                                          <Font name="Lucida Sans Regular" size="11.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="TOP_CENTER" prefHeight="16.0" prefWidth="33.0">
+                                 <children>
+                                    <Label text="||" textFill="#d7d7d7">
+                                       <font>
+                                          <Font name="Lucida Sans Regular" size="11.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="TOP_CENTER" prefHeight="16.0" prefWidth="84.0">
+                                 <children>
+                                    <Label prefHeight="14.0" prefWidth="65.0" text="Maret" textFill="#ff9292">
+                                       <font>
+                                          <Font name="Lucida Sans Regular" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="120.0" prefWidth="711.0">
+                     <children>
+                        <Label text="Status" textFill="WHITE">
+                           <font>
+                              <Font name="Lucida Sans Regular" size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Line endX="100.0" startX="50.0" stroke="#fceaea" />
+                        <Label text="In Progress" textFill="#fc9090">
+                           <font>
+                              <Font name="Lucida Sans Regular" size="11.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="600.0" prefWidth="841.0">
+               <children>
+                  <VBox prefHeight="580.0" prefWidth="182.0">
+                     <children>
+                        <VBox prefHeight="271.0" prefWidth="221.0" style="-fx-background-color: #FFFFFF;">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="25.0" prefWidth="310.0" style="-fx-background-color: #7FD051;">
+                                 <children>
+                                    <Label text="SCOUPE" textFill="WHITE" />
+                                 </children>
+                              </HBox>
+                              <VBox prefHeight="232.0" prefWidth="162.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Finance">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Accounting">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Warehouse">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Production">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Marketing">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Administration">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Exim">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Information Technology">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Purchasing">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Quality Assurance">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="General Affair">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox prefHeight="248.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="25.0" prefWidth="310.0" style="-fx-background-color: #F9BD47;">
+                                 <children>
+                                    <Label text="TEAM INCHARGE" textFill="WHITE" />
+                                 </children>
+                              </HBox>
+                              <VBox prefHeight="212.0" prefWidth="162.0">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Arip Saripudin">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Fachri Uwais">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Bagus Ade S">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Ardie Christ Partahan">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Clara Setiowati">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Meivina Cintalia">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Arifika Primada M">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Nabil">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="20.0" prefWidth="200.0">
+                                       <children>
+                                          <Label text="Abdul Azis">
+                                             <font>
+                                                <Font name="Lucida Sans Regular" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="580.0" prefWidth="656.0">
+                     <children>
+                        <VBox prefHeight="358.0" prefWidth="622.0" style="-fx-background-color: #FFFFFF;">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="25.0" prefWidth="310.0" style="-fx-background-color: #EA3349;">
+                                 <children>
+                                    <Label text="OVER ALL PROGRESS" textFill="#f8f1f1" />
+                                 </children>
+                              </HBox>
+                              <StackedBarChart prefHeight="319.0" prefWidth="559.0">
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </StackedBarChart>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <GridPane prefHeight="171.0" prefWidth="656.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="169.0" minHeight="10.0" prefHeight="143.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <VBox prefHeight="193.0" prefWidth="308.0" style="-fx-background-color: #FFFFFF;">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="25.0" prefWidth="310.0" style="-fx-background-color: #37C8CE;">
+                                       <children>
+                                          <Label text="DUE DAY" textFill="WHITE" />
+                                       </children>
+                                    </HBox>
+                                    <GridPane prefHeight="153.0" prefWidth="321.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints maxHeight="44.0" minHeight="10.0" prefHeight="13.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="115.0" minHeight="10.0" prefHeight="106.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="34.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #00C98E;">
+                                             <children>
+                                                <Label text="Start" textFill="WHITE" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ADADAD;" GridPane.columnIndex="1">
+                                             <children>
+                                                <Label text="Finish" textFill="WHITE" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #677AB0;" GridPane.columnIndex="2">
+                                             <children>
+                                                <Label text="Time Free" textFill="WHITE" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <children>
+                                                <Label text="10" textFill="#bfbdbd">
+                                                   <font>
+                                                      <Font name="Cousine" size="50.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                             <children>
+                                                <Label text="09" textFill="#bfbdbd">
+                                                   <font>
+                                                      <Font name="Cousine" size="50.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                             <children>
+                                                <Label text="120" textFill="#bfbdbd">
+                                                   <font>
+                                                      <Font name="Cousine" size="50.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #00C98E;" GridPane.rowIndex="2">
+                                             <children>
+                                                <Label text="Januari" textFill="WHITE" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ADADAD;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                             <children>
+                                                <Label text="Maret" textFill="WHITE" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #677AB0;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                             <children>
+                                                <Label text="On Going" textFill="WHITE" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </GridPane.margin>
+                              </VBox>
+                              <VBox prefHeight="271.0" prefWidth="221.0" style="-fx-background-color: #FFFFFF;" GridPane.columnIndex="1">
+                                 <children>
+                                    <HBox alignment="CENTER" prefHeight="25.0" prefWidth="310.0" style="-fx-background-color: #439FDC;">
+                                       <children>
+                                          <Label text="SUMMARY" textFill="WHITE" />
+                                       </children>
+                                    </HBox>
+                                    <GridPane>
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="119.0" minWidth="10.0" prefWidth="87.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="160.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="47.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="5.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #EAD52C;">
+                                             <children>
+                                                <Label text="Preliminary" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Lucida Sans Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets bottom="2.0" right="5.0" top="2.0" />
+                                             </GridPane.margin>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #5F87D1;" GridPane.rowIndex="1">
+                                             <children>
+                                                <Label text="OU" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Lucida Sans Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets bottom="2.0" right="5.0" top="2.0" />
+                                             </GridPane.margin>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #F4505D;" GridPane.rowIndex="2">
+                                             <children>
+                                                <Label text="IA &amp; RA" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Lucida Sans Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets bottom="2.0" right="5.0" top="2.0" />
+                                             </GridPane.margin>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #828282;" GridPane.rowIndex="3">
+                                             <children>
+                                                <Label text="Field Work" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Lucida Sans Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets bottom="2.0" right="5.0" top="2.0" />
+                                             </GridPane.margin>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #0EE37D;" GridPane.rowIndex="4">
+                                             <children>
+                                                <Label text="Finalization" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="Lucida Sans Regular" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets bottom="2.0" right="5.0" top="2.0" />
+                                             </GridPane.margin>
+                                          </HBox>
+                                          <ProgressBar prefWidth="200.0" progress="1.0" GridPane.columnIndex="1" />
+                                          <ProgressBar prefWidth="200.0" progress="1.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <ProgressBar prefWidth="200.0" progress="1.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <ProgressBar prefWidth="200.0" progress="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                          <ProgressBar prefWidth="200.0" progress="0.8" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+                                             <children>
+                                                <Label text="100%" />
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets bottom="2.0" left="5.0" top="2.0" />
+                                             </GridPane.margin>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                             <children>
+                                                <Label text="100%" />
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets bottom="2.0" left="5.0" top="2.0" />
+                                             </GridPane.margin>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                             <children>
+                                                <Label text="80%" />
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets bottom="2.0" left="5.0" top="2.0" />
+                                             </GridPane.margin>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                             <children>
+                                                <Label text="100%" />
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets bottom="2.0" left="5.0" top="2.0" />
+                                             </GridPane.margin>
+                                          </HBox>
+                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                             <children>
+                                                <Label text="0%" />
+                                             </children>
+                                             <GridPane.margin>
+                                                <Insets bottom="2.0" left="5.0" top="2.0" />
+                                             </GridPane.margin>
+                                          </HBox>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </GridPane.margin>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </GridPane>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

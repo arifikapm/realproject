@@ -1,0 +1,68 @@
+.mylistview {
+    -fx-expanded:true;
+}
+
+.mylistview .scroll-bar:horizontal .track,
+.mylistview .scroll-bar:vertical .track{
+    -fx-background-color:transparent;
+    -fx-border-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-border-radius:0em;
+}
+ 
+.mylistview .scroll-bar:horizontal .increment-button ,
+.mylistview .scroll-bar:horizontal .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-padding:0 0 0 0;
+}
+ 
+.mylistview .scroll-bar:vertical .increment-button ,
+.mylistview .scroll-bar:vertical .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-padding:0 0 0 0;
+}
+.mylistview  .scroll-bar .increment-arrow,
+.mylistview  .scroll-bar .decrement-arrow{
+    -fx-shape:" ";
+    -fx-padding:0;
+}
+ 
+.mylistview .scroll-bar:horizontal .thumb,
+.mylistview .scroll-bar:vertical .thumb {
+    -fx-background-color:derive(black,90%);
+    -fx-background-insets: 0, 0, 0;
+    -fx-background-radius: 0em;
+}
+
+.mylistview {
+    -fx-background-insets: 0;
+  -fx-padding: 0;
+}
+
+/*.list-cell:empty {
+    -fx-opacity: 0;
+}
+
+.cell-root{
+    -fx-background-color: red;
+}*/
+
+/*.list-cell:expanded{
+    -fx-vgap: 2em;
+    
+}*/
+
+
+.list-cell {
+    -fx-padding: 6px ;
+    -fx-background-color: transparent, -fx-background ;
+    -fx-background-insets: 0px, 2px ;
+}
+
+.list-cell:empty {
+    -fx-padding: 6px ;
+    -fx-background-color: transparent ;
+    -fx-background-insets: 0 ;
+}

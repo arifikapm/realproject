@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="330.0" prefWidth="320" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="belajarcrud.FXMLDocumentController">
+   <children>
+      <JFXTextField fx:id="server" layoutX="76.0" layoutY="44.0" promptText="server" />
+      <JFXTextField fx:id="port" layoutX="76.0" layoutY="78.0" promptText="port" />
+      <JFXTextField fx:id="database" layoutX="76.0" layoutY="118.0" promptText="database" />
+      <JFXTextField fx:id="password" layoutX="76.0" layoutY="212.0" promptText="password" />
+      <JFXTextField fx:id="username" layoutX="76.0" layoutY="166.0" promptText="username" />
+      <JFXButton layoutX="76.0" layoutY="264.0" onAction="#handleTestKoneksi" prefHeight="25.0" prefWidth="95.0" ripplerFill="#4fb9c2" style="-fx-background-color: #B3b3b3;" />
+      <JFXButton fx:id="simpanKoneksi" layoutX="184.0" layoutY="264.0" onAction="#handleSimpanKoneksi" prefHeight="25.0" prefWidth="95.0" ripplerFill="BLACK" style="-fx-background-color: #FF0404;" text="Save" textFill="WHITE" wrapText="true" />
+   </children>
+</AnchorPane>

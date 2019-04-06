@@ -1,0 +1,747 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Cylinder?>
+
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="1140.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cobatracking.InformationViewController">
+   <children>
+      <HBox prefHeight="700.0" prefWidth="1140.0">
+         <children>
+            <VBox prefHeight="700.0" prefWidth="353.0">
+               <children>
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="599.0" prefWidth="434.0">
+                     <content>
+                        <VBox prefHeight="700.0" prefWidth="403.0">
+                           <children>
+                              <VBox alignment="CENTER" onMouseClicked="#loadDetailInformation" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="94.0" prefWidth="441.0">
+                                 <children>
+                                    <HBox prefHeight="77.0" prefWidth="421.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <ImageView fitHeight="67.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                                             <HBox.margin>
+                                                <Insets bottom="8.0" left="8.0" top="8.0" />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <VBox prefHeight="70.0" prefWidth="202.0">
+                                             <children>
+                                                <Label style="-fx-font-size: 13;" text="PT. SURYA CIPTA MANDIRI">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="Jan - Mar">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="5.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Label style="-fx-font-size: 12;" text="In Progress">
+                                                   <VBox.margin>
+                                                      <Insets left="10.0" top="10.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                             </children>
+                                          </VBox>
+                                          <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                             <HBox.margin>
+                                                <Insets left="5.0" />
+                                             </HBox.margin>
+                                             <children>
+                                                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="60.0" style="-fx-border-color: #72d3fe;" styleClass="round-box" stylesheets="@stylesheet.css">
+                                                   <VBox.margin>
+                                                      <Insets left="20.0" right="20.0" />
+                                                   </VBox.margin>
+                                                   <children>
+                                                      <Label style="-fx-font-size: 14;" text="25%" />
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                    <Label alignment="CENTER" prefHeight="18.0" prefWidth="383.0" style="-fx-text-fill: #DCDCDC;" text="......................................................................................................." />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+            <Cylinder height="680.0" opacity="0.3" />
+            <AnchorPane fx:id="detailPane" prefHeight="703.0" prefWidth="696.0" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

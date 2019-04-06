@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="177.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="label1" prefHeight="26.0" prefWidth="22.0" text="100" />
+      <Label fx:id="label2" prefHeight="33.0" prefWidth="127.0" text="Label">
+         <graphic>
+            <FontAwesomeIconView fx:id="fxIconGender" strokeLineCap="ROUND" strokeLineJoin="ROUND" />
+         </graphic>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </Label>
+   </children>
+</HBox>

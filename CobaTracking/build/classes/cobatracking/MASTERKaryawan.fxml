@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="562.0" prefWidth="1164.0" style="-fx-background-color: #E9F1F7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cobatracking.MASTERKaryawanController">
+   <children>
+      <VBox prefHeight="562.0" prefWidth="1164.0">
+         <children>
+            <HBox prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <HBox alignment="CENTER" onMouseClicked="#loadInputKaryawanVIew" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Karyawan" textFill="#656464">
+                           <font>
+                              <Font name="Lucida Sans Regular" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" onMouseClicked="#loadInputDepartemenVIew" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Departemen" textFill="#656464">
+                           <font>
+                              <Font name="Lucida Sans Regular" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" onMouseClicked="#loadInputJabatanVIew" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Jabatan" textFill="#656464">
+                           <font>
+                              <Font name="Lucida Sans Regular" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" onMouseClicked="#loadInputStatusVIew" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Status" textFill="#656464">
+                           <font>
+                              <Font name="Lucida Sans Regular" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <Line endX="100.0" startX="1244.0" stroke="#d3d3d3">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Line>
+            <AnchorPane fx:id="loadInputView" prefHeight="523.0" prefWidth="1164.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

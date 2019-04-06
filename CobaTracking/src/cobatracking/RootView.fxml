@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cobatracking.MainController">
+   <left>
+      <VBox prefHeight="400.0" prefWidth="200.0" styleClass="sidebar" stylesheets="@stylesheet.css" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" prefHeight="87.0" prefWidth="148.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <ImageView fitHeight="74.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/ARMAProjecttracking.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </ImageView>
+               </children>
+            </VBox>
+            <HBox accessibleRole="BUTTON" accessibleText="btn_timetable" alignment="CENTER_LEFT" prefHeight="50.0">
+               <children>
+                  <FontAwesomeIconView fill="#e4e1e1" glyphName="CALENDAR" size="18" />
+                  <Label style="-fx-text-fill: e4e1e1;" text="Time Table">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox accessibleRole="BUTTON" accessibleText="btn_information" alignment="CENTER_LEFT" onMouseClicked="#loadInformation" prefHeight="50.0">
+               <children>
+                  <FontAwesomeIconView fill="#e4e1e1" glyphName="TASKS" size="18" />
+                  <Label style="-fx-text-fill: e4e1e1;" text="Information">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox accessibleRole="BUTTON" accessibleText="btn_newproject" alignment="CENTER_LEFT" onMouseClicked="#loadNewProject" prefHeight="50.0">
+               <children>
+                  <FontAwesomeIconView fill="#e4e1e1" glyphName="" size="18" />
+                  <Label style="-fx-text-fill: e4e1e1;" text="New Project">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox accessibleRole="BUTTON" accessibleText="btn_master" alignment="CENTER_LEFT" prefHeight="50.0">
+               <children>
+                  <FontAwesomeIconView fill="#e4e1e1" glyphName="EDIT" size="18" />
+                  <Label style="-fx-text-fill: e4e1e1;" text="Master">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox accessibleRole="BUTTON" accessibleText="btn_logout" alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="50.0">
+               <children>
+                  <FontAwesomeIconView fill="#e4e1e1" glyphName="SIGN_OUT" size="18" />
+                  <Label accessibleRole="CHECK_BOX" accessibleText="btn_logout" prefHeight="15.0" prefWidth="162.0" style="-fx-text-fill: e4e1e1;" text="Log Out">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </HBox>
+            <HBox prefHeight="95.0" prefWidth="186.0" stylesheets="@stylesheet.css" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <ScrollPane fx:id="rootPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

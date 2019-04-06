@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="gridPane" prefHeight="108.0" prefWidth="309.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane HBox.hgrow="ALWAYS">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="242.0" minWidth="10.0" prefWidth="237.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="78.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="0.5" minHeight="0.5" prefHeight="0.5" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="titleCivitas" prefHeight="25.0" prefWidth="317.0" text="PT Bangun Pertiwi Perkasa" textFill="#a8a8a8" GridPane.columnSpan="2">
+               <font>
+                  <Font name="Ubuntu Bold" size="13.0" />
+               </font>
+               <padding>
+                  <Insets right="10.0" top="10.0" />
+               </padding>
+            </Label>
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="15.0" prefWidth="277.0" GridPane.rowIndex="2">
+               <children>
+                  <VBox prefHeight="39.0" prefWidth="241.0">
+                     <children>
+                        <Label fx:id="titleActivity" text="Activity" textFill="#aeaeae">
+                           <font>
+                              <Font name="Ubuntu Bold" size="11.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Plan Due Date" textFill="#8d8d8d">
+                                 <font>
+                                    <Font name="Ubuntu" size="9.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="titleStratMonth" text="Jan" textFill="#8d8d8d">
+                                 <font>
+                                    <Font name="Ubuntu" size="9.0" />
+                                 </font>
+                              </Label>
+                              <Label text="|">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="titleEndMonth" text="Mar" textFill="#8d8d8d">
+                                 <font>
+                                    <Font name="Ubuntu" size="9.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="2.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <GridPane.margin>
+                  <Insets top="4.0" />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="277.0" GridPane.rowIndex="3">
+               <children>
+                  <ProgressBar fx:id="barProgress" cacheShape="false" maxHeight="12.0" maxWidth="1.7976931348623157E308" minHeight="12.0" opacity="0.57" prefHeight="12.0" prefWidth="178.0" progress="0.54">
+                     <effect>
+                        <Glow />
+                     </effect>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ProgressBar>
+                  <Label fx:id="titleProsentase" text="25" textFill="#ababab">
+                     <HBox.margin>
+                        <Insets left="12.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Lucida Sans Typewriter Regular" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="titleProsentase1" text="\%" textFill="#ababab">
+                     <font>
+                        <Font name="Lucida Sans Typewriter Regular" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </HBox>
+            <HBox opacity="0.13" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #545454;" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <HBox alignment="CENTER" prefHeight="65.0" prefWidth="101.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2">
+               <children>
+                  <Label fx:id="lblProgres" style="-fx-text-fill: #a8a8a8;" text="IP">
+                     <font>
+                        <Font name="Ubuntu" size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+   </children>
+</HBox>

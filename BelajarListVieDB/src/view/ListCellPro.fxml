@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="gridPane" prefHeight="97.0" prefWidth="317.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="97.0" prefWidth="317.0">
+         <children>
+            <Label fx:id="titleCivitas" prefHeight="15.0" prefWidth="312.0" text="PT SENANTIASA MAKMUR SEJAHTERA BERSAMA">
+               <VBox.margin>
+                  <Insets left="5.0" right="10.0" top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Lucida Sans Demibold" size="12.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" prefHeight="15.0" prefWidth="277.0">
+               <children>
+                  <Label text="Plan Due Date" textFill="#8d8d8d">
+                     <font>
+                        <Font name="Lucida Sans Regular" size="9.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="titleStratMonth" text="Jan" textFill="#d7a335">
+                     <font>
+                        <Font name="Lucida Sans Regular" size="9.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="|">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="2.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="titleEndMonth" text="Mar" textFill="#d7a335">
+                     <font>
+                        <Font name="Lucida Sans Regular" size="9.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="2.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label text="Label">
+                     <font>
+                        <Font size="1.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="277.0">
+               <children>
+                  <ProgressBar fx:id="barProgress" cacheShape="false" maxHeight="12.0" minHeight="12.0" opacity="0.57" prefHeight="12.0" prefWidth="275.0" progress="0.25">
+                     <effect>
+                        <Glow />
+                     </effect>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </ProgressBar>
+                  <Label fx:id="titleProsentase" text="25%" textFill="#06a0bf">
+                     <HBox.margin>
+                        <Insets left="12.0" right="15.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Lucida Sans Typewriter Regular" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </VBox>
+   </children>
+</HBox>

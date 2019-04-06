@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="446.0" prefWidth="579.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainViewController">
+   <center>
+      <TabPane prefHeight="314.0" prefWidth="462.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+         <tabs>
+            <Tab fx:id="btnHome" onSelectionChanged="#loadHome" text="Home">
+               <content>
+                  <BorderPane prefHeight="381.0" prefWidth="465.0">
+                     <left>
+                        <JFXListView fx:id="rootViewList" cacheShape="false" centerShape="false" fixedCellSize="0.0" focusTraversable="false" onMouseClicked="#loadDetailPro" prefHeight="393.0" prefWidth="319.0" scaleShape="false" showTooltip="true" stylesheets="@mylistview.css" verticalGap="80.0" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </BorderPane.margin></JFXListView>
+                     </left>
+                     <center>
+                        <AnchorPane fx:id="rootDetailView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </content>
+            </Tab>
+            <Tab fx:id="btnSetting" onSelectionChanged="#loadDBSetting" text="Setting">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <AnchorPane fx:id="rootVIewSetting" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </center>
+</BorderPane>
