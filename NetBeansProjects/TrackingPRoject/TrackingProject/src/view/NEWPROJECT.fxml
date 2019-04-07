@@ -4,17 +4,18 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXListView?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -128,29 +129,39 @@
                         </Label>
                      </children>
                   </HBox>
-                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                  <VBox alignment="TOP_CENTER" prefHeight="409.0" prefWidth="273.0" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
                      <children>
-                        <JFXTextField fx:id="valueProject" focusColor="WHITE" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="300.0" promptText="Project" style="-jfx-focus-color: #47A3E0;" unFocusColor="#cdcbcb">
-                           <font>
-                              <Font name="Ubuntu" size="12.0" />
-                           </font>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
+                        <TextField fx:id="valueProject">
+                           <VBox.margin>
+                              <Insets left="5.0" right="5.0" top="5.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <StackPane prefHeight="23.0" prefWidth="263.0">
+                           <children>
+                              <JFXComboBox fx:id="comboAcitivity" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="263.0" promptText="Activity" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;" />
+                              <TextField fx:id="valueActivity1">
+                                 <StackPane.margin>
+                                    <Insets right="25.0" />
+                                 </StackPane.margin>
+                              </TextField>
+                           </children>
                            <VBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </VBox.margin>
-                        </JFXTextField>
-                        <JFXComboBox fx:id="comboAcitivity" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="300.0" promptText="Activity" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;">
+                        </StackPane>
+                        <StackPane prefHeight="23.0" prefWidth="200.0">
                            <VBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </VBox.margin>
-                        </JFXComboBox>
-                        <JFXComboBox fx:id="comboCivitas" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="300.0" promptText="Civitas" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;">
-                           <VBox.margin>
-                              <Insets left="5.0" right="5.0" />
-                           </VBox.margin>
-                        </JFXComboBox>
+                           <children>
+                              <JFXComboBox fx:id="comboCivitas" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="300.0" promptText="Civitas" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;" />
+                              <TextField fx:id="valueCivitas1">
+                                 <StackPane.margin>
+                                    <Insets right="25.0" />
+                                 </StackPane.margin>
+                              </TextField>
+                           </children>
+                        </StackPane>
                         <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="231.0">
                            <children>
                               <JFXDatePicker fx:id="dateStart" defaultColor="#b8b9bf" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="112.0" promptText="Start Month" style="-jfx-default-color: #47A3E0;" />
@@ -168,31 +179,69 @@
                            </VBox.margin>
                         </HBox>
                         <GridPane>
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                           </rowConstraints>
                            <children>
-                              <JFXComboBox fx:id="comboRiskFactor" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="300.0" promptText="Risk Factor" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;" GridPane.rowIndex="1" />
-                              <JFXComboBox fx:id="comboAuditIndex" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="300.0" promptText="Audit Index" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                 <children>
+                                    <JFXComboBox fx:id="comboRiskFactor" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="300.0" promptText="Risk Factor" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;">
+                                       <StackPane.margin>
+                                          <Insets left="5.0" />
+                                       </StackPane.margin>
+                                    </JFXComboBox>
+                                    <TextField fx:id="valueRiskFactor1">
+                                       <StackPane.margin>
+                                          <Insets right="25.0" />
+                                       </StackPane.margin>
+                                    </TextField>
+                                 </children>
+                              </StackPane>
+                              <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <children>
+                                    <JFXComboBox fx:id="comboAuditIndex" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="300.0" promptText="Audit Index" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;">
+                                       <StackPane.margin>
+                                          <Insets left="5.0" />
+                                       </StackPane.margin>
+                                    </JFXComboBox>
+                                    <TextField fx:id="valueAuditGrading1">
+                                       <StackPane.margin>
+                                          <Insets right="25.0" />
+                                       </StackPane.margin>
+                                    </TextField>
+                                 </children>
+                              </StackPane>
                            </children>
                            <VBox.margin>
                               <Insets left="5.0" right="5.0" top="8.0" />
                            </VBox.margin>
                         </GridPane>
-                        <JFXComboBox fx:id="comboStatus" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="300.0" promptText="Status" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;">
-                           <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" top="5.0" />
-                           </VBox.margin>
-                        </JFXComboBox>
-                        <VBox alignment="BOTTOM_CENTER" prefHeight="133.0" prefWidth="325.0" VBox.vgrow="ALWAYS">
+                        <StackPane prefHeight="23.0" prefWidth="200.0">
                            <children>
-                              <GridPane alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="38.0" prefWidth="325.0">
+                              <JFXComboBox fx:id="comboStatus" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="300.0" promptText="Status" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;">
+                                 <StackPane.margin>
+                                    <Insets left="5.0" />
+                                 </StackPane.margin>
+                              </JFXComboBox>
+                              <TextField fx:id="valueStatus1">
+                                 <StackPane.margin>
+                                    <Insets right="25.0" />
+                                 </StackPane.margin>
+                              </TextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </VBox.margin>
+                        </StackPane>
+                        <VBox alignment="BOTTOM_CENTER" prefHeight="21.0" prefWidth="300.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <GridPane alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="22.0" prefWidth="300.0">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -213,15 +262,12 @@
                                     </JFXButton>
                                  </children>
                                  <VBox.margin>
-                                    <Insets bottom="5.0" />
+                                    <Insets />
                                  </VBox.margin>
                               </GridPane>
                            </children>
                         </VBox>
                      </children>
-                     <GridPane.margin>
-                        <Insets top="5.0" />
-                     </GridPane.margin>
                   </VBox>
                </children>
             </GridPane>

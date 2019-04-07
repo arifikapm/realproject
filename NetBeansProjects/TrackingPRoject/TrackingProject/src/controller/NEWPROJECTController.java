@@ -54,6 +54,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
@@ -138,7 +139,24 @@ public class NEWPROJECTController implements Initializable {
     private JFXComboBox<MasStatusProject> comboStatus;
     
     @FXML
-    private JFXTextField valueProject;
+    private TextField valueProject;
+    
+    @FXML
+    private TextField valueActivity1;
+    
+    @FXML
+    private TextField valueCivitas1;
+    
+    @FXML
+    private TextField valueRiskFactor1;
+    
+    @FXML
+    private TextField valueAuditGrading1;
+    
+    @FXML
+    private TextField valueStatus1;
+//    @FXML
+//    private JFXTextField valueProject;
     @FXML
     private JFXDatePicker dateStart;
     @FXML

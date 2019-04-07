@@ -34,7 +34,7 @@ import model.MasResponsibility;
 public class ROOTController implements Initializable {
 
     @FXML
-    private BorderPane rootLoad;
+    public BorderPane rootLoad;
     @FXML
     private VBox btnProject;
     @FXML
@@ -77,6 +77,7 @@ public class ROOTController implements Initializable {
 
     @FXML
     private void loadProjectView(MouseEvent event) throws IOException {
+        rootLoad.setCenter(null);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PROJECT.fxml"));
         BorderPane newScene = loader.load();
         PROJECTController mct = loader.getController();
@@ -101,7 +102,8 @@ public class ROOTController implements Initializable {
 
     @FXML
     private void loadNewProject(MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NEWPROJECT_1.fxml"));
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NEWPROJECT_1.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NEWPROJECT.fxml"));
         BorderPane newScene = loader.load();
         NEWPROJECTController mct = loader.getController();
         rootLoad.setCenter(newScene);
@@ -173,6 +175,14 @@ public class ROOTController implements Initializable {
 
     public void setYear(int year) {
         this.year = year;
+    }
+    
+    public void refresh() throws IOException{
+        rootLoad.setCenter(null);
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PROJECT.fxml"));
+//        BorderPane newScene = loader.load();
+//        PROJECTController asad = loader.getController();
+//        rootLoad.setCenter(newScene);
     }
         
     

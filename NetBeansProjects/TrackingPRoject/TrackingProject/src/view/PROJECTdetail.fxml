@@ -13,13 +13,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="871.0" style="-fx-background-color: #E7E7E7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PROJECTdetailController">
+<BorderPane fx:id="detailLayout" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="634.0" prefWidth="871.0" style="-fx-background-color: #E7E7E7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PROJECTdetailController">
    <top>
       <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="42.0" prefWidth="871.0" BorderPane.alignment="TOP_RIGHT">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="540.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="307.0" minWidth="10.0" prefWidth="307.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="20.0" prefWidth="80.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="20.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="22.0" minHeight="22.0" prefHeight="22.0" vgrow="SOMETIMES" />
@@ -108,10 +109,10 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </HBox>
-            <HBox opacity="0.16" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-            <HBox alignment="CENTER" onMouseClicked="#loadTaskProject" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #0C39FF;" GridPane.columnIndex="2" GridPane.rowSpan="2">
+            <HBox opacity="0.16" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #000000;" GridPane.columnSpan="4" GridPane.rowIndex="3" />
+            <HBox alignment="CENTER" onMouseClicked="#loadTaskProject" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #03A9F4;" GridPane.columnIndex="2" GridPane.rowSpan="2">
                <children>
-                  <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="25" style="-fx-fill: #fff;" />
+                  <FontAwesomeIconView fill="WHITE" glyphName="FILES_ALT" size="25" style="-fx-fill: #fff;" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" GridPane.rowIndex="1">
@@ -136,6 +137,11 @@
                <padding>
                   <Insets left="22.0" />
                </padding>
+            </HBox>
+            <HBox alignment="CENTER" onMouseClicked="#deleteProject" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #E53C40;" GridPane.columnIndex="3" GridPane.rowSpan="2">
+               <children>
+                  <FontAwesomeIconView fill="WHITE" glyphName="REMOVE" size="25" style="-fx-fill: #fff;" />
+               </children>
             </HBox>
          </children>
       </GridPane>

@@ -154,25 +154,25 @@ public class LoginController implements Initializable {
 
     }    
     
-    public void testDB(){
-        Properties properties = new Properties();
-        try {
-            properties.load(new FileInputStream("setting.properties"));
-            String username_prop = properties.getProperty("user");
-            String password_prop = properties.getProperty("password");
-            String server_prop = properties.getProperty("serverName");
-            String database_prop = properties.getProperty("databaseName");
-            String port_prop = properties.getProperty("port");
-            kon.testKoneksi(server_prop, port_prop, database_prop, username_prop, password_prop);
-            
-        } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText(null);
-                alert.setContentText(" Check your setting ! \n or changes your connection into public ");
-                alert.showAndWait();
-        }
-    }
+//    public void testDB(){
+//        Properties properties = new Properties();
+//        try {
+//            properties.load(new FileInputStream("setting.properties"));
+//            String username_prop = properties.getProperty("user");
+//            String password_prop = properties.getProperty("password");
+//            String server_prop = properties.getProperty("serverName");
+//            String database_prop = properties.getProperty("databaseName");
+//            String port_prop = properties.getProperty("port");
+//            kon.testKoneksi(server_prop, port_prop, database_prop, username_prop, password_prop);
+//            
+//        } catch (Exception e) {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Error");
+//                alert.setHeaderText(null);
+//                alert.setContentText(" Check your setting ! \n or changes your connection into public ");
+//                alert.showAndWait();
+//        }
+//    }
 
 
     @FXML

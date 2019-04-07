@@ -16,17 +16,22 @@ import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
@@ -45,6 +50,7 @@ import model.ProjectDetail;
 import model.ProjectDetailDao;
 import model.MasScope;
 import model.MasScopeDao;
+import model.ProjectDao;
 import model.TaskForm;
 import model.TaskFormDao;
 import model.Team;
@@ -105,33 +111,11 @@ public class PROJECTdetailController implements Initializable {
     private JFXListView<ProfileProjectRoot> listProjectProfile;
     
     
-    @FXML
-    private TableView<TaskForm> tblTask;
-
-    @FXML
-    private TableColumn<TaskForm, String> colTask;
-
-    @FXML
-    private TableColumn<TaskForm, String> colStartPlan;
-
-    @FXML
-    private TableColumn<TaskForm, String> colEndPlan;
-
-    @FXML
-    private TableColumn<TaskForm, String> colActStart;
-
-    @FXML
-    private TableColumn<TaskForm, String> colActEnd;
-
-    @FXML
-    private TableColumn<TaskForm, String> colEdit;
-
-    @FXML
-    private TableColumn<TaskForm, String> colDelete;
     
     //Koneki
     koneksi kon = new koneksi();
-    ProjectDetailDao model = new ProjectDetailDao();
+    ProjectDetailDao modelProjectDetail = new ProjectDetailDao();
+    ProjectDao modelProject = new ProjectDao();
     MasScopeDao modelScope = new MasScopeDao();
     TeamDao modelTeam = new TeamDao();
     TaskFormDao modelTask = new TaskFormDao();
@@ -143,6 +127,10 @@ public class PROJECTdetailController implements Initializable {
     private ObservableList<Team>dataTeam;
     private ObservableList<TaskForm>dataTaskForm;
     private ObservableList<ProfileProjectRoot>dataProfileProject;
+    @FXML
+    private Label lblCivitas;
+    @FXML
+    private BorderPane detailLayout;
 
     
 
@@ -161,11 +149,11 @@ public class PROJECTdetailController implements Initializable {
         
         
         //model.loadDetail(idProject);
-        model.loadProjectDetail(idProject);
+        modelProjectDetail.loadProjectDetail(idProject);
         
         data=FXCollections.observableArrayList();
-        kon.res=kon.stat.executeQuery(model.queryload);
-        System.out.println(model.queryload);
+        kon.res=kon.stat.executeQuery(modelProjectDetail.queryload);
+        System.out.println(modelProjectDetail.queryload);
 
         while (kon.res.next()) {                
                 data.add(new ProjectDetail(kon.res.getString(1), kon.res.getString(2), kon.res.getString(3), 
@@ -400,5 +388,110 @@ public class PROJECTdetailController implements Initializable {
  
             newWindow.show();
     }
+
+    @FXML
+    private void deleteProject(MouseEvent event) throws SQLException, IOException {
+        try {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Look, a Confirmation Dialog");
+                alert.setContentText("You will delete : \n "+textActivity+" \n"+textCivitas+"");
+                
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    //deletedFirst();
+                    if(deletedFirst().equals("Success")){
+                        System.out.println("succes");
+                        modelProject.deleteProject(idPorject);
+                        kon.stat.executeUpdate(modelProject.delete);
+                        
+
+                        
+                    } else{
+                        System.out.println("Error Delete project");
+                    }
+                     refreshAllProject();
+                     refreshAll();
+
+                    // ... user chose OK
+                    
+                } else {
+                   alert.close();
+                    
+                    // ... user chose CANCEL or closed the dialog
+                    
+                }
+                
+        } catch(Exception e){
+        
+        }
+                       
+                        
+    }
+    
+    public String deletedFirst(){
+        try{
+            modelProject.deleteProjectHasKaryawan(idPorject);
+            kon.stat.executeUpdate(modelProject.delete);
+            modelProject.deleteProjectHasScope(idPorject);
+            kon.stat.executeUpdate(modelProject.delete);
+            modelProject.deleteProjectHasTask(idPorject);
+            kon.stat.executeUpdate(modelProject.delete);
+            return "Success";
+        } catch(Exception e){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText(String.valueOf(e));
+                alert.showAndWait();
+            return "Error";
+        }
+    }
+    
+    public void refreshAll() throws SQLException, IOException{
+        //label atas
+                lblProjectCivitas.setText("");
+                lblActivity.setText("");
+                lblStartMonth.setText("");
+                lblEndMonth.setText("");
+                
+                //label bawah
+                txtTglStart.setText("");
+                txtStartMonth.setText("");
+                txtTglEnd.setText("");
+                txtEndMonth.setText("");
+                txtCountDown.setText("");
+                
+                listProjectProfile.refresh();
+                listScope.refresh();
+                listTeam.refresh();
+                
+                //setData("");
+//                listTeam.setItems(null);
+//                listProjectProfile.setItems(null);
+//                listScope.setItems(null);
+                //refreshProject();
+    }
+    
+    void refreshAllProject() throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PROJECT.fxml"));
+        BorderPane newScene = loader.load();
+        PROJECTController asad = loader.getController();
+        asad.loadListProject();
+//        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/view/ROOT.fxml"));
+//        ROOTController pct = loader1.getController();
+//        //mct1.refresh();
+//        pct.rootLoad.setCenter(null);
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PROJECT.fxml"));
+//        BorderPane newScene = loader.load();
+//        PROJECTController dwr = loader.getController();
+//        pct.rootLoad.setCenter(newScene);
+//       
+
+//        mct.refresh();
+        System.out.println("set refresh");
+    }
+    
+
     
 }

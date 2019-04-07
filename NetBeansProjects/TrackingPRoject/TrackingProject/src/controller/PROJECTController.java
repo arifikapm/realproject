@@ -58,9 +58,9 @@ public class PROJECTController implements Initializable {
     private ObservableList<Project> filteredData;
     
     @FXML
-    private BorderPane viewProject;
+    public BorderPane viewProject;
     
-    private void loadListProject(){
+    public void loadListProject(){
         try {
             rootViewList.setItems(null);
 //            String load = "1";
@@ -234,5 +234,11 @@ public class PROJECTController implements Initializable {
        // System.out.println("loadSearchProject "+textSearch.getText());
     }
     
+    public void reloadProject(){
+        rootViewList.refresh();
+        //viewProject.refr;
+        loadListProject();
+        System.out.println("set reload project");
+    }
     
 }

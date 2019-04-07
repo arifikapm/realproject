@@ -48,6 +48,7 @@ public class ProjectDao extends ListCell<Project>{
     
     public String SelectNeeded; 
     public String update; 
+    public String delete; 
     
     public String queryListProject= "SELECT PRO.idproject,PRO.projectcol, \n" +
         "COUNT(PMK.master_task_idtask) AS line, MIC.civitascol,MAC.activitycol,\n" +
@@ -255,7 +256,18 @@ public class ProjectDao extends ListCell<Project>{
         update = "UPDATE `project` SET `act_month_start` = "+actDateStart+" and WHERE `project`.`idproject` = "+idProject+" ";
     }
 
-    
+    public void deleteProject(String idProject){
+        delete="DELETE FROM `project` WHERE idproject="+idProject+"";
+    }
+    public void deleteProjectHasKaryawan(String idProject){
+        delete="DELETE FROM `project_has_master_karyawan` WHERE project_idproject="+idProject+"";
+    }
+    public void deleteProjectHasScope(String idProject){
+        delete="DELETE FROM `project_has_master_scope` WHERE project_idproject="+idProject+"";
+    }
+    public void deleteProjectHasTask(String idProject){
+        delete="DELETE FROM `project_has_master_task` WHERE project_idproject="+idProject+"";
+    }
 
     
 }
