@@ -75,12 +75,21 @@ public class ROOTController implements Initializable {
         
     }
 
+//    @FXML
+//    private void loadProjectView(MouseEvent event) throws IOException {
+//        rootLoad.setCenter(null);
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PROJECT.fxml"));
+//        BorderPane newScene = loader.load();
+//        PROJECTController mct = loader.getController();
+//        rootLoad.setCenter(newScene);
+//    }
+    
     @FXML
     private void loadProjectView(MouseEvent event) throws IOException {
         rootLoad.setCenter(null);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PROJECT.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/PROJECT_1.fxml"));
         BorderPane newScene = loader.load();
-        PROJECTController mct = loader.getController();
+        PROJECT_1Controller mct = loader.getController();
         rootLoad.setCenter(newScene);
     }
 
