@@ -94,18 +94,18 @@ public void loadNeWTaskProject(String idProject){
 //            System.out.println("item empty2");
             setText(null);
             setGraphic(null);
+             
         } else {
 
             if (isEditing()) {
-                System.out.println(" editing2");
                 if(datePicker != null) {
-//                    System.out.println(" editing datepicker isnull2");
+                    System.out.println(" editing datepicker isnull2");
                     datePicker.setValue(getDate());
                 } 
-//                    System.out.println(" editing datepicker notnull2");
+                    System.out.println(" editing datepicker notnull2");
                 setText(null);
                 setGraphic(datePicker);
-                
+                System.out.println("updateItem2 " +getDate());
                 
             } else {
                 if (item == null){
@@ -113,11 +113,12 @@ public void loadNeWTaskProject(String idProject){
                     setGraphic(null);
                 } else{
                     setText(formatter.format(item));
-//                    System.out.println("updateItem2");
+
                     setGraphic(null);
                 }
             }
         }
+                           
     }
 
     private void createDatePicker() {
@@ -152,8 +153,9 @@ public void loadNeWTaskProject(String idProject){
     @Override
     public void startEdit() {
         super.startEdit();
-//        System.out.println("startEdit2");
+
         if(!isEmpty()) {
+                    System.out.println("startEdit2");
             createDatePicker();
             setText(null);
             setGraphic(datePicker);
@@ -163,7 +165,7 @@ public void loadNeWTaskProject(String idProject){
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-//        System.out.println("cancelEdit2");
+        System.out.println("cancelEdit2");
         if(getDate() == null){
             setGraphic(null);
         } else{

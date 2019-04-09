@@ -1,0 +1,16 @@
+CREATE TRIGGER `project_has_task` AFTER INSERT ON `project`
+ FOR EACH ROW INSERT INTO `project_has_master_task`(`project_idproject`, `master_task_idtask`, `est_datestart`, `est_dateend`, `act_datestart`, `act_dateend`, `create_date_task`, `mod_date_task`) VALUES (new.idproject,'1',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'2',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'3',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'4',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'5',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'6',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'7',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'8',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'9',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'10',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'11',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'12',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'13',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'14',NULL,NULL,NULL,NULL,NOW(),NULL),
+(new.idproject,'15',NULL,NULL,NULL,NULL,NOW(),NULL)

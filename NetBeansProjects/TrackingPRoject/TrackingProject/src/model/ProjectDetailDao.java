@@ -119,4 +119,15 @@ public class ProjectDetailDao {
 //        System.out.println(update);
     }
     
+    public void setOnModifiedDate(String idProject, String idTask, String valueSet){
+        update="UPDATE `project_has_master_task` "
+                + "SET "+valueSet+"  "
+                + "WHERE `project_has_master_task`.`project_idproject` =  "+idProject+" "
+                + "AND "
+                + "`project_has_master_task`.`master_task_idtask` = "+idTask+" ";
+        
+        System.out.println(update);
+    }
+        
+    
 }

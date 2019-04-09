@@ -1,0 +1,138 @@
+CREATE TRIGGER `delete` AFTER DELETE ON `project_has_master_task`
+ FOR EACH ROW BEGIN 
+	IF OLD.ACT_DATEEND > 0 THEN 
+		IF OLD.MASTER_TASK_IDTASK <= 15 THEN 
+        	UPDATE project 
+            SET STATUS_IDSTATUS = 3, ACT_MONTH_END = NULL,
+            mod_date = NOW()
+            WHERE IDPROJECT = OLD.PROJECT_IDPROJECT; 
+        ELSEIF OLD.MASTER_TASK_IDTASK < 15 AND OLD.MASTER_TASK_IDTASK >= 12 THEN 
+        	UPDATE project
+            SET STATUS_IDSTATUS = 2 
+            WHERE IDPROJECT = OLD.PROJECT_IDPROJECT; 
+        ELSEIF OLD.MASTER_TASK_IDTASK > 1 AND OLD.MASTER_TASK_IDTASK < 12 THEN 
+			IF OLD.MASTER_TASK_IDTASK = 1 THEN
+				UPDATE project 
+				SET STATUS_IDSTATUS = 1 , ACT_MONTH_START = NULL,
+				mod_date = NOW()
+				WHERE IDPROJECT = OLD.PROJECT_IDPROJECT; 
+            ELSE
+				UPDATE project 
+				SET STATUS_IDSTATUS = 1
+				WHERE IDPROJECT = OLD.PROJECT_IDPROJECT; 
+            END IF;
+
+       	ELSE 
+        	UPDATE project 
+            SET STATUS_IDSTATUS = 1
+            WHERE IDPROJECT = OLD.PROJECT_IDPROJECT; 
+        END IF;
+        
+    ELSEif OLD.ACT_DATEEND = 0 THEN
+    	IF OLD.MASTER_TASK_IDTASK < 16 THEN 
+        	UPDATE project 
+            SET STATUS_IDSTATUS = 3 
+            WHERE IDPROJECT = OLD.PROJECT_IDPROJECT; 
+        ELSEIF OLD.MASTER_TASK_IDTASK < 15 AND OLD.MASTER_TASK_IDTASK >= 12 THEN 
+        	UPDATE project 
+            SET STATUS_IDSTATUS = 2 
+            WHERE IDPROJECT = OLD.PROJECT_IDPROJECT; 
+        ELSEIF OLD.MASTER_TASK_IDTASK > 1 AND OLD.MASTER_TASK_IDTASK < 12 THEN 
+        	UPDATE project 
+            SET STATUS_IDSTATUS = 1 
+            WHERE IDPROJECT = OLD.PROJECT_IDPROJECT; 
+       	ELSE 
+        	UPDATE project 
+            SET STATUS_IDSTATUS = 1 
+            WHERE IDPROJECT = OLD.PROJECT_IDPROJECT; 
+        END IF; 
+   END IF; 
+END
+
+CREATE TRIGGER `project_has_master_task_AFTER_UPDATE` AFTER UPDATE ON `project_has_master_task`
+ FOR EACH ROW BEGIN
+IF NEW.ACT_DATEEND > 0 THEN
+    	IF NEW.master_task_idtask = 15 THEN
+        	UPDATE project
+            SET STATUS_IDSTATUS = 4, ACT_MONTH_END = NEW.ACT_DATEEND,
+            mod_date = NOW()
+            WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+            
+        ELSEIF NEW.master_task_idtask < 15 AND NEW.MASTER_TASK_IDTASK >= 12 THEN
+        	UPDATE project
+            SET STATUS_IDSTATUS = 3
+            WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+            
+        ELSEIF NEW.master_task_idtask >= 1 AND NEW.MASTER_TASK_IDTASK <= 11 THEN
+			if NEW.master_task_idtask = 1 then 
+				UPDATE project
+				SET STATUS_IDSTATUS = 2 , ACT_MONTH_START = NEW.ACT_DATESTART,
+					mod_date = NOW()
+				WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+            else 
+				UPDATE project
+				SET STATUS_IDSTATUS = 2
+				WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+            end if;
+        	
+            
+        ELSE
+        	UPDATE project
+            SET STATUS_IDSTATUS = 1
+            WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+            
+        END IF;
+        
+	ELSEif NEW.ACT_DATEEND = 0 THEN
+    	IF NEW.master_task_idtask = 15 THEN
+        	UPDATE project
+            SET STATUS_IDSTATUS = 4
+            WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+            
+        ELSEIF NEW.master_task_idtask < 15 AND NEW.MASTER_TASK_IDTASK >= 12 THEN
+        	UPDATE project
+            SET STATUS_IDSTATUS = 3
+            WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+            
+        ELSEIF NEW.master_task_idtask > 0 AND NEW.MASTER_TASK_IDTASK <= 11 THEN
+        	UPDATE project
+            SET STATUS_IDSTATUS = 2
+            WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+            
+        ELSE
+        	UPDATE project
+            SET STATUS_IDSTATUS = 1
+            WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+        END IF;
+    END IF;
+END
+
+CREATE TRIGGER `insert` BEFORE INSERT ON `project_has_master_task`
+ FOR EACH ROW BEGIN
+	IF NEW.ACT_DATEEND > 0 THEN
+    	IF NEW.master_task_idtask = 15 THEN
+        	UPDATE project
+            SET STATUS_IDSTATUS = 4
+            WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+            
+        ELSEIF NEW.master_task_idtask < 15 AND NEW.MASTER_TASK_IDTASK >= 12 THEN
+        	UPDATE project
+            SET STATUS_IDSTATUS = 3
+            WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+            
+        ELSEIF NEW.master_task_idtask > 0 AND NEW.MASTER_TASK_IDTASK < 12 THEN
+        	UPDATE project
+            SET STATUS_IDSTATUS = 2
+            WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+            
+        ELSE
+        	UPDATE project
+            SET STATUS_IDSTATUS = 1
+            WHERE IDPROJECT = NEW.PROJECT_IDPROJECT;
+        END IF;
+        
+	
+        
+    END IF;
+END
+

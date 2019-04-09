@@ -109,7 +109,7 @@ public class NEWPROJECTController implements Initializable {
     private String actStart  = null;
     private String actEnd = null;
     private String estEnd = null;
-    private Format formatter;
+    private Format formatter = new SimpleDateFormat("yyyy-MM-dd");;
     
     final ContextMenu contextMenu = new ContextMenu();
     final ContextMenu contextTask = new ContextMenu();
@@ -141,20 +141,6 @@ public class NEWPROJECTController implements Initializable {
     @FXML
     private TextField valueProject;
     
-    @FXML
-    private TextField valueActivity1;
-    
-    @FXML
-    private TextField valueCivitas1;
-    
-    @FXML
-    private TextField valueRiskFactor1;
-    
-    @FXML
-    private TextField valueAuditGrading1;
-    
-    @FXML
-    private TextField valueStatus1;
 //    @FXML
 //    private JFXTextField valueProject;
     @FXML
@@ -224,6 +210,8 @@ public class NEWPROJECTController implements Initializable {
     private ObservableList<MasStatusProject>dataStatusProject;
     private ObservableList<MasResponsibility>dataResponsibility;
     private ObservableList<MasTask>dataTask;
+    @FXML
+    private Label lblErrors;
 
 
     
@@ -849,11 +837,7 @@ public class NEWPROJECTController implements Initializable {
                 textEndDate = kon.res.getString(11);
                 
                 //textRiskFactore = kon.res.getString(textEndDate)
-                 System.out.println(textProject);
-                 System.out.println(textActivity);
-                 System.out.println(textCivitas);
-                 System.out.println(textStartDate);
-                 System.out.println(textEndDate);
+
                  
 //                jtsDayStart = kon.res.getString(11);
 //                jtsMonthStart = kon.res.getString(12);
@@ -928,7 +912,7 @@ public class NEWPROJECTController implements Initializable {
         modelKaryawan.loadTeamProject(idProject);
         kon.res=kon.stat.executeQuery(modelKaryawan.queryteam);
         dataKaryawan =FXCollections.observableArrayList();
-        System.out.println(modelKaryawan.queryteam);
+        
         try {
             
         while (kon.res.next()) {                
@@ -1009,24 +993,58 @@ public class NEWPROJECTController implements Initializable {
             
             colStartPlan.setCellValueFactory(cell -> cell.getValue().dateEstStart());
             colStartPlan.setCellFactory(cell -> new ListTaskDatePicker());
-            colStartPlan.setOnEditCommit(event -> event.getTableView().getItems()
-                    .get(event.getTablePosition().getRow()).setEst_Datestart(event.getNewValue()));
+            colStartPlan.setOnEditCommit(event -> {
+                //set on class listTaskProject
+                event.getTableView().getItems()
+                    .get(event.getTablePosition().getRow()).setEst_Datestart(event.getNewValue());
+                idTask = tblTask.getSelectionModel().getSelectedItem().getIdTask();
+                try {
+                    updateHandleCommitStartPlan();
+                } catch (SQLException ex) {
+                    Logger.getLogger(NEWPROJECTController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
             
             colEndPlan.setCellValueFactory(cell -> cell.getValue().dateEstEnd());
             colEndPlan.setCellFactory(cell -> new ListTaskDatePicker());
-            colEndPlan.setOnEditCommit(event -> event.getTableView().getItems()
-                    .get(event.getTablePosition().getRow()).setEst_Dateend(event.getNewValue()));
+            colEndPlan.setOnEditCommit(event -> {
+                event.getTableView().getItems()
+                    .get(event.getTablePosition().getRow()).setEst_Dateend(event.getNewValue());
+                idTask = tblTask.getSelectionModel().getSelectedItem().getIdTask();
+                try {
+                    updateHandleCommitEndPlan();
+                } catch (SQLException ex) {
+                    Logger.getLogger(NEWPROJECTController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
             
             colActStart.setCellValueFactory(cell -> cell.getValue().dateActStart());
             colActStart.setCellFactory(cell -> new ListTaskDatePicker());
-            colActStart.setOnEditCommit(event -> event.getTableView().getItems()
-                    .get(event.getTablePosition().getRow()).setAct_Datestart(event.getNewValue()));
+            colActStart.setOnEditCommit(event -> {
+                event.getTableView().getItems()
+                    .get(event.getTablePosition().getRow()).setAct_Datestart(event.getNewValue());
+                idTask = tblTask.getSelectionModel().getSelectedItem().getIdTask();
+                try {
+                    updateHandleCommitActStart();
+                } catch (SQLException ex) {
+                    Logger.getLogger(NEWPROJECTController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
             
             colActEnd.setCellValueFactory(cell -> cell.getValue().dateActEnd());
             colActEnd.setCellFactory(cell -> new ListTaskDatePicker());
-            colActEnd.setOnEditCommit(event -> event.getTableView().getItems()
-                    .get(event.getTablePosition().getRow()).setAct_Dateend(event.getNewValue()));
+            colActEnd.setOnEditCommit(event -> {
+                event.getTableView().getItems()
+                    .get(event.getTablePosition().getRow()).setAct_Dateend(event.getNewValue());
+                idTask = tblTask.getSelectionModel().getSelectedItem().getIdTask();
+                try {
+                    updateHandleCommitActEnd();
+                } catch (SQLException ex) {
+                    Logger.getLogger(NEWPROJECTController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            });
             
+            tblTask.setEditable(true);
             tblTask.setItems(dataDatePicker);
             
         } catch (SQLException ex) {
@@ -1074,7 +1092,7 @@ public class NEWPROJECTController implements Initializable {
                     // ... user chose CANCEL or closed the dialog
                 }
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
 
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Error");
@@ -1123,7 +1141,7 @@ public class NEWPROJECTController implements Initializable {
                     
                     modelScope.setOnDeleteProjectHasScope(getIdProject(),getIdScope());
                     kon.stat.executeUpdate(modelScope.deleteProjectScope);
-                    System.out.println(modelScope.deleteProjectScope);
+                   
                     // ... user chose OK
                     
                 } else {
@@ -1207,10 +1225,10 @@ public class NEWPROJECTController implements Initializable {
                     
                     modelDetail.setOnDeleteTask(getIdProject(),idTask);
                     kon.stat.executeUpdate(modelDetail.delete);
-                    System.out.println(modelDetail.delete);
+                    
                     // ... user chose OK
                     
-                    System.out.println("Delete Scope ");
+
                 } else {
                    alert.close();
                     // ... user chose CANCEL or closed the dialog
@@ -1250,13 +1268,8 @@ public class NEWPROJECTController implements Initializable {
         try {
         modelDetail.setOnModifiedTask(idProject,idTask,getEstStart(),getEstEnd(),getActStart(),getActEnd(),nowValue);
         kon.stat.executeUpdate(modelDetail.update);
-            System.out.println(getActStart() +"  "+getActEnd());
-        
-//        if(idTask == "1"){
-//            modelProject.updateActStart(idProject, getActStart());
-//            kon.stat.executeUpdate(modelProject.insert);
-//        }
-        //System.out.println(modelDetail.update);
+
+        System.out.println(modelDetail.update);
             
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Input Success");
@@ -1264,7 +1277,10 @@ public class NEWPROJECTController implements Initializable {
             alert.setContentText(String.valueOf(" Project "+tblTask.getSelectionModel().getSelectedItem().getTaskCol()+" "
                     + "\n" +" Mod Success on \n"));
             alert.showAndWait();
-            
+            estEnd =null;
+            estStart = null;
+            actEnd =null;
+            actStart = null;
             tblTask.refresh();
             setDataListTask(idProject);
         } catch (Exception e) {
@@ -1294,14 +1310,11 @@ public class NEWPROJECTController implements Initializable {
         idKaryawan = listRemover.getSelectionModel().getSelectedItem().getIdKaryawan();
         
         
-        System.out.println("List As a = "+getIdAsa());
-        System.out.println("HD = "+getIdHd());
-        
         listRemover.getSelectionModel().clearSelection();
         
         if(maska != null){
             if(listContainer == null){
-                System.out.println("go");
+
                 listRemover.getItems().remove(maska);
                 listContainer.getItems().add(maska);
                 
@@ -1324,7 +1337,7 @@ public class NEWPROJECTController implements Initializable {
                         } else{
                             listRemover.getItems().remove(maska);
                             listContainer.getItems().add(maska);
-                            System.out.println("hd current Karyawan");
+
                         }
                         
                     }
@@ -1337,7 +1350,7 @@ public class NEWPROJECTController implements Initializable {
                     if (hd == 2) {
                         onInsertKaryawan();
                     }
-                    System.out.println("just go");
+
                     listRemover.getItems().remove(maska);
                     listContainer.getItems().add(maska);
                 }                
@@ -1360,7 +1373,7 @@ public class NEWPROJECTController implements Initializable {
        //checking exis selection from list remover to listcontainer 
         if(masScope != null){
             if(listContainer == null){
-                System.out.println("go");
+
                 listRemover.getItems().remove(masScope);
                 listContainer.getItems().add(masScope);
                 
@@ -1378,13 +1391,13 @@ public class NEWPROJECTController implements Initializable {
                         } else{
                             listRemover.getItems().remove(masScope);
                             listContainer.getItems().add(masScope);
-                            System.out.println("hd current scope");
+
                         }
                         
                     }
                     
                 } else{
-                    System.out.println("just go");
+
                     listRemover.getItems().remove(masScope);
                     listContainer.getItems().add(masScope);
                     //listContainer.setCellFactory(masScopeView -> new MasScopeDao());
@@ -1415,7 +1428,7 @@ public class NEWPROJECTController implements Initializable {
                 return true;
             }
         }     
-        System.out.println("false");
+
         return false;
     }
     
@@ -1578,7 +1591,7 @@ public class NEWPROJECTController implements Initializable {
             try {
                 modelDetail.setOnInsertTask(idProject, idTask);
                 kon.stat.executeUpdate(modelDetail.insertInto);
-                System.out.println(modelDetail.insertInto);
+
                 tblTask.refresh();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Success");
@@ -1711,5 +1724,76 @@ public class NEWPROJECTController implements Initializable {
         this.idTask = idTask;
     }
 
+
+    private void updateHandleCommitStartPlan() throws SQLException {
+        try{
+            Date dateActStart = tblTask.getSelectionModel().getSelectedItem().getEst_Datestart();
+            String estStart1 = formatter.format(dateActStart);
+            
+            String valueSet ="`est_datestart`= '"+estStart1+"' ";
+                    
+            modelDetail.setOnModifiedDate(idProject,idTask,valueSet);
+            kon.stat.executeUpdate(modelDetail.update);          
+            lblErrors.setTextFill(Color.GREEN);
+            lblErrors.setText("Success Update Date");
+        } catch (SQLException e){
+            lblErrors.setTextFill(Color.TOMATO);
+            lblErrors.setText("Error Data " + tblTask.getSelectionModel().getSelectedItem().getTaskCol() +" cannot Update Start Plan");
+        }
+
+
+    }
+
+    private void updateHandleCommitEndPlan() throws SQLException {
+        try{
+            Date dateActStart = tblTask.getSelectionModel().getSelectedItem().getEst_Dateend();
+            String estStart1 = formatter.format(dateActStart);
+            
+            String valueSet = "`est_dateend`= '"+estStart1+"'";
+            modelDetail.setOnModifiedDate(idProject,idTask,valueSet);
+            kon.stat.executeUpdate(modelDetail.update);
+            lblErrors.setTextFill(Color.GREEN);
+            lblErrors.setText("Success Update Date");
+        } catch (SQLException e){
+            lblErrors.setTextFill(Color.TOMATO);
+            lblErrors.setText("Error Data " + tblTask.getSelectionModel().getSelectedItem().getTaskCol() +" cannot Update Start Plan");
+        }
+
+
+    }
+
+    private void updateHandleCommitActStart() throws SQLException {
+        try{
+            Date dateActStart = tblTask.getSelectionModel().getSelectedItem().getAct_Datestart();
+            String estStart1 = formatter.format(dateActStart);
+            
+            String valueSet = "`act_datestart`= '"+estStart1+" '" ;
+            modelDetail.setOnModifiedDate(idProject,idTask,valueSet);
+            kon.stat.executeUpdate(modelDetail.update); 
+            lblErrors.setTextFill(Color.GREEN);
+            lblErrors.setText("Success Update Date");
+        } catch (SQLException e){
+            lblErrors.setTextFill(Color.TOMATO);
+            lblErrors.setText("Error Data " + tblTask.getSelectionModel().getSelectedItem().getTaskCol() +" cannot Update Start Plan");
+        }
+
+
+    }
+
+    private void updateHandleCommitActEnd() throws SQLException {
+        try{
+            Date dateActStart = tblTask.getSelectionModel().getSelectedItem().getAct_Dateend();
+            String estStart1 = formatter.format(dateActStart);
+             
+            String valueSet = "`act_dateend`= '"+estStart1+"'";
+            modelDetail.setOnModifiedDate(idProject,idTask,valueSet);
+            kon.stat.executeUpdate(modelDetail.update);
+            lblErrors.setTextFill(Color.GREEN);
+            lblErrors.setText("Success Update Date");
+        } catch (SQLException e){
+            lblErrors.setTextFill(Color.TOMATO);
+            lblErrors.setText("Error Data " + tblTask.getSelectionModel().getSelectedItem().getTaskCol() +" cannot Update Start Plan");
+        }
+    }
     
 }
