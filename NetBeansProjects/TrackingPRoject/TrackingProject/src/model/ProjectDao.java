@@ -269,5 +269,13 @@ public class ProjectDao extends ListCell<Project>{
         delete="DELETE FROM `project_has_master_task` WHERE project_idproject="+idProject+"";
     }
 
+    public void updateProject(String idProject ,String riskfactorValue, 
+            String auditindexValue, String statusValue, LocalDate start, LocalDate end, LocalDate nowDate) {
+        update = "UPDATE `project` SET `risk_factore_idrisk_factore` = "+riskfactorValue+", `audit_grading_idaudit_grading` = "+auditindexValue+", "
+                + "`status_idstatus` = "+statusValue+" ,"
+                + "`startmonth` = '"+start+"', `endmonth` = '"+end+"' , mod_date = now() WHERE `project`.`idproject` = "+idProject+" ";
+        System.out.println(update);
+    }
+
     
 }

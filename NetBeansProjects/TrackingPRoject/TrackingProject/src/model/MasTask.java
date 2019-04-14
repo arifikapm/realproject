@@ -20,14 +20,16 @@ public class MasTask {
     private final StringProperty taskCol;
     private final StringProperty inisial_Task;
     private final StringProperty rootCol;
+    private final StringProperty mandatory;
 
     
     public MasTask(String idtask, String taskcol, String inisial_task, 
-            String rootcol){
+            String rootcol, String mandatoryList){
         this.idTask=new SimpleStringProperty(idtask);
         this.taskCol=new SimpleStringProperty(taskcol);
         this.inisial_Task=new SimpleStringProperty(inisial_task);
         this.rootCol=new SimpleStringProperty(rootcol);
+        this.mandatory=new SimpleStringProperty(mandatoryList);
      
     }
 
@@ -46,6 +48,10 @@ public class MasTask {
     public String getRootCol() {
         return rootCol.get();
     }
+    
+    public String getMandatory() {
+        return mandatory.get();
+    }
 
     public void setIdTask(String value) {
         idTask.setValue(value);
@@ -61,6 +67,10 @@ public class MasTask {
 
     public void setRootCol(String value) {
         rootCol.setValue(value);
+    }
+    
+    public void setMandatory(String value) {
+        mandatory.setValue(value);
     }
 
     

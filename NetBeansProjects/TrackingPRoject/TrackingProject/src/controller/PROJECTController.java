@@ -161,7 +161,7 @@ public class PROJECTController implements Initializable {
     private void loadDetailProject(MouseEvent event) throws IOException, SQLException {
         try {
             idPro = rootViewList.getSelectionModel().getSelectedItem().getIdProject();
-            System.out.println(idPro);
+
 //              civitas = rootViewList.getSelectionModel().getSelectedItem().getCivitasCol();
 //              startMonth = rootViewList.getSelectionModel().getSelectedItem().getStartmonth();
 //              endMonth = rootViewList.getSelectionModel().getSelectedItem().getEndmonth();

@@ -72,7 +72,6 @@ public class DashboardDetailController implements Initializable {
     public void setData(String idActivity, int Sheyear){
         idAct = idActivity;
         setYear(Sheyear);
-        System.out.println(" id Act "+idAct);
         try {
             int idStatusLoad = 2;
             loadListProject(idStatusLoad);

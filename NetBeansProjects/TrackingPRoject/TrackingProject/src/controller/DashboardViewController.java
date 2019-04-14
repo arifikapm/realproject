@@ -246,11 +246,9 @@ public class DashboardViewController implements Initializable {
     } 
     
     public void setChoseYear(){
-        System.out.println("set");
         //year = ChoseYear;
 //        if (ChoseYear != 0) {
-            //System.out.println(ChoseYear);
-            System.out.println("getyear "+rOOTController.getYear());
+
 //        
 //        loadListCountProject();
 //        loadListCarryProject();

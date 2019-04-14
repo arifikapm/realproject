@@ -45,10 +45,10 @@ public class MASTERController implements Initializable {
 
     @FXML
     private void loadKaryawan(MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MASTERkaryawan.fxml"));
-        BorderPane newScene = loader.load();
-        MASTERkaryawanController mct = loader.getController();
-        viewMaster.setCenter(newScene);
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MASTERkaryawan.fxml"));
+//        BorderPane newScene = loader.load();
+//        MASTERkaryawanController mct = loader.getController();
+//        viewMaster.setCenter(newScene);
     }
 
     @FXML
@@ -61,18 +61,18 @@ public class MASTERController implements Initializable {
 
     @FXML
     private void loadTask(MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MASTERtask.fxml"));
-        BorderPane newScene = loader.load();
-        MASTERtaskController mct = loader.getController();
-        viewMaster.setCenter(newScene);
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MASTERtask.fxml"));
+//        BorderPane newScene = loader.load();
+//        MASTERtaskController mct = loader.getController();
+//        viewMaster.setCenter(newScene);
     }
 
     @FXML
     private void loadProject(MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MASTERproject.fxml"));
-        BorderPane newScene = loader.load();
-        MASTERprojectController mct = loader.getController();
-        viewMaster.setCenter(newScene);
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MASTERproject.fxml"));
+//        BorderPane newScene = loader.load();
+//        MASTERprojectController mct = loader.getController();
+//        viewMaster.setCenter(newScene);
 
     }
 

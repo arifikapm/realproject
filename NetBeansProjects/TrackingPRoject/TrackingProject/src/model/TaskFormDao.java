@@ -6,12 +6,21 @@
 package model;
 
 import db.koneksi;
+import java.io.IOException;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.layout.GridPane;
 
 /**
  *
  * @author kuupie
  */
 public class TaskFormDao {
+
+
+    
     
     koneksi kon = new koneksi();
     
@@ -50,6 +59,7 @@ public class TaskFormDao {
     public String update;
     public String delete;
     
+
     
     public void loadData(String idProject){
         where = " WHERE pr.idproject="+idProject+"";
@@ -62,4 +72,6 @@ public class TaskFormDao {
         queryload=selected+where;
         
     }
+    
+    
 }

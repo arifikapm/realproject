@@ -133,7 +133,7 @@ Scroll Style
 }
 
 .table-view .column-header, .table-view .filler {
-    -fx-size: 20;
+    -fx-size: 25;
     -fx-border-width: 0 0 1 0;
     -fx-background-color: #505050;
     -fx-border-color: 

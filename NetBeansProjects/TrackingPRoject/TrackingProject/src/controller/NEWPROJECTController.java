@@ -9,40 +9,26 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXPopup;
-import com.jfoenix.controls.JFXTextField;
-import com.sun.glass.ui.PlatformFactory;
 import db.koneksi;
-import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.MonthDay;
-import java.time.Year;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Side;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
@@ -52,18 +38,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
-import javafx.util.converter.LocalDateStringConverter;
-import javax.swing.JOptionPane;
 import model.MasActivity;
 import model.MasActivityDao;
 import model.MasCivitas;
@@ -88,9 +70,7 @@ import model.MasTask;
 import model.MasTaskDao;
 import model.Project;
 import model.ProjectDao;
-import model.Team;
 import model.TeamDao;
-import org.jfree.data.time.Day;
 
 /**
  * FXML Controller class
@@ -109,7 +89,10 @@ public class NEWPROJECTController implements Initializable {
     private String actStart  = null;
     private String actEnd = null;
     private String estEnd = null;
-    private Format formatter = new SimpleDateFormat("yyyy-MM-dd");;
+    private Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+    
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
     
     final ContextMenu contextMenu = new ContextMenu();
     final ContextMenu contextTask = new ContextMenu();
@@ -140,6 +123,16 @@ public class NEWPROJECTController implements Initializable {
     
     @FXML
     private TextField valueProject;
+    @FXML
+    private TextField valueActivity1;
+    @FXML
+    private TextField valueCivitas1;
+    @FXML
+    private TextField valueRiskFactor1;
+    @FXML
+    private TextField valueAuditGrading1;
+    @FXML
+    private TextField valueStatus1;
     
 //    @FXML
 //    private JFXTextField valueProject;
@@ -210,8 +203,48 @@ public class NEWPROJECTController implements Initializable {
     private ObservableList<MasStatusProject>dataStatusProject;
     private ObservableList<MasResponsibility>dataResponsibility;
     private ObservableList<MasTask>dataTask;
-    @FXML
     private Label lblErrors;
+    @FXML
+    private JFXButton btnTaskDel;
+    @FXML
+    private JFXButton btnTaskMod;
+    
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+        kon.db();
+        popupAsa();
+        popupTask();
+        listKaryawan.setDisable(true);
+        listScope.setDisable(true);
+        
+        //setBtnDisable();
+        
+        try {
+
+            comboBoxCivitas();
+            comboBoxActivity();
+            comboBoxAuditIndex();
+            comboBoxStatusProject();
+            comboBoxRiskFactor();
+            
+            setKaryawan();
+            setScope();
+            
+
+            
+        
+            
+            tblTask.getStyleClass().add("mylistview.css");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(NEWPROJECTController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }  
 
 
     
@@ -222,10 +255,13 @@ public class NEWPROJECTController implements Initializable {
         //query set on class
         kon.db();
         dataCivitas=FXCollections.observableArrayList();
-        kon.res=kon.stat.executeQuery(modelCivitas.selectNameId);
+        kon.res=kon.stat.executeQuery(modelCivitas.Select);
         try {
             while (kon.res.next()) {                
-                dataCivitas.add(new MasCivitas(kon.res.getInt(1), kon.res.getString(2)) );
+                dataCivitas.add(new MasCivitas(kon.res.getInt(1), kon.res.getString(2), kon.res.getString(3), kon.res.getString(4), 
+                        kon.res.getString(5), kon.res.getString(6), kon.res.getString(7), kon.res.getString(8), kon.res.getString(9), 
+                        kon.res.getString(10), kon.res.getString(11), kon.res.getString(12), kon.res.getString(13), kon.res.getString(14), 
+                        kon.res.getString(15), kon.res.getString(16)));
             }
             
             //load all query result or model on combo box
@@ -259,9 +295,11 @@ public class NEWPROJECTController implements Initializable {
                 if (civitasCol == null){
                   return null;
                 } else {
+                    valueCivitas1.setText(civitasCol.getCivitasCol());
                     //System.out.println("load the id = "+civitasCol.getIdCivitas());
                     //saveMode(civitasCol.getIdCivitas());
                   return civitasCol.getCivitasCol();
+  
                 }
               }
 
@@ -329,6 +367,7 @@ public class NEWPROJECTController implements Initializable {
                 } else {
                     //System.out.println("load the id = "+civitasCol.getIdCivitas());
                     //saveMode(civitasCol.getIdCivitas());
+                    valueActivity1.setText(activityCol.getAcitivitycol());
                   return activityCol.getAcitivitycol();
                 }
               }
@@ -394,6 +433,7 @@ public class NEWPROJECTController implements Initializable {
                 } else {
                     //System.out.println("load the id = "+civitasCol.getIdCivitas());
                     //saveMode(civitasCol.getIdCivitas());
+                    valueRiskFactor1.setText(activityCol.getRisk_Valuecol());
                   return activityCol.getRisk_Valuecol();
                 }
               }
@@ -457,6 +497,7 @@ public class NEWPROJECTController implements Initializable {
                 if (activityCol == null){
                   return null;
                 } else {
+                    valueAuditGrading1.setText(activityCol.getAudit_Gradingcol());
                   return activityCol.getAudit_Gradingcol();
                 }
               }
@@ -522,6 +563,7 @@ public class NEWPROJECTController implements Initializable {
                 if (activityCol == null){
                   return null;
                 } else {
+                    valueStatus1.setText(activityCol.getStatusCol());
                   return activityCol.getStatusCol();
                 }
               }
@@ -553,33 +595,7 @@ public class NEWPROJECTController implements Initializable {
             }
             listScope.setItems(dataScope);
             listScope.setCellFactory(scopeListView -> new MasScopeDao());
-//            listScope.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue)->{
-//                if(newValue!=null){
-//                    Platform.runLater(() -> {
-//                        listScope.getSelectionModel().select(-1);
-//                        currentScope.getItems().add(newValue);
-//                        currentScope.setCellFactory(scopeListView -> new MasScopeDao());
-//                        currentScope.getSelectionModel().selectedItemProperty().addListener((obt, bfrValue, afrValue)->{
-//                            if(afrValue!=null){
-//                                Platform.runLater(() -> {
-//                                    currentScope.getSelectionModel().select(-1);
-//                                    listScope.getItems().add(afrValue);
-//                                    currentScope.getItems().remove(afrValue);
-//                                    
-//                                    //listScope.setCellFactory(scopeListView -> new MasScopeDao());
-//                                });
-//                            }
-//                        });
-//                        listScope.getItems().remove(newValue);
-//                        currentScope.setVerticalGap(30.0);
-//                        currentScope.setExpanded(true);
-//                        currentScope.depthProperty().set(1);
-//                        currentScope.getStyleClass().add("mylistview");
-//                    });
-//
-//                } 
-//                
-//            });
+
             listScope.setVerticalGap(30.0);
             listScope.setExpanded(true);
             listScope.depthProperty().set(1);
@@ -603,92 +619,17 @@ public class NEWPROJECTController implements Initializable {
             listKaryawan.getStyleClass().add("mylistview");
     }
     
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        kon.db();
-        try {
-            comboBoxCivitas();
-            comboBoxActivity();
-            comboBoxAuditIndex();
-            comboBoxStatusProject();
-            comboBoxRiskFactor();
-            
-            setKaryawan();
-            setScope();
-            
-            popupAsa();
-            popupTask();
-            
-            
-            listKaryawan.setDisable(true);
-            listScope.setDisable(true);
-            
-            tblTask.getStyleClass().add("mylistview.css");
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(NEWPROJECTController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }    
-
-
+    
     @FXML
     private void btnSave(MouseEvent event) throws SQLException {
-        //Initiate to get value form
+        //Initiate to updateData value form
             String civitasValue;
             String activityValue;
             String auditindexValue;
             String statusValue;
             String riskfactorValue;
             
-            if(comboCivitas.getValue()==null){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText(String.valueOf("combo CIvitas kosong"));
-                    alert.showAndWait();
-            }else if(comboAcitivity.getValue()==null){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText(String.valueOf("combo comboAcitivity kosong"));
-                    alert.showAndWait();
-            }else if(comboAuditIndex.getValue()==null){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText(String.valueOf("combo comboAuditIndex kosong"));
-                    alert.showAndWait();
-            }else if(comboRiskFactor.getValue()==null){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText(String.valueOf("combo comboRiskFactor kosong"));
-                    alert.showAndWait();
-            
-            } else if(dateStart.getValue()==null){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText(String.valueOf("combo dateStart kosong"));
-                    alert.showAndWait();
-            }else if(dateEnd.getValue()==null){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText(String.valueOf("combo dateEnd kosong"));
-                    alert.showAndWait();
-            }else if(valueProject.getText()==null){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText(String.valueOf("combo valueProject kosong"));
-                    alert.showAndWait();
-            }else {
+            if (checkForm().equals("Success")) {
                 String projectValue = valueProject.getText();
                 civitasValue = Integer.toString(comboCivitas.getSelectionModel().getSelectedItem().getIdCivitas());
                 activityValue = Integer.toString(comboAcitivity.getSelectionModel().getSelectedItem().getIdAcitivity());
@@ -697,102 +638,115 @@ public class NEWPROJECTController implements Initializable {
                 LocalDate start = dateStart.getValue();
                 LocalDate end = dateEnd.getValue();
                 LocalDate nowDate = LocalDate.now();
-                                           
-                //create id
-                
-                String startDate = Integer.toString(start.getDayOfMonth());
-                String startMonth = Integer.toString(start.getMonthValue());
-                String endDate = Integer.toString(end.getDayOfMonth());
-                String endMonth = Integer.toString(end.getMonthValue());
-                String yearNow = Integer.toString(nowDate.getYear());
-                int lastTwoDigits = Calendar.getInstance().get(Calendar.YEAR) % 100;
 
-                idProject = ""+lastTwoDigits+""+civitasValue+""
-                        + ""+activityValue;
-                
-                //to save Project on database
-                
-                if (comboStatus.getValue() == null){
+                if (!makeId().equals(null)){
+                    if (comboStatus.getValue() == null){
                     
-                    statusValue = "1";
-                    //int status_idstatus = 1;
-                    try {
-                         //setquery save
-                        modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
-                            riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
-                        kon.stat.executeUpdate(modelProject.SelectNeeded);
-                        
-                        setDataListTask(idProject);
-                        
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Input Success");
-                        alert.setHeaderText(null);
-                        alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
-                        alert.showAndWait();
-                        
-                    } catch (SQLException ex) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText(null);
-                        alert.setContentText(String.valueOf(ex));
-                        alert.showAndWait();
-                    }
-                    
+                        statusValue = "1";
+                        //int status_idstatus = 1;
+                        try {
+                             //setquery save
+                            modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
+                                riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
+                           // kon.stat.executeUpdate(modelProject.SelectNeeded);
+
+                            setDataListTask(idProject);
+
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Input Success");
+                            alert.setHeaderText(null);
+                            alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
+                            alert.showAndWait();
+
+                        } catch (SQLException ex) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText(null);
+                            alert.setContentText(String.valueOf(ex));
+                            alert.showAndWait();
+                        }
+
                    
                     
-                } else{
-                    
-                    statusValue = Integer.toString(comboStatus.getSelectionModel().getSelectedItem().getIdStatus());
-                    //int status_idstatus = 1;
-                    try {
-                         //setquery save
-                        modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
-                            riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
-                        kon.stat.executeUpdate(modelProject.SelectNeeded);
-                        
-                        setDataListTask(idProject);
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Input Success");
-                        alert.setHeaderText(null);
-                        alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
-                        alert.showAndWait();
-                        
-                    } catch (SQLException ex) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Error");
-                        alert.setHeaderText(null);
-                        alert.setContentText(String.valueOf(ex));
-                        alert.showAndWait();
-                    }
+                    } else{
 
+                        statusValue = Integer.toString(comboStatus.getSelectionModel().getSelectedItem().getIdStatus());
+                        //int status_idstatus = 1;
+                        try {
+                             //setquery save
+                            modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
+                                riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
+                            kon.stat.executeUpdate(modelProject.SelectNeeded);
+
+                            setDataListTask(idProject);
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Input Success");
+                            alert.setHeaderText(null);
+                            alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Input Success "));
+                            alert.showAndWait();
+
+                        } catch (SQLException ex) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText(null);
+                            alert.setContentText(String.valueOf(ex));
+                            alert.showAndWait();
+                        }
+
+                    }
                 }
-                   
- 
-            }
-            setIdProject(idProject);
 
-            listKaryawan.setDisable(false);
-            listScope.setDisable(false);
+            } else {
+                
+            }
+            setBtnDisable();
     }
     
     
     @FXML
     void btnRefreshForm(MouseEvent event) {
-//        valueProject.clear();
-//        comboAcitivity.re
-//        comboCivitas.
-//        comboAuditIndex.
-//        comboRiskFactor.
-//        comboStatus.
+
     }
 
 
     @FXML
     private void btnModiified(MouseEvent event) {
+            
+            if (checkForm().equals("Success")) {
+                String projectValue = valueProject.getText();
+                //String civitasValue = Integer.toString(comboCivitas.getSelectionModel().getSelectedItem().getIdCivitas());
+                //String activityValue = Integer.toString(comboAcitivity.getSelectionModel().getSelectedItem().getIdAcitivity());
+                String auditindexValue = Integer.toString(comboAuditIndex.getSelectionModel().getSelectedItem().getIdaudit_Grading());
+                String riskfactorValue = Integer.toString(comboRiskFactor.getSelectionModel().getSelectedItem().getIdrisk_Value());
+                String statusValue = Integer.toString(comboStatus.getSelectionModel().getSelectedItem().getIdStatus());
+                        
+                LocalDate start = dateStart.getValue();
+                LocalDate end = dateEnd.getValue();
+                LocalDate nowDate = LocalDate.now();
+                
+                try {
+                    modelProject.updateProject(idProject,
+                                riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
+                    kon.stat.executeUpdate(modelProject.update);
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Input Success");
+                            alert.setHeaderText(null);
+                            alert.setContentText(String.valueOf(" Project "+projectValue+" \n" +" Update Success "));
+                            alert.showAndWait();
+                } catch (Exception e) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Error");
+                            alert.setHeaderText(null);
+                            alert.setContentText(String.valueOf(e));
+                            alert.showAndWait();
+                }
+                
+        }
+        
     }
     
     
-    public void setData(String idProject) throws SQLException{
+    public void setLoadData(String idProject) throws SQLException{
         // load list karyawan
         setDataListKaryawan(idProject);
         // load list scope
@@ -804,13 +758,7 @@ public class NEWPROJECTController implements Initializable {
         //set idProject for all project they need to modified
         setIdProject(idProject);
         
-        btnSave.setDisable(true);
-        
-        listKaryawan.setDisable(false);
-        listScope.setDisable(false);
-        
-
-        
+        setBtnDisable();
     }
     
     public  void setDataProject(String idProject) throws SQLException{
@@ -835,19 +783,13 @@ public class NEWPROJECTController implements Initializable {
                 textActivity = kon.res.getString(5);
                 textStartDate = kon.res.getString(10);
                 textEndDate = kon.res.getString(11);
-                
-                //textRiskFactore = kon.res.getString(textEndDate)
 
-                 
-//                jtsDayStart = kon.res.getString(11);
-//                jtsMonthStart = kon.res.getString(12);
-//                jtsDayEnd = kon.res.getString(13);
-//                jtsMonthEnd = kon.res.getString(14);
-//                textCountDown = kon.res.getString(15);
 //                
             }
              valueProject.setText(textProject);
-             valueProject.setDisable(true);
+             valueActivity1.setText(textActivity);
+             valueCivitas1.setText(textCivitas);
+             
              
              DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
              
@@ -858,10 +800,9 @@ public class NEWPROJECTController implements Initializable {
              } else{
                 LocalDate localDateSt = LocalDate.parse(textStartDate, formatter);
                 dateStart.setValue(localDateSt);
-                dateStart.setDisable(true);                 
+              
              }
 
-             
              // date End
              if(textEndDate == null){
                  dateEnd.setValue(null);
@@ -869,7 +810,7 @@ public class NEWPROJECTController implements Initializable {
              } else{
                 LocalDate localDateEnd = LocalDate.parse(textEndDate, formatter);
                 dateEnd.setValue(localDateEnd);
-                dateEnd.setDisable(true);                
+               
              }
              
             
@@ -1081,9 +1022,12 @@ public class NEWPROJECTController implements Initializable {
 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
-                    transferListMasKaryawan(currentTeam, listKaryawan);
-                    modelTeam.setOnDeleteProjectHasTeam(getIdProject(),getIdKaryawan());
-                    kon.stat.executeUpdate(modelTeam.onDelete);
+                    if(getIdKaryawan() != null){
+                        transferListMasKaryawan(currentTeam, listKaryawan);
+                        modelTeam.setOnDeleteProjectHasTeam(getIdProject(),getIdKaryawan());
+                        kon.stat.executeUpdate(modelTeam.onDelete);
+                    }
+
 
                     // ... user chose OK
                     
@@ -1120,7 +1064,7 @@ public class NEWPROJECTController implements Initializable {
         
     @FXML
     void loadRefresScope(MouseEvent event) throws SQLException {
-        //setScope();
+
     }
     
     @FXML
@@ -1138,9 +1082,11 @@ public class NEWPROJECTController implements Initializable {
                 
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK){
-                    
-                    modelScope.setOnDeleteProjectHasScope(getIdProject(),getIdScope());
-                    kon.stat.executeUpdate(modelScope.deleteProjectScope);
+                    if(getIdScope() != null){
+                        modelScope.setOnDeleteProjectHasScope(getIdProject(),getIdScope());
+                        kon.stat.executeUpdate(modelScope.deleteProjectScope);                      
+                    }
+
                    
                     // ... user chose OK
                     
@@ -1179,26 +1125,7 @@ public class NEWPROJECTController implements Initializable {
                         alert.setContentText(String.valueOf("Duplicate Scope "));
                         alert.showAndWait();
         }
-//        System.out.println("getIdProject = "+getIdProject());
-//        System.out.println("getIdScope = "+getIdScope());
-        //kon.stat.execute(modelScope.insertInto);
-//         List<String> list = listScope.getItems().stream().
-//                                map(MasScope::getIdScope).
-//                                collect(Collectors.toList());
-//         Set<String> set = listScope.getItems().stream().
-//                 map(MasScope::getIdScope).collect(Collectors.toCollection(TreeSet::new));
-//         System.out.println("ini set = "+set);
-//         
-//          String joined = listScope.getItems().stream()
-//                           .map(Object::toString)
-//                           .collect(Collectors.joining(", "));
-//          System.out.println("inijoined = "+ joined);
-////            for (String string : list) {
-////                System.out.println(string);
-////                modelScope.setQueryProjectHasScopeSave(getIdProject(),string);
-////                kon.stat.execute(modelScope.insertInto);
-////            }
-//            
+            
  
     }
     
@@ -1268,8 +1195,6 @@ public class NEWPROJECTController implements Initializable {
         try {
         modelDetail.setOnModifiedTask(idProject,idTask,getEstStart(),getEstEnd(),getActStart(),getActEnd(),nowValue);
         kon.stat.executeUpdate(modelDetail.update);
-
-        System.out.println(modelDetail.update);
             
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Input Success");
@@ -1284,7 +1209,7 @@ public class NEWPROJECTController implements Initializable {
             tblTask.refresh();
             setDataListTask(idProject);
         } catch (Exception e) {
-            System.out.println(""+e);
+
         }
         
 
@@ -1417,51 +1342,7 @@ public class NEWPROJECTController implements Initializable {
     this method below
     to check the destination list view have same data  
     */
-    private boolean checkIdExisKaryawan(JFXListView<MasKaryawan> listRemover, JFXListView<MasKaryawan> listContainer) {
-        //bolean checking id selection list remover to list array on list container
-        List<String> listChecker = listContainer.getItems().stream().
-                        map(MasKaryawan::getIdKaryawan).
-                        collect(Collectors.toList());
-        
-        for (String listChecker1 : listChecker) {
-            if (listChecker1.trim().contains(listRemover.getId())) {        
-                return true;
-            }
-        }     
-
-        return false;
-    }
-    
-    private boolean checkIdExisScope(JFXListView<MasScope> listRemover, JFXListView<MasScope> listContainer) {
-        //bolean checking id selection list remover to list array on list container
-        List<String> listChecker = listContainer.getItems().stream().
-                        map(MasScope::getIdScope).
-                        collect(Collectors.toList());
-        for (String listChecker1 : listChecker) {
-            if (listChecker1.trim().contains(idScope)) {
-                
-                return true;
-            }
-        }
-        return false;
-    }
-    
-
-    /*
-    checking 
-    when user remove mandatory task,
-    mandatory task blocked to removed 
-    */
-    private boolean checkMandatoryTask(int taskId) {
-        //bolean checking id selection list 
-        if(taskId == 1 || taskId == 3 || taskId == 7 || taskId == 12 || taskId == 13
-                || taskId == 15){
-            return true;
-        } else {
-            return false;
-        }
-        
-    }
+ 
     
     
     
@@ -1531,19 +1412,7 @@ public class NEWPROJECTController implements Initializable {
 
     }
     
-    private boolean checkIdExisTask(TableView<ListTaskProject> tblContainer) {
-        //bolean checking id selection list remover to list array on list container
-        List<String> listChecker = tblContainer.getItems().stream().
-                        map(ListTaskProject::getIdTask).
-                        collect(Collectors.toList());
-        
-        for (String listChecker1 : listChecker) {
-            if (idTask.trim().contains(listChecker1)) {        
-                return true;
-            }
-        }     
-        return false;
-    }
+
     
     public void popupTask(){
         String idItemTask = null;
@@ -1556,7 +1425,7 @@ public class NEWPROJECTController implements Initializable {
 
             while (kon.res.next()) {
                 dataTask.addAll(new MasTask(kon.res.getString(1), kon.res.getString(2),
-                        kon.res.getString(3),kon.res.getString(4) ));
+                        kon.res.getString(3),kon.res.getString(4),kon.res.getString(5) ));
                 
                 //set text
                 //set id text
@@ -1607,7 +1476,7 @@ public class NEWPROJECTController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText(String.valueOf(e));
                 alert.showAndWait();
-                System.out.println(""+e);
+
             }
         }
     }
@@ -1796,4 +1665,199 @@ public class NEWPROJECTController implements Initializable {
         }
     }
     
+    public String makeId(){
+        String  sql = "SELECT max(idproject) from project";
+        
+        try{
+            preparedStatement = kon.con.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                idProject = Integer.toString(resultSet.getInt(1)+1);
+            } else{
+                idProject=null;
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        return idProject;
+    }
+    
+    public String checkForm(){
+        
+            if(comboCivitas.getValue()==null){
+                if (idProject!= null) {
+                    return "Success";
+                } else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo CIvitas kosong"));
+                    alert.showAndWait();
+                    return "Error";
+                }
+            }else if(comboAcitivity.getValue()==null){
+                if(idProject != null){
+                    return "Success";
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo comboAcitivity kosong"));
+                    alert.showAndWait();
+                    return "Error";
+                }
+            }else if(comboAuditIndex.getValue()==null){
+                if(idProject != null){
+                    return "Success";
+                } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo comboAuditIndex kosong"));
+                    alert.showAndWait();
+                    return "Error";
+                }
+            }else if(comboRiskFactor.getValue()==null){
+                if(idProject != null){
+                    return "Success";
+                } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo comboRiskFactor kosong"));
+                    alert.showAndWait();
+                    return "Error";
+                }
+            } else if(dateStart.getValue()==null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo dateStart kosong"));
+                    alert.showAndWait();
+                    return "Error";
+            }else if(dateEnd.getValue()==null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo dateEnd kosong"));
+                    alert.showAndWait();
+                    return "Error";
+            }else if(valueProject.getText()==null){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("combo valueProject kosong"));
+                    alert.showAndWait();
+                    return "Error";
+            }
+            else if(dateStart.getValue().isAfter(dateEnd.getValue())){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText(String.valueOf("Check Date Value"));
+                    alert.showAndWait();
+                    return "Error";
+            } 
+            else {
+                return "Success";
+            }
+           
+    }
+    
+    public void setBtnDisable(){
+        if(getIdProject() == null){
+            listKaryawan.setDisable(true);
+            listScope.setDisable(true);
+            currentScope.setDisable(true);
+            currentTeam.setDisable(true);
+            btnMod.setDisable(true);
+            btnInput.setDisable(true);
+            btnTaskDel.setDisable(true);
+            btnTaskMod.setDisable(true);
+            
+        } else{
+            btnSave.setDisable(true);
+            valueProject.setDisable(true);
+            valueActivity1.setDisable(true);
+            comboAcitivity.setDisable(true);
+            comboAcitivity.setVisible(false);
+            valueCivitas1.setDisable(true);
+            comboCivitas.setDisable(true);
+            comboCivitas.setVisible(false);
+            
+            
+            dateEnd.setDisable(false);
+            dateStart.setDisable(false);
+            listKaryawan.setDisable(false);
+            listScope.setDisable(false);
+            currentScope.setDisable(false);
+            currentTeam.setDisable(false);
+            btnMod.setDisable(false);
+            btnInput.setDisable(false);
+            btnTaskDel.setDisable(false);
+            btnTaskMod.setDisable(false);
+        }
+            
+    }
+    
+       private boolean checkIdExisKaryawan(JFXListView<MasKaryawan> listRemover, JFXListView<MasKaryawan> listContainer) {
+        //bolean checking id selection list remover to list array on list container
+        List<String> listChecker = listContainer.getItems().stream().
+                        map(MasKaryawan::getIdKaryawan).
+                        collect(Collectors.toList());
+        
+        for (String listChecker1 : listChecker) {
+            if (listChecker1.trim().contains(listRemover.getId())) {        
+                return true;
+            }
+        }     
+
+        return false;
+    }
+    
+    private boolean checkIdExisScope(JFXListView<MasScope> listRemover, JFXListView<MasScope> listContainer) {
+        //bolean checking id selection list remover to list array on list container
+        List<String> listChecker = listContainer.getItems().stream().
+                        map(MasScope::getIdScope).
+                        collect(Collectors.toList());
+        for (String listChecker1 : listChecker) {
+            if (listChecker1.trim().contains(idScope)) {
+                
+                return true;
+            }
+        }
+        return false;
+    }
+    
+
+    /*
+    checking 
+    when user remove mandatory task,
+    mandatory task blocked to removed 
+    */
+    private boolean checkMandatoryTask(int taskId) {
+        //bolean checking id selection list 
+        if(taskId == 1 || taskId == 3 || taskId == 7 || taskId == 12 || taskId == 13
+                || taskId == 15){
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+    
+        private boolean checkIdExisTask(TableView<ListTaskProject> tblContainer) {
+        //bolean checking id selection list remover to list array on list container
+        List<String> listChecker = tblContainer.getItems().stream().
+                        map(ListTaskProject::getIdTask).
+                        collect(Collectors.toList());
+        
+        for (String listChecker1 : listChecker) {
+            if (idTask.trim().contains(listChecker1)) {        
+                return true;
+            }
+        }     
+        return false;
+    }
 }

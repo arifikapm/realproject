@@ -184,10 +184,11 @@ public class PROJECT_1Controller implements Initializable {
     private void loadTaskProject(MouseEvent event) throws IOException, SQLException {
         // New window (Stage)
             final Stage primaryStage = null;
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NEWPROJECT_1.fxml"));
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NEWPROJECT_1.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/NEWPROJECT.fxml"));
             BorderPane newScene = loader.load();
             NEWPROJECTController mct = loader.getController();
-            mct.setData(idPro);
+            mct.setLoadData(idPro);
             Scene scene = new Scene(newScene);
            
             //new Scene load new windows

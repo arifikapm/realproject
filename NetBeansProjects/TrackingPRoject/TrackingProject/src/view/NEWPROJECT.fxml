@@ -62,9 +62,9 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="381.0" minHeight="10.0" prefHeight="293.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="262.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="295.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="5.0" minHeight="0.0" prefHeight="5.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="ALWAYS" />
+          <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="271.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <BorderPane.margin>
             <Insets left="15.0" right="15.0" top="10.0" />
@@ -131,15 +131,18 @@
                   </HBox>
                   <VBox alignment="TOP_CENTER" prefHeight="409.0" prefWidth="273.0" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
                      <children>
-                        <TextField fx:id="valueProject">
+                        <TextField fx:id="valueProject" stylesheets="@../styling/fullpackstyling.css">
                            <VBox.margin>
-                              <Insets left="5.0" right="5.0" top="5.0" />
+                              <Insets left="5.0" right="5.0" top="10.0" />
                            </VBox.margin>
                         </TextField>
                         <StackPane prefHeight="23.0" prefWidth="263.0">
                            <children>
-                              <JFXComboBox fx:id="comboAcitivity" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="263.0" promptText="Activity" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;" />
-                              <TextField fx:id="valueActivity1">
+                              <JFXComboBox fx:id="comboAcitivity" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="263.0" promptText="Activity" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;">
+                                 <StackPane.margin>
+                                    <Insets top="5.0" />
+                                 </StackPane.margin></JFXComboBox>
+                              <TextField fx:id="valueActivity1" stylesheets="@../styling/fullpackstyling.css">
                                  <StackPane.margin>
                                     <Insets right="25.0" />
                                  </StackPane.margin>
@@ -154,8 +157,11 @@
                               <Insets left="5.0" right="5.0" />
                            </VBox.margin>
                            <children>
-                              <JFXComboBox fx:id="comboCivitas" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="300.0" promptText="Civitas" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;" />
-                              <TextField fx:id="valueCivitas1">
+                              <JFXComboBox fx:id="comboCivitas" focusColor="#4b9ddb" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="23.0" prefWidth="300.0" promptText="Civitas" style="-jfx-focus-color: #47A3E0; -jfx-unfocus-color: #cdcbcb;">
+                                 <StackPane.margin>
+                                    <Insets top="5.0" />
+                                 </StackPane.margin></JFXComboBox>
+                              <TextField fx:id="valueCivitas1" stylesheets="@../styling/fullpackstyling.css">
                                  <StackPane.margin>
                                     <Insets right="25.0" />
                                  </StackPane.margin>
@@ -175,7 +181,7 @@
                               <Insets />
                            </opaqueInsets>
                            <VBox.margin>
-                              <Insets left="10.0" right="5.0" />
+                              <Insets left="10.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </HBox>
                         <GridPane>
@@ -196,7 +202,7 @@
                                           <Insets left="5.0" />
                                        </StackPane.margin>
                                     </JFXComboBox>
-                                    <TextField fx:id="valueRiskFactor1">
+                                    <TextField fx:id="valueRiskFactor1" stylesheets="@../styling/fullpackstyling.css">
                                        <StackPane.margin>
                                           <Insets right="25.0" />
                                        </StackPane.margin>
@@ -210,7 +216,7 @@
                                           <Insets left="5.0" />
                                        </StackPane.margin>
                                     </JFXComboBox>
-                                    <TextField fx:id="valueAuditGrading1">
+                                    <TextField fx:id="valueAuditGrading1" stylesheets="@../styling/fullpackstyling.css">
                                        <StackPane.margin>
                                           <Insets right="25.0" />
                                        </StackPane.margin>
@@ -219,7 +225,7 @@
                               </StackPane>
                            </children>
                            <VBox.margin>
-                              <Insets left="5.0" right="5.0" top="8.0" />
+                              <Insets left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </GridPane>
                         <StackPane prefHeight="23.0" prefWidth="200.0">
@@ -229,19 +235,19 @@
                                     <Insets left="5.0" />
                                  </StackPane.margin>
                               </JFXComboBox>
-                              <TextField fx:id="valueStatus1">
+                              <TextField fx:id="valueStatus1" stylesheets="@../styling/fullpackstyling.css">
                                  <StackPane.margin>
                                     <Insets right="25.0" />
                                  </StackPane.margin>
                               </TextField>
                            </children>
                            <VBox.margin>
-                              <Insets left="5.0" right="5.0" />
+                              <Insets left="5.0" right="5.0" top="5.0" />
                            </VBox.margin>
                         </StackPane>
-                        <VBox alignment="BOTTOM_CENTER" prefHeight="21.0" prefWidth="300.0" VBox.vgrow="ALWAYS">
+                        <VBox alignment="BOTTOM_CENTER" prefHeight="22.0" prefWidth="300.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <GridPane alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="22.0" prefWidth="300.0">
+                              <GridPane alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="300.0">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -336,10 +342,9 @@
                         <JFXListView fx:id="listScope" onMouseClicked="#handleListScope" style="-fx-background-color: #E7E7E7;" stylesheets="@mylistview.css" verticalGap="120.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #9E9E9E;">
                            <children>
-                              <GridPane>
+                              <GridPane prefHeight="25.0" prefWidth="148.0">
                                 <columnConstraints>
-                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="146.0" />
-                                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="80.0" minWidth="10.0" prefWidth="26.0" />
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -350,11 +355,6 @@
                                           <Font name="Ubuntu" size="12.0" />
                                        </font>
                                     </Label>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="SAVE" GridPane.columnIndex="1">
-                                       <GridPane.margin>
-                                          <Insets right="5.0" />
-                                       </GridPane.margin>
-                                    </FontAwesomeIconView>
                                  </children>
                               </GridPane>
                            </children>
@@ -363,8 +363,7 @@
                            <children>
                               <GridPane onMousePressed="#loadRefresScope">
                                 <columnConstraints>
-                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="151.0" />
-                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="81.0" minWidth="10.0" prefWidth="22.0" />
+                                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -378,7 +377,6 @@
                                           <Insets />
                                        </GridPane.margin>
                                     </Label>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -463,8 +461,7 @@
                            <children>
                               <GridPane>
                                  <columnConstraints>
-                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="151.0" />
-                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="81.0" minWidth="10.0" prefWidth="22.0" />
+                                    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="200.0" />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -478,7 +475,6 @@
                                           <Insets />
                                        </GridPane.margin>
                                     </Label>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" GridPane.columnIndex="1" />
                                  </children>
                               </GridPane>
                            </children>
@@ -499,7 +495,7 @@
                 <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXButton onMouseClicked="#handleDelete" prefHeight="25.0" prefWidth="82.0" ripplerFill="#30a0d0" text="Delete" textFill="#f54141">
+                  <JFXButton fx:id="btnTaskDel" onMouseClicked="#handleDelete" prefHeight="25.0" prefWidth="82.0" ripplerFill="#30a0d0" text="Delete" textFill="#f54141">
                      <graphic>
                         <FontAwesomeIconView fill="#fc0e0e" glyphName="MINUS" />
                      </graphic>
@@ -509,7 +505,7 @@
                         <FontAwesomeIconView fill="#42d342" glyphName="PENCIL" />
                      </graphic>
                   </JFXButton>
-                  <JFXButton onMouseClicked="#handleModTask" prefHeight="25.0" prefWidth="79.0" ripplerFill="#30a0d0" text="Mod" textFill="#eda205" GridPane.columnIndex="2">
+                  <JFXButton fx:id="btnTaskMod" onMouseClicked="#handleModTask" prefHeight="25.0" prefWidth="79.0" ripplerFill="#30a0d0" text="Mod" textFill="#eda205" GridPane.columnIndex="2">
                      <graphic>
                         <FontAwesomeIconView fill="#46c5eb" glyphName="PLUS" style="-fx-fill: #F9BD47;" />
                      </graphic>

@@ -28,7 +28,7 @@ public class MasGroupCivitas {
         return idGroupCivitas.get();
     }
 
-    public String getCivitasCol() {
+    public String getGroupCivitasCol() {
         return groupcivitasCol.get();
     }
 
