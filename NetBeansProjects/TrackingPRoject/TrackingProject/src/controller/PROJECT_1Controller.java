@@ -297,7 +297,7 @@ public class PROJECT_1Controller implements Initializable {
             filteredData = FXCollections.observableArrayList();
             //kon.res=kon.stat.executeQuery(modelProject.queryListProject);
             kon.res=kon.stat.executeQuery(modelProject.SelectNeeded);
-//            System.out.println(modelProject.SelectNeeded);
+            System.out.println(modelProject.SelectNeeded);
             while (kon.res.next()) {                
                 data.add(new Project
                         (kon.res.getString(1), kon.res.getString(2), kon.res.getInt(3), kon.res.getString(4), 

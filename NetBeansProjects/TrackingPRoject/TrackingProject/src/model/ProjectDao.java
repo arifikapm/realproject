@@ -144,7 +144,6 @@ public class ProjectDao extends ListCell<Project>{
         where = " where PRO.status_idstatus = "+idStatus+""
                 + " and YEAR(PRO.startmonth) = "+year+"";
         SelectNeeded = querySelect+where+groupBy;
-        System.out.println(SelectNeeded);
     }
     
     public void loadProjectbyYear(int year) {
@@ -156,7 +155,7 @@ public class ProjectDao extends ListCell<Project>{
         where = " where YEAR(PRO.startmonth) = "+year+""
                 + " and PRO.projectcol like '%"+SearchKey+"%' "
                 + " or MIC.civitascol like '%"+SearchKey+"%' "
-                + " or MAC.activitycol like '%"+SearchKey+"%' ";
+                + " or MAC.activitycol like '%"+SearchKey+"%'";
         SelectNeeded = querySelect+where+groupBy;
     }
     

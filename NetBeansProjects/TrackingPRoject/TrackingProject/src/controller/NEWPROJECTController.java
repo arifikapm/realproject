@@ -648,7 +648,7 @@ public class NEWPROJECTController implements Initializable {
                              //setquery save
                             modelProject.insertProject(idProject,projectValue,civitasValue,activityValue,
                                 riskfactorValue,auditindexValue,statusValue,start,end,nowDate);
-                           // kon.stat.executeUpdate(modelProject.SelectNeeded);
+                            kon.stat.executeUpdate(modelProject.SelectNeeded);
 
                             setDataListTask(idProject);
 
