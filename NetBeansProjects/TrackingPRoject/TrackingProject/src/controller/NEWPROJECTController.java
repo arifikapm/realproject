@@ -641,7 +641,7 @@ public class NEWPROJECTController implements Initializable {
 
                 if (!makeId().equals(null)){
                     if (comboStatus.getValue() == null){
-                    
+                    //gg
                         statusValue = "1";
                         //int status_idstatus = 1;
                         try {
